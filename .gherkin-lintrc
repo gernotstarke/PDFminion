@@ -11,7 +11,7 @@
   "no-multiple-empty-lines": "off",
   "no-empty-file": "on",
   "no-scenario-outlines-without-examples": "on",
-  "name-length": ["on", {"Feature": 79}],
+  "name-length": ["off", {"Feature": 79}],
   "no-restricted-tags": ["on", {"tags": ["@watch", "@wip"]}],
   "use-and": "on",
   "no-duplicate-tags": "on",
