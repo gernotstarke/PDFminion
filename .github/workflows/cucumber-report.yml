@@ -25,7 +25,7 @@ jobs:
         run: go get github.com/cucumber/godog/cmd/godog@v0.11.0
 
       - name: Execute Cucumber BDD Specifications
-        run: godog --format cucumber:test-results-results/cucumber-report.json
+        run: godog --format cucumber:test-results/cucumber-report.json
 
 # we need node.js to create the report from the json-results
       - uses: actions/setup-node@v2
@@ -35,7 +35,7 @@ jobs:
       - name: install cucumber-html-reporter
         run: npm install cucumber-html-reporter --save-dev
 
-      - name: generate html report from cucumber-test-results-results
+      - name: generate html report from cucumber-test-results
         run: node cucumber-report-index.js
 
 
@@ -46,7 +46,7 @@ jobs:
 
         with:
           # which file(s) to add
-          file_pattern: test-results-results/cucumber-report.*
+          file_pattern: test-results/cucumber-report.*
 
           commit_message: "new cucumber bdd test-results report, created by github action run"
 
