@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/cucumber/godog"
-	"godog-bdd/basket"
+	"pdfminion/basket"
 )
 
 // based upon: https://semaphoreci.com/community/tutorials/how-to-use-godog-for-behavior-driven-development-in-go
