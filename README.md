@@ -6,15 +6,15 @@ Helper (_minion_) for some mundane tasks with PDF documents.
 * [Godog](https://github.com/cucumber/godog), the official Cucumber tool
 * [cucumber-html-reporter](https://www.npmjs.com/package/cucumber-html-reporter)
 
-
+## Status
 ![feature-linter](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml/badge.svg)
 ![cucumber](https://github.com/gernotstarke/PDFminion/actions/workflows/cucumber.yml/badge.svg)
 ![go_test](https://github.com/gernotstarke/PDFminion/actions/workflows/go_test.yml/badge.svg)
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Go Report Card](https://goreportcard.com/badge/github.com/gernotstarke/PDFminion)](https://goreportcard.com/report/github.com/gernotstarke/PDFminion)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gernotstarke_PDFminion&metric=alert_status)](https://sonarcloud.io/dashboard?id=gernotstarke_PDFminion)
 [![Maintainability](https://api.codeclimate.com/v1/badges/c481ef8142826f71ff65/maintainability)](https://codeclimate.com/github/gernotstarke/PDFminion/maintainability)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 ## Why PDFminion? 
 
