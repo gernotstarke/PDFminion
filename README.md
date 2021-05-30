@@ -7,9 +7,9 @@ Helper (_minion_) for some mundane tasks with PDF documents.
 * [cucumber-html-reporter](https://www.npmjs.com/package/cucumber-html-reporter)
 
 ## Status
-![feature-linter](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml/badge.svg)
-![cucumber](https://github.com/gernotstarke/PDFminion/actions/workflows/cucumber.yml/badge.svg)
-![go_test](https://github.com/gernotstarke/PDFminion/actions/workflows/go_test.yml/badge.svg)
+[![feature-linter](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml/badge.svg)](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml)
+[![cucumber-report](https://github.com/gernotstarke/PDFminion/actions/workflows/cucumber-report.yml/badge.svg)](https://github.com/gernotstarke/PDFminion/actions/workflows/cucumber-report.yml)
+[![go_test](https://github.com/gernotstarke/PDFminion/actions/workflows/go_test.yml/badge.svg)](https://github.com/gernotstarke/PDFminion/actions/workflows/go_test.yml)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/gernotstarke/PDFminion)](https://goreportcard.com/report/github.com/gernotstarke/PDFminion)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=gernotstarke_PDFminion&metric=alert_status)](https://sonarcloud.io/dashboard?id=gernotstarke_PDFminion)

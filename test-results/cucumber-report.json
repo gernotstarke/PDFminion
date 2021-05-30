@@ -5,7 +5,13 @@
         "keyword": "Feature",
         "name": "Add page numbers to existing PDF files",
         "description": "",
-        "line": 1,
+        "line": 2,
+        "tags": [
+            {
+                "name": "@numbering",
+                "line": 1
+            }
+        ],
         "elements": [
             {
                 "id": "add-page-numbers-to-existing-pdf-files;as-a-user-i-want-to-add-page-numbers-to-a-single-pdf-file",
@@ -17,24 +23,13 @@
                 "tags": [
                     {
                         "name": "@numbering",
-                        "line": 8
+                        "line": 1
                     }
                 ],
                 "steps": [
                     {
                         "keyword": "Given ",
                         "name": "A source directory",
-                        "line": 4,
-                        "match": {
-                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:4"
-                        },
-                        "result": {
-                            "status": "undefined"
-                        }
-                    },
-                    {
-                        "keyword": "And ",
-                        "name": "a different target directory",
                         "line": 5,
                         "match": {
                             "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:5"
@@ -44,11 +39,22 @@
                         }
                     },
                     {
+                        "keyword": "And ",
+                        "name": "a different target directory",
+                        "line": 6,
+                        "match": {
+                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:6"
+                        },
+                        "result": {
+                            "status": "undefined"
+                        }
+                    },
+                    {
                         "keyword": "When ",
                         "name": "the source directory contains a single PDF file",
-                        "line": 11,
+                        "line": 10,
                         "match": {
-                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:11"
+                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:10"
                         },
                         "result": {
                             "status": "undefined"
@@ -57,9 +63,9 @@
                     {
                         "keyword": "Then ",
                         "name": "sequential page numbers should have been added to this PDF file starting from 1",
-                        "line": 12,
+                        "line": 11,
                         "match": {
-                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:12"
+                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:11"
                         },
                         "result": {
                             "status": "undefined"
@@ -72,29 +78,18 @@
                 "keyword": "Scenario",
                 "name": "As a user I want to add page numbers to a number of PDF files",
                 "description": "",
-                "line": 16,
+                "line": 14,
                 "type": "scenario",
                 "tags": [
                     {
                         "name": "@numbering",
-                        "line": 15
+                        "line": 1
                     }
                 ],
                 "steps": [
                     {
                         "keyword": "Given ",
                         "name": "A source directory",
-                        "line": 4,
-                        "match": {
-                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:4"
-                        },
-                        "result": {
-                            "status": "undefined"
-                        }
-                    },
-                    {
-                        "keyword": "And ",
-                        "name": "a different target directory",
                         "line": 5,
                         "match": {
                             "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:5"
@@ -104,11 +99,22 @@
                         }
                     },
                     {
-                        "keyword": "When ",
-                        "name": "the source directory contains several PDF file",
-                        "line": 18,
+                        "keyword": "And ",
+                        "name": "a different target directory",
+                        "line": 6,
                         "match": {
-                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:18"
+                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:6"
+                        },
+                        "result": {
+                            "status": "undefined"
+                        }
+                    },
+                    {
+                        "keyword": "When ",
+                        "name": "the source directory contains several PDF files",
+                        "line": 15,
+                        "match": {
+                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:15"
                         },
                         "result": {
                             "status": "undefined"
@@ -117,9 +123,9 @@
                     {
                         "keyword": "Then ",
                         "name": "sequential page numbers should have been added to the PDF files",
-                        "line": 19,
+                        "line": 16,
                         "match": {
-                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:19"
+                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:16"
                         },
                         "result": {
                             "status": "undefined"
@@ -132,33 +138,18 @@
                 "keyword": "Scenario",
                 "name": "Several files shall be numbered in alphabetical order",
                 "description": "",
-                "line": 22,
+                "line": 19,
                 "type": "scenario",
                 "tags": [
                     {
                         "name": "@numbering",
-                        "line": 21
-                    },
-                    {
-                        "name": "@sorting",
-                        "line": 21
+                        "line": 1
                     }
                 ],
                 "steps": [
                     {
                         "keyword": "Given ",
                         "name": "A source directory",
-                        "line": 4,
-                        "match": {
-                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:4"
-                        },
-                        "result": {
-                            "status": "undefined"
-                        }
-                    },
-                    {
-                        "keyword": "And ",
-                        "name": "a different target directory",
                         "line": 5,
                         "match": {
                             "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:5"
@@ -168,11 +159,22 @@
                         }
                     },
                     {
+                        "keyword": "And ",
+                        "name": "a different target directory",
+                        "line": 6,
+                        "match": {
+                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:6"
+                        },
+                        "result": {
+                            "status": "undefined"
+                        }
+                    },
+                    {
                         "keyword": "When ",
                         "name": "the source directory contains several PDF files",
-                        "line": 23,
+                        "line": 20,
                         "match": {
-                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:23"
+                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:20"
                         },
                         "result": {
                             "status": "undefined"
@@ -181,9 +183,9 @@
                     {
                         "keyword": "Then ",
                         "name": "numbering is done in alphabetical order of the filenames",
-                        "line": 24,
+                        "line": 21,
                         "match": {
-                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:24"
+                            "location": "features/numberize/Add_pagenumbers_to_PDF_files.feature:21"
                         },
                         "result": {
                             "status": "undefined"
@@ -228,7 +230,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 36000
+                            "duration": 36265
                         }
                     },
                     {
@@ -240,7 +242,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 21643
+                            "duration": 21275
                         }
                     },
                     {
@@ -252,7 +254,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 22460
+                            "duration": 23764
                         }
                     },
                     {
@@ -264,7 +266,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 17237
+                            "duration": 18404
                         }
                     }
                 ]
@@ -286,7 +288,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 13314
+                            "duration": 16421
                         }
                     },
                     {
@@ -298,7 +300,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 18020
+                            "duration": 22334
                         }
                     },
                     {
@@ -310,7 +312,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 17369
+                            "duration": 19753
                         }
                     },
                     {
@@ -322,7 +324,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 19103
+                            "duration": 16853
                         }
                     }
                 ]
@@ -344,7 +346,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 14547
+                            "duration": 12584
                         }
                     },
                     {
@@ -356,7 +358,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 16515
+                            "duration": 17641
                         }
                     },
                     {
@@ -368,7 +370,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 18461
+                            "duration": 18878
                         }
                     },
                     {
@@ -380,7 +382,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 14978
+                            "duration": 17690
                         }
                     },
                     {
@@ -392,7 +394,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 17369
+                            "duration": 21125
                         }
                     },
                     {
@@ -404,7 +406,7 @@
                         },
                         "result": {
                             "status": "passed",
-                            "duration": 18890
+                            "duration": 21382
                         }
                     }
                 ]
