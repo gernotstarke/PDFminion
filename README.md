@@ -1,10 +1,9 @@
+![](PDFminion-logo-small.png)
 # PDFminion
 
 
 Helper (_minion_) for some mundane tasks with PDF documents.
 
-* [Godog](https://github.com/cucumber/godog), the official Cucumber tool
-* [cucumber-html-reporter](https://www.npmjs.com/package/cucumber-html-reporter)
 
 ## Status
 [![feature-linter](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml/badge.svg)](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml)
@@ -24,6 +23,9 @@ Helper (_minion_) for some mundane tasks with PDF documents.
 We're using BDD (behavior driven development) with Cucumber to specify at least some of the requirements as _scenarios_.
 These scenarios can be executed, similar to automated unit tests.
 
+* [Godog](https://github.com/cucumber/godog), the official Cucumber tool
+* [cucumber-html-reporter](https://www.npmjs.com/package/cucumber-html-reporter)
+
 
 ### Godog
  
@@ -38,11 +40,10 @@ It's written in JavaScript and requires `npm` and `node` to be available on your
 npm install cucumber-html-reporter --save-dev
 ```
 
-## Usage
+## Usage of Development Tools
 
 I squeezed the required commands into the file `test-and-create-report.sh`
-(and will pack them into github actions...)
-
+(and into a github action )
 
 ### Godog
 
