@@ -1,4 +1,4 @@
-module godog-bdd
+module pdfminion
 
 go 1.16
 
