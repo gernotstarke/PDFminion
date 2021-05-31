@@ -1,9 +1,17 @@
-![](PDFminion-logo.png)
-# PDFminion
+# ![PDFminion](PDFminion-logo.png)
 
 
-Helper (_minion_) for some mundane tasks with PDF documents.
+Helper (_minion_) for some mundane tasks with PDF documents, among others:
 
+* add page numbers
+* add header and/or footer text
+* concatenate (combine multiple PDF files into a single file)
+
+It shall have a (multi-platform) graphical user interface, at least for Mac-OS, Windows and maybe Linux.
+
+>  minion: a servile dependent, follower, or underling.<br> 
+> "He's one of the boss's minions."<br>
+> From: [Merriam-Webster Dictionary](https://www.merriam-webster.com/dictionary/minion)
 
 ## Status
 [![feature-linter](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml/badge.svg)](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml)
@@ -20,7 +28,7 @@ Helper (_minion_) for some mundane tasks with PDF documents.
 
 ## Development
 
-We're using BDD (behavior driven development) with Cucumber to specify at least some of the requirements as _scenarios_.
+We're using BDD (behavior driven development) with Cucumber to specify at least part of the requirements as _scenarios_.
 These scenarios can be executed, similar to automated unit tests.
 
 * [Godog](https://github.com/cucumber/godog), the official Cucumber tool
@@ -60,11 +68,6 @@ Notes:
 ### Cucumber Report
 
 ```shell
-node cucumber-report-index.js
+node ./assets/cucumber-report-index.js
 ```
 
-Notes:
-
-* cucumber-html-reporter can handle "Metadata" (see `cucumber-report-index.js`), for really interesting data
-you should provide it with command line parameters, like commit-id
-  

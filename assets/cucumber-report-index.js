@@ -2,13 +2,16 @@ var reporter = require('cucumber-html-reporter');
 
 var os = require('os');
 
+// file location
+let report_location = "test-results/cucumber-report"
+
 //var reporter_theme = 'hierarchy'
 var reporter_theme = 'bootstrap'
 
 var options = {
     theme: reporter_theme,
-    jsonFile: 'test-results/cucumber-report.json',
-    output: 'test-results/cucumber_report.html',
+    jsonFile: report_location + '.json',
+    output: report_location + '.html',
     brandTitle: 'PDFminion Cucumber Report',
     reportSuiteAsScenarios: true,
     scenarioTimestamp: true,
