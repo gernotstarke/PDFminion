@@ -1,4 +1,4 @@
-![](PDFminion-logo-small.png)
+![](PDFminion-logo.png)
 # PDFminion
 
 
