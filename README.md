@@ -37,6 +37,16 @@ These scenarios can be executed, similar to automated unit tests.
 
 Use `./create-detailed-cucumber-report.sh` to generate a detailed BDD Cucumber report.
 
+### Deviation from Standard golang practices
+As of June 2021, the `godog` bdd tool does not respect the standard golang layout practice
+of putting test files next to the tested-code.
+Instead, the step definitions need to be present in the root folder!
+
+To avoid confusion, I prefixed the step definitions with `stepdef_` - so they are easily recognizable.
+Other (non-bdd/cucumber) automated tests will reside within the appropriate package folders.
+
+See this [Cucumber/godog issue](https://github.com/cucumber/godog/issues/373).
+
 ### Godog
  
 ````shell
@@ -61,8 +71,8 @@ npm install multiple-cucumber-html-reporter --save-dev
 
 ## Usage of Development Tools
 
-I squeezed the required commands into the file `test-and-create-report.sh`
-(and into a github action )
+I squeezed the required commands into the files `create-cucumber-report.sh`
+and `create-detailed-cucumber-report.sh`.
 
 ### Godog
 

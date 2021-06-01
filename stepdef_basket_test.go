@@ -37,7 +37,7 @@ func (sh *shopping) theOverallBasketPriceShouldBe(basketTotal float64) error {
 			"expected basket total to be %.2f but it is %.2f",
 			basketTotal,
 			sh.basket.GetBasketTotal(),
-			)
+		)
 	}
 	return nil
 }
@@ -46,7 +46,6 @@ func (sh *shopping) addProductToShelf(product string, price float64) (err error)
 	sh.shelf.AddProduct(product, price)
 	return nil
 }
-
 
 func InitializeBasketScenario(ctx *godog.ScenarioContext) {
 	sh := &shopping{}
@@ -62,4 +61,3 @@ func InitializeBasketScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^the overall basket price should be €(\d+)$`, sh.theOverallBasketPriceShouldBe)
 	ctx.Step(`^there is a "([^"]*)", which costs €(\d+)$`, sh.addProductToShelf)
 }
-

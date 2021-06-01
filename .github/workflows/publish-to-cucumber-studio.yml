@@ -1,14 +1,14 @@
-name: Create and push Cucumber Report
+name: Run godog
 
 on:
   pull_request:
-  push:
-    branches:
-      - "main"
+#  push:
+#    branches:
+#      - "main"
 
 jobs:
   test:
-    name: Cucumber (with Godog)
+    name: run godog
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -20,38 +20,28 @@ jobs:
         with:
           go-version: '1.16'
 
-# install and run the godog bdd tooling
       - name: Install Godog
         run: go get github.com/cucumber/godog/cmd/godog@v0.11.0
+
 
       - name: Execute Cucumber BDD Specifications
         run: godog --format cucumber:test-results/cucumber-report.json
 
-# we need node.js to create the report from the json-results
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '15'
-
-      - name: install cucumber-html-reporter
-        run: npm install cucumber-html-reporter --save-dev
-
-      - name: generate html report from cucumber-test-results
-        run: node cucumber-report-index.js
 
 
 
 # commit the changed test-results report
 # see https://github.com/stefanzweifel/git-auto-commit-action for details
-      - uses: stefanzweifel/git-auto-commit-action@v4
+#      - uses: stefanzweifel/git-auto-commit-action@v4
 
-        with:
-          # which file(s) to add
-          file_pattern: test-results/cucumber-report.*
+#        with:
+#          # which file(s) to add
+#          file_pattern: test-results/cucumber-report.*
 
-          commit_message: "new cucumber bdd test-results report, created by github action run"
+#          commit_message: "new cucumber bdd test-results report, created by github action run"
 
           # Optional. Disable dirty check and always try to create a commit and push
-          skip_dirty_check: true
+#          skip_dirty_check: true
 
           # Optional. Skip internal call to `git fetch`
-          skip_fetch: true
+#          skip_fetch: true
