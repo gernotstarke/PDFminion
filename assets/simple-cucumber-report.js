@@ -3,7 +3,7 @@ var reporter = require('cucumber-html-reporter');
 var os = require('os');
 
 // file location
-let report_location = "test-results/cucumber-report"
+let report_location = "test-results/simple-cucumber-report"
 
 //var reporter_theme = 'hierarchy'
 var reporter_theme = 'bootstrap'

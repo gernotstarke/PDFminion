@@ -2,11 +2,11 @@
 
 echo on
 
-REPORT_PATH="test-results/cucumber-report"
+REPORT_PATH="test-results/simple-cucumber-report"
 
 godog --format cucumber:${REPORT_PATH}.json
 
 
 # create HTML report
-node ./assets/cucumber-report-index.js
+node ./assets/simple-cucumber-report.js
 

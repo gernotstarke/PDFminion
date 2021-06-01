@@ -32,8 +32,10 @@ We're using BDD (behavior driven development) with Cucumber to specify at least 
 These scenarios can be executed, similar to automated unit tests.
 
 * [Godog](https://github.com/cucumber/godog), the official Cucumber tool
-* [cucumber-html-reporter](https://www.npmjs.com/package/cucumber-html-reporter)
+* [Cucumber HTML Reporter](https://www.npmjs.com/package/cucumber-html-reporter)
+* [Cucumber Multi Reporter (more detailed)](https://github.com/wswebcreation/multiple-cucumber-html-reporter)
 
+Use `./create-detailed-cucumber-report.sh` to generate a detailed BDD Cucumber report.
 
 ### Godog
  
@@ -47,6 +49,15 @@ It's written in JavaScript and requires `npm` and `node` to be available on your
 ```shell
 npm install cucumber-html-reporter --save-dev
 ```
+
+### Cucumber Multi Reporter
+
+Again, JavaScript, see above:
+
+```shell
+npm install multiple-cucumber-html-reporter --save-dev
+```
+
 
 ## Usage of Development Tools
 
@@ -68,6 +79,6 @@ Notes:
 ### Cucumber Report
 
 ```shell
-node ./assets/cucumber-report-index.js
+node ./assets/simple-cucumber-report.js
 ```
 

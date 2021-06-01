@@ -4,8 +4,11 @@ echo on
 
 
 COMMIT_ID=$(git rev-parse --verify HEAD)
+echo "commit id = " + ${COMMIT_ID}
 
-godog --format cucumber:test-results/cucumber-report.json
+REPORT_PATH="test-results/cucumber-report"
+
+godog --format cucumber:${REPORT_PATH}.json
 
 # create HTML report
 node ./cucumber-report-index.js
