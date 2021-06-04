@@ -50,7 +50,7 @@ func thisFileHasTypePDF() error {
 	return godog.ErrPending
 }
 
-func InitializeScenario(ctx *godog.ScenarioContext) {
+func InitializeFileUtilScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^a different target directory$`, aDifferentTargetDirectory)
 	ctx.Step(`^A directory containing a single file$`, aDirectoryContainingASingleFile)
 	ctx.Step(`^A source directory$`, aSourceDirectory)

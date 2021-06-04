@@ -8,4 +8,3 @@ Feature: Padding to a certain number of pages
   When I choose padding to eight pages
     And start processing
   Then the resulting PDF contains eight pages
-    And the three last pages are blank
