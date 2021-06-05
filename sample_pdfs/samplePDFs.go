@@ -7,13 +7,13 @@ package sample_pdfs
 // public constants
 
 // DirPrefix is the relative path to the directory containing samples
-const DirPrefix = "../samplepdfs/"
+const DirPrefix = "./resources/"
 
 // OnePageFile has exactly one page
-const OnePageFile = DirPrefix + "sample-A4-portrait-1pg.pdf"
+const OnePageFile = DirPrefix + "OnePDF/sample-A4-portrait-1pg.pdf"
 
 // ThreePageFile has exactly three pages
-const ThreePageFile = DirPrefix + "sample-A4-portrait-3pgs.pdf"
+const ThreePageFile = DirPrefix + "TwoPDFs/sample-A4-portrait-3pgs.pdf"
 
 // DisguisedMarkdownFile is a file with PDF extension, but markdown content
-const DisguisedMarkdownFile = DirPrefix + "md-disguised-as.pdf"
+const DisguisedMarkdownFile = DirPrefix + "md-disguised-as-pdf.pdf"
