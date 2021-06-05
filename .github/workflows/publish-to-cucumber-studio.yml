@@ -1,14 +1,14 @@
-name: Run godog
+name: Publish BDD results to Cucumber Studio
 
 on:
-  pull_request:
+#  pull_request:
 #  push:
 #    branches:
 #      - "main"
 
 jobs:
   test:
-    name: run godog
+    name: run godog and publish results to cucumber studio
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
