@@ -15,7 +15,6 @@ It shall have a (multi-platform) graphical user interface, at least for Mac-OS, 
 
 ## Status
 [![feature-linter](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml/badge.svg)](https://github.com/gernotstarke/PDFminion/actions/workflows/feature-linter.yml)
-[![cucumber-report](https://github.com/gernotstarke/PDFminion/actions/workflows/cucumber-report.yml/badge.svg)](https://github.com/gernotstarke/PDFminion/actions/workflows/cucumber-report.yml)
 [![go_test](https://github.com/gernotstarke/PDFminion/actions/workflows/go_test.yml/badge.svg)](https://github.com/gernotstarke/PDFminion/actions/workflows/go_test.yml)
 
 [![Go Report Card](https://goreportcard.com/badge/github.com/gernotstarke/PDFminion)](https://goreportcard.com/report/github.com/gernotstarke/PDFminion)

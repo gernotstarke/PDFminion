@@ -7,7 +7,7 @@ package sample_pdfs
 // public constants
 
 // DirPrefix is the relative path to the directory containing samples
-const DirPrefix = "./resources/"
+const DirPrefix = "../sample-files-for-testing/"
 
 // OnePageFile has exactly one page
 const OnePageFile = DirPrefix + "OnePDF/sample-A4-portrait-1pg.pdf"

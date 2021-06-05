@@ -14,8 +14,8 @@ import (
 func FileExists(fileName string) (bool, error) {
 	var err error
 
-	// Stat returns file info. It will return
-	// an error if there is no file.
+	// os.Stat returns file info.
+	// It will return an error if there is no file.
 	_, err = os.Stat(fileName)
 	if err != nil {
 		if os.IsNotExist(err) {

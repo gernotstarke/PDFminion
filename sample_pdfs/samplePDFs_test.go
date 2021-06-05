@@ -19,20 +19,19 @@ func TestSamplePDFs(t *testing.T) {
 	valid, err := fileutil.ValidatePDFFile(DisguisedMarkdownFile)
 
 	assert.NotNil(t, err)
+
+	// disguised file shall NOT be valid!
 	assert.Equal(t, false, valid)
 
 
 }
 
 func checkFor(t *testing.T, fileToCheck string) {
-	valid, err := fileutil.ValidatePDFFile(fileToCheck)
+	_, err := fileutil.ValidatePDFFile(fileToCheck)
 
 	if err != nil {
-		t.Errorf("ValidatePDFFile: errof with file %v: %v", fileToCheck, err)
+		t.Errorf("ValidatePDFFile: file %v: %v", fileToCheck, err)
 	}
 
-	if valid == false {
-		t.Errorf("ValidatePDFFile: %v not valid", fileToCheck)
-	}
 }
 

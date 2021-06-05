@@ -1,9 +1,7 @@
 package fileutil
 
 import (
-	"fmt"
 	samplePDFs "pdfminion/sample_pdfs"
-	"testing"
 )
 
 var testPDFs = []struct {
@@ -23,6 +21,7 @@ var testPDFs = []struct {
 	},
 }
 
+/*
 func TestPageCount(t *testing.T) {
 	want := 1
 	fmt.Println(samplePDFs.OnePageFile)
@@ -46,5 +45,7 @@ func TestPageCount(t *testing.T) {
 			t.Errorf("FAIL: file %s expected %v pages, got %v", f.fileName, f.expectedNrOfPages, got)
 		}
 	}
+*/
 
-}
+
+
