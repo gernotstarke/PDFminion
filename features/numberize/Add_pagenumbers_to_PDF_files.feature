@@ -2,13 +2,14 @@
 Feature:  Add page numbers to existing PDF files
 
   Background:
-    Given A source directory
-    And a different target directory
+    Given "sample-files-for-testing/" as source directory
+    And a temporary target directory
 
 
-  Scenario: I want to add page numbers to a single PDF file
-    When  the source directory contains a single PDF file
-    Then sequential page numbers should have been added to this PDF file starting from 1
+  Scenario: Can add page number to PDF containing single page
+    Given A PDF with a single page
+    When  minion processing is started
+    Then PDF pagecount is 1
 
 
   Scenario: As a user I want to add page numbers to a number of PDF files

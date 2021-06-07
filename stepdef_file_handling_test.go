@@ -41,7 +41,15 @@ func theNumberOfPDFFilesShouldBe(expectedNrOfPDFFiles int) error {
 	}
 }
 
-func InitializeScenario(ctx *godog.ScenarioContext) {
+func aFileCanBeCreatedThere() error {
+	return godog.ErrPending
+}
+
+func aTemporaryDirectoryIsCreated() error {
+	return godog.ErrPending
+}
+
+func InitializeFileHandlingScenario(ctx *godog.ScenarioContext) {
 
 
 	// runs before a scenario is tested
@@ -52,4 +60,8 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^Sample PDF files under "([^"]*)"$`, samplePDFFilesUnder)
 	ctx.Step(`^Number of PDF files in "([^"]*)" is counted$`, numberOfPDFFilesInIsCounted)
 	ctx.Step(`^the number of PDF files should be (\d+)$`, theNumberOfPDFFilesShouldBe)
+
+	ctx.Step(`^a temporary directory is created$`, aTemporaryDirectoryIsCreated)
+	ctx.Step(`^a file can be created there$`, aFileCanBeCreatedThere)
+
 }

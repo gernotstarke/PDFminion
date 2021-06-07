@@ -17,3 +17,6 @@ Feature: Convenience functions for PDF files
       | "NoPDF"      |     0 |
       | "EmptyDir"   |     0 |
 
+Scenario: Can create temporary directory for writing
+  When a temporary directory is created
+  Then a file can be created there

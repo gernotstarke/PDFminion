@@ -3,6 +3,7 @@
 
 # which tags (on features or scenarios) to execute
 #TAGS = "@wip, not @skip"
+#TAGS = "not @ignore"
 TAGS = ""
 
 # store location of test-results in variable

@@ -12,7 +12,7 @@
   "no-empty-file": "on",
   "no-scenario-outlines-without-examples": "on",
   "name-length": ["off", {"Feature": 79}],
-  "no-restricted-tags": ["on", {"tags": ["@watch", "@wip"]}],
+  "no-restricted-tags": ["off", {"tags": ["@watch", "@wip"]}],
   "use-and": "on",
   "no-duplicate-tags": "on",
   "no-superfluous-tags": "on",
