@@ -1,3 +1,5 @@
+// documentation:
+//
 const report = require('multiple-cucumber-html-reporter');
 
 var os = require('os');

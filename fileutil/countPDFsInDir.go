@@ -22,6 +22,11 @@ func CountAndCollectPDFsInDir(dirName string) (int, []string) {
 
 	err := filepath.Walk(dirName, func(path string, info os.FileInfo, err error) error {
 
+		// this error checking is required to avoid panic
+		if err != nil {
+			return err
+		}
+
 		// exclude dirs
 		if info.IsDir() {
 			return nil

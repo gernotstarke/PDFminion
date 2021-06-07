@@ -6,13 +6,13 @@ import (
 	"testing"
 )
 
-func TestCanCheckForDirectory( t *testing.T) {
+func TestCanCheckForDirectory(t *testing.T) {
 	var fe bool
 
-	fe, err := FileExists( sample_pdfs.DirPrefix )
+	fe, err := FileExists(sample_pdfs.DirPrefix)
 	assert.Equal(t, err, nil, "FileExist returned error but should not")
 
-	assert.True( t, fe, "directory + #{sample_pdfs.DirPrefix} does not exist ")
+	assert.True(t, fe, "directory + #{sample_pdfs.DirPrefix} does not exist ")
 }
 
 func TestValidate(t *testing.T) {

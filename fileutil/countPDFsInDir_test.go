@@ -2,6 +2,7 @@ package fileutil
 
 import (
 	samplePDFs "pdfminion/sample_pdfs"
+	"testing"
 )
 
 const prefix = samplePDFs.DirPrefix
@@ -32,7 +33,6 @@ var testDirs = []struct {
 	},
 }
 
-/*
 func TestCountPDFsInDir(t *testing.T) {
 
 	for _, d := range testDirs {
@@ -43,4 +43,3 @@ func TestCountPDFsInDir(t *testing.T) {
 	}
 
 }
-*/

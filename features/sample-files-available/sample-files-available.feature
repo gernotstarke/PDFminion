@@ -1,6 +1,6 @@
 Feature: Sample files are available
 
-  Scenari directory containing sample files is available
+  Scenario:k directory containing sample files is available
     When Existence of "sample-files-for-testing/" is checked
     Then The directory containing sample files is available
 

@@ -1,6 +1,7 @@
 # taken from https://docs.behat.org/en/v3.0/quick_start.html
 #
 
+@learn
 Feature: Product basket
   In order to buy products
   As a customer
@@ -30,4 +31,5 @@ Feature: Product basket
     And I add the "Jedi Lightsaber" to the basket
     Then I should have 2 products in the basket
     And the overall basket price should be €20
+
 
