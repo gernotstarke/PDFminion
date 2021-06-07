@@ -1,6 +1,7 @@
+@developer
 Feature: Sample files are available
 
-  Scenario:k directory containing sample files is available
+  Scenario: The directory containing sample files is available
     When Existence of "sample-files-for-testing/" is checked
     Then The directory containing sample files is available
 

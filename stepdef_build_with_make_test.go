@@ -28,8 +28,11 @@ func weHaveAFile(arg1 string) error {
 
 
 func InitializeMakefileScenario( ctx *godog.ScenarioContext){
+
+
 	ctx.Step(`^"([^"]*)" is present$`, fileIsPresent)
 	ctx.Step(`^The repository is checked out$`, theRepositoryIsCheckedOut)
+	ctx.Step(`^we have a "([^"]*)" file$`, weHaveAFile)
 
 }
 

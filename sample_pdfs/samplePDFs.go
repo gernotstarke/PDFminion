@@ -13,7 +13,7 @@ const DirPrefix = "../sample-files-for-testing/"
 const OnePageFile = DirPrefix + "OnePDF/sample-A4-portrait-1pg.pdf"
 
 // ThreePageFile has exactly three pages
-const ThreePageFile = DirPrefix + "TwoPDFs/sample-A4-portrait-3pgs.pdf"
+const ThreePageFile = DirPrefix + "TwoPDFs/make"
 
 // DisguisedMarkdownFile is a file with PDF extension, but markdown content
 const DisguisedMarkdownFile = DirPrefix + "md-disguised-as-pdf.pdf"

@@ -1,9 +1,14 @@
 # thanx to https://makefiletutorial.com
 #
 
+# which tags (on features or scenarios) to execute
+#TAGS = "@wip, not @skip"
+TAGS = ""
+
 # store location of test-results in variable
 REPORTS ?= test-results/
 FEATURES := $(shell find features -name '*.feature')
+
 
 .PHONY: all clean features bdd report simple-report detailed-report bdd list json
 
@@ -18,7 +23,7 @@ clean:
 
 #.PHONY: bdd
 bdd:
-	-godog
+	-godog --tags=$(TAGS)
 
 
 report: simple-report detailed-report
@@ -35,7 +40,7 @@ json: $(REPORTS)cucumber-report.json
 
 #$(REPORTS)cucumber-report.json: $(wildcard $(FEATURES)*.feature)
 $(REPORTS)cucumber-report.json: $(FEATURES)
-	-godog --format cucumber:$(REPORTS)cucumber-report.json
+	-godog --format cucumber:$(REPORTS)cucumber-report.json --tags=$(TAGS)
 
 
 # list command: https://stackoverflow.com/a/26339924/1782149
