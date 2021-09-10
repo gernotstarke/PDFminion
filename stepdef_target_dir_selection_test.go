@@ -10,7 +10,7 @@ var targetDirSelected string
 var isTargetValid bool
 
 func userSelectsAsTarget(dir string) error {
-	sourceDirSelected = dir
+	targetDirSelected = dir
 	return nil
 }
 

@@ -4,7 +4,8 @@
 # which tags (on features or scenarios) to execute
 #TAGS = "@wip, not @skip"
 #TAGS = "not @ignore"
-TAGS = ""
+#TAGS = "@directory"
+TAGS=""
 
 # store location of test-results in variable
 REPORTS ?= test-results/
@@ -20,7 +21,7 @@ all: clean report
 
 
 clean:
-	rm -r $(REPORTS)*
+	-rm -r $(REPORTS)*
 
 #.PHONY: bdd
 bdd:

@@ -8,9 +8,9 @@ Feature: Source directory - required properties
 
 Scenario: User selects empty directory
   When user selects "EmptyDir" as source
-  Then validity of source dir is true
+  Then validity of source dir is "false"
 
 
 Scenario: User selects dir with one PDF
   When user selects "OnePDF" as source
-  Then validity of source dir is true
+  Then validity of source dir is "true"

@@ -11,12 +11,13 @@ Feature: Convenience functions for PDF files
 
     Examples:
       | directory    | count |
-      | "OnePDF"     |     1 |
-      | "TwoPDFs"    |     1 |
-      | "TwelvePDFs" |    12 |
-      | "NoPDF"      |     0 |
-      | "EmptyDir"   |     0 |
+      | "OnePDF"     | 1     |
+      | "TwoPDFs"    | 1     |
+      | "TwelvePDFs" | 12    |
+      | "NoPDF"      | 0     |
+      | "EmptyDir"   | 0     |
 
-Scenario: Can create temporary directory for writing
-  When a temporary directory is created
-  Then a file can be created there
+  @wip
+  Scenario: Can create temporary directory for writing
+    When a temporary directory is created
+    Then a file can be created there

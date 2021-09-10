@@ -7,7 +7,7 @@ Feature: Sample files are available
 
 
   Scenario: A directory without PDF files exists
-    Given Directory "sample-files-for-testing/EmptyFolder"
+    Given Directory "sample-files-for-testing/EmptyDir"
     When Number of PDF files is counted
     Then 0 is returned
 
