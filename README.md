@@ -49,7 +49,7 @@ See this [Cucumber/godog issue](https://github.com/cucumber/godog/issues/373).
 ### Godog
  
 ````shell
-go get github.com/cucumber/godog/cmd/godog@v0.11.0
+go get github.com/cucumber/godog/cmd/godog@v0.12.0
 ````
 ### Cucumber HTML Reporter
 

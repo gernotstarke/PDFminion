@@ -14,7 +14,7 @@ func numberOfPDFFilesInIsCounted(dir string) error {
 	if thisDir != "" {
 		nrOfPDFFiles = fileutil.CountPDFsInDir(thisDir)
 	} else {
-		return fmt.Errorf( "no directory given (dir == #{thisDir}")
+		return fmt.Errorf("no directory given (dir == #{thisDir}")
 	}
 	return nil
 }
@@ -28,7 +28,7 @@ func samplePDFFilesUnder(dir string) error {
 
 	if (err != nil) || !dirExists {
 		return fmt.Errorf("standard sample PDF dir does not exist" + err.Error())
-	} 	else  {
+	} else {
 		return nil
 	}
 }
@@ -50,7 +50,6 @@ func aTemporaryDirectoryIsCreated() error {
 }
 
 func InitializeFileHandlingScenario(ctx *godog.ScenarioContext) {
-
 
 	// runs before a scenario is tested
 	ctx.BeforeScenario(func(*godog.Scenario) {
