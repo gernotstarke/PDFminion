@@ -1,16 +1,19 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"github.com/cucumber/godog"
+	"os"
 	"pdfminion/fileutil"
+	"pdfminion/sample_pdfs"
 )
 
 var pageCount int
 var pdfFileName string
 
 func aDirUnderSampleContainingFile(directory, samplePDFDir, pdfFile string) error {
-	pdfFileName = samplePDFDir + "/" + directory + "/" + pdfFile
+	pdfFileName = samplePDFDir + string(os.PathSeparator) + directory + string(os.PathSeparator) + pdfFile
 
 	fileExists, err := fileutil.FileExists(samplePDFDir)
 
@@ -37,9 +40,10 @@ func theNumberOfPagesShouldBe(expectedPageCount int) error {
 
 func InitializeScenario(ctx *godog.ScenarioContext) {
 
-	// runs before a scenario is tested
-	ctx.BeforeScenario(func(*godog.Scenario) {
+	ctx.Before(func(ctx context.Context, sc *godog.Scenario) (context.Context, error) {
 		pageCount = -1
+		samplePDFDir = sample_pdfs.SampleDirectoryPrefix
+		return ctx, nil
 	})
 
 	ctx.Step(`^A "([^"]*)" under "([^"]*)" containing "([^"]*)"$`, aDirUnderSampleContainingFile)

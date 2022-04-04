@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-const prefix = samplePDFs.DirPrefix
+const prefix = samplePDFs.SampleDirectoryPrefix
 
 var testDirs = []struct {
 	dirName          string

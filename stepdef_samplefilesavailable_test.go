@@ -28,7 +28,7 @@ func numberOfPDFFilesIsCounted() error {
 	if testedDirectory != "" {
 		nrOfPDFFiles = fileutil.CountPDFsInDir(testedDirectory)
 	} else {
-		return fmt.Errorf( "no directory given (testedDirectory == #{testedDirectory}")
+		return fmt.Errorf("no directory given (testedDirectory == #{testedDirectory}")
 	}
 	return nil
 }
@@ -39,7 +39,7 @@ func isReturned(expectedNrOfFiles int) error {
 	if nrOfPDFFiles == expectedNrOfFiles {
 		return nil
 	} else {
-		return 	fmt.Errorf(
+		return fmt.Errorf(
 			"expected nr of PDF files %d but it is %d",
 			expectedNrOfFiles,
 			nrOfPDFFiles,
