@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/cucumber/godog"
 	"os"
-	"pdfminion/fileutil"
+	"pdfminion/domain"
 	"pdfminion/sample_pdfs"
 	"strings"
 )
@@ -25,7 +25,7 @@ func aDirectoryNamedContainingSamplePDFs(sampleDir string) error {
 func numberOfPDFFilesInIsCounted(dir string) error {
 	var thisDir = samplePDFDir + string(os.PathSeparator) + dir
 	if thisDir != "" {
-		nrOfPDFFiles = fileutil.CountPDFsInDir(thisDir)
+		nrOfPDFFiles = domain.CountPDFsInDir(thisDir)
 	} else {
 		return fmt.Errorf("no directory given (dir == #{thisDir}")
 	}
@@ -35,7 +35,7 @@ func numberOfPDFFilesInIsCounted(dir string) error {
 // ensures sample PDF directory exists
 func samplePDFFilesUnder(dir string) error {
 
-	dirExists, err := fileutil.FileExists(samplePDFDir)
+	dirExists, err := domain.FileExists(samplePDFDir)
 
 	if (err != nil) || !dirExists {
 		return fmt.Errorf("standard sample PDF dir does not exist" + err.Error())
@@ -55,7 +55,7 @@ func theNumberOfPDFFilesShouldBe(expectedNrOfPDFFiles int) error {
 func pDFFilesInDirAreCollected(dir string) error {
 	var thisDir = samplePDFDir + string(os.PathSeparator) + dir
 	if thisDir != "" {
-		nrOfPDFFiles, pdfFileList = fileutil.CountAndCollectPDFsInDir(thisDir)
+		nrOfPDFFiles, pdfFileList = domain.CountAndCollectPDFsInDir(thisDir)
 	} else {
 		return fmt.Errorf("no directory given (dir == #{thisDir}")
 	}

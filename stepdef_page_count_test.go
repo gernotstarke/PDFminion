@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/cucumber/godog"
 	"os"
-	"pdfminion/fileutil"
+	"pdfminion/domain"
 	"pdfminion/sample_pdfs"
 )
 
@@ -15,7 +15,7 @@ var pdfFileName string
 func aDirUnderSampleContainingFile(directory, samplePDFDir, pdfFile string) error {
 	pdfFileName = samplePDFDir + string(os.PathSeparator) + directory + string(os.PathSeparator) + pdfFile
 
-	fileExists, err := fileutil.FileExists(samplePDFDir)
+	fileExists, err := domain.FileExists(samplePDFDir)
 
 	if (err != nil) || !fileExists {
 		return fmt.Errorf("sample PDF file does not exist" + err.Error())
@@ -25,7 +25,7 @@ func aDirUnderSampleContainingFile(directory, samplePDFDir, pdfFile string) erro
 }
 
 func numberOfPagesIsCounted() error {
-	pageCount, _ = fileutil.CountPagesOfPDFFile(pdfFileName)
+	pageCount, _ = domain.CountPagesOfPDFFile(pdfFileName)
 
 	return nil
 }

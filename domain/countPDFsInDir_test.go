@@ -1,4 +1,4 @@
-package fileutil
+package domain
 
 import (
 	samplePDFs "pdfminion/sample_pdfs"

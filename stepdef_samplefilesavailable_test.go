@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/cucumber/godog"
-	"pdfminion/fileutil"
+	"pdfminion/domain"
 )
 
 var dirExists bool
@@ -15,7 +15,7 @@ func checkIfDirExists(dirName string) error {
 	var err error
 
 	testedDirectory = dirName
-	dirExists, err = fileutil.FileExists(dirName)
+	dirExists, err = domain.FileExists(dirName)
 
 	if err != nil {
 		return err
@@ -26,7 +26,7 @@ func checkIfDirExists(dirName string) error {
 func numberOfPDFFilesIsCounted() error {
 
 	if testedDirectory != "" {
-		nrOfPDFFiles = fileutil.CountPDFsInDir(testedDirectory)
+		nrOfPDFFiles = domain.CountPDFsInDir(testedDirectory)
 	} else {
 		return fmt.Errorf("no directory given (testedDirectory == #{testedDirectory}")
 	}

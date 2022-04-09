@@ -1,4 +1,4 @@
 package domain
 
-const VersionStr = "0.0.1"
+const VersionStr = "0.0.2"
 const AppName = "PDFminion - pre-alpha"
