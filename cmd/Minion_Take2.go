@@ -8,6 +8,6 @@ import (
 func main() {
 
 	domain.SetupConfiguration()
-	ui.CreateMainUI_take1()
+	ui.CreateMainUI_take2()
 
 }

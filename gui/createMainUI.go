@@ -20,8 +20,6 @@ var Appl fyne.App
 // Window is the main application window
 var Window fyne.Window
 
-// CreateMainUI_take1 creates and shows the minimalistic graphical user interface.
-// It creates by delegating to "Panel" functions which will create their respective panel.
 func CreateMainUI_take1() {
 
 }
@@ -32,7 +30,7 @@ func CreateMainUI_take2() {
 
 	Appl = app.New()
 
-	Appl.Settings().SetTheme(theme.LightTheme())
+	// deprecated: Appl.Settings().SetTheme(theme.LightTheme())
 	Window = Appl.NewWindow(domain.AppName)
 
 	content := container.New(layout.NewVBoxLayout(),
