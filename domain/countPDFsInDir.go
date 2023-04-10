@@ -1,21 +1,23 @@
 package domain
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 )
 
-// CountPDFsInDir returns the number of PDF files in the given directory
-func CountPDFsInDir(dirName string) int {
+// CountPDFsInDirTree returns the number of PDF files in the given directory
+func CountPDFsInDirTree(dirName string) int {
 
-	nrOfPDFFiles, _ := CountAndCollectPDFsInDir(dirName)
+	nrOfPDFFiles, _ := CountAndCollectPDFsInDirTree(dirName)
 	return nrOfPDFFiles
 }
 
-// CountAndCollectPDFsInDir returns the number of PDF files in the given directory
-func CountAndCollectPDFsInDir(dirName string) (int, []string) {
+// CountAndCollectPDFsInDirTree returns the number of PDF files in the given directory
+// plus subdirectories (recursive walk)
+func CountAndCollectPDFsInDirTree(dirName string) (int, []string) {
 
 	var files []string
 	var fCount int
@@ -43,6 +45,8 @@ func CountAndCollectPDFsInDir(dirName string) (int, []string) {
 	if err != nil {
 		log.Println("Error in walking the filepath " + dirName)
 	}
+
+	fmt.Printf("Found these files\n%v", files)
 
 	return fCount, files
 }

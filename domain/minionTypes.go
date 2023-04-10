@@ -27,22 +27,9 @@ type MinionConfiguration struct {
 	// footer configuration settings
 	// ************************************************
 
-	numerate             bool
 	pageNumberPrefix     string
 	chapterPageSeparator string
 	chapterPrefix        string
-
-	// status information (in UI: shown in status line at bottom of UI)
-	statusInfo       string
-	sourceDirMessage string
-	targetDirMessage string
-
-	// header configuration
-	// ************************************************
-	headerText string
-
-	// additional processing options
-	// ************************************************
 
 	// evenify: make every PDF have an EVEN page count,
 	// by adding a single blank page to those PDFs with
@@ -51,58 +38,11 @@ type MinionConfiguration struct {
 
 	// this String gets stamped onto pages added during evenification
 	blankPageText string "Diese Seite bleibt absichtlich frei"
-
-	// concatenate several PDFs to a single PDF
-	concatenate bool
-
-	// if we concatenate and/or pad, how shall the resulting file be called
-	resultingPDFFileName string
 } // MinionConfiguration
 
-// getter functions for better data encapsulation
-// ==============================================
-func StatusInfo() string           { return config.statusInfo }
-func SourceDirName() string        { return config.sourceDirName }
-func SourceDirMessage() string     { return config.sourceDirMessage }
-func TargetDirName() string        { return config.targetDirName }
-func TargetDirMessage() string     { return config.targetDirMessage }
-func PageNumberPrefix() string     { return config.pageNumberPrefix }
-func ChapterPageSeparator() string { return config.chapterPageSeparator }
-func ChapterPrefix() string        { return config.chapterPrefix }
-func HeaderText() string           { return config.headerText }
-func IsEvenify() bool              { return config.evenify }
-func BlankPageText() string        { return config.blankPageText }
-func IsConcatenate() bool          { return config.concatenate }
-
-// setter functions to avoid uncontrolled changes to global data...
-// ================
-func SetStatusInfo(msg string) {
-	config.statusInfo = msg
-}
-
-func SetSourceDirMessage(msg string) {
-	config.sourceDirMessage = msg
-}
-
-// SetSourceDirName also sets status messages
-func SetSourceDirName(srcDir string) {
-	log.Println("SetSourceDirName called")
-	if CheckSrcDirectoryStatus(srcDir) {
-		config.sourceDirName = srcDir
-	} else {
-		SetSourceDirMessage("illegal source dir")
-	}
-}
-
-func SetTargetDirName(targetDir string) error                   { return nil }
-func SetNumerate(numerate bool) error                           { return nil }
-func SetPageNumberPrefix(pageNumberPrefix string) error         { return nil }
-func SetChapterPageSeparator(chapterPageSeparator string) error { return nil }
-func SetChapterPrefix(chapterPrefix string) error               { return nil }
-func SetHeaderText(headerText string) error                     { return nil }
-func SetEvenify(evenify bool) error                             { return nil }
-func SetBlankPageText(blankPageText string) error               { return nil }
-func SetConcatenate(concatenate bool) error                     { return nil }
+/**
+getter functions for better data encapsulation
+**/
 
 // todo: use constructor function instead
 func SetupConfiguration() {
@@ -128,20 +68,13 @@ func setupLanguageNeutralConfig() {
 	config.sourceDirName = GetUserHomeDirectory()
 	config.targetDirName = GetUserHomeDirectory()
 
-	config.numerate = true
 	config.pageNumberPrefix = ""
 	config.chapterPageSeparator = " - "
 	config.chapterPrefix = ""
 
-	config.headerText = ""
-
 	config.evenify = false
 
 	config.blankPageText = ""
-
-	config.concatenate = false
-
-	config.resultingPDFFileName = ""
 
 }
 

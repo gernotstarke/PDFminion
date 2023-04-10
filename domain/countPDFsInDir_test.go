@@ -36,7 +36,7 @@ var testDirs = []struct {
 func TestCountPDFsInDir(t *testing.T) {
 
 	for _, d := range testDirs {
-		got := CountPDFsInDir(d.dirName)
+		got := CountPDFsInDirTree(d.dirName)
 		if got != d.expectedNrOfPDFs {
 			t.Errorf("FAIL: directory %s expected %v, got %v PDF files", d.dirName, d.expectedNrOfPDFs, got)
 		}
