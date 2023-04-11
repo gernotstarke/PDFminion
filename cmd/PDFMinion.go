@@ -22,33 +22,37 @@ import (
 )
 
 type singleFileToProcess struct {
-	filename         string
-	origPageCount    int
-	hasBeenEvenified bool
+	filename      string
+	pageCount     int
+	origByteCount int64
 }
 
 const sourceDirName = "_pdfs"
 const targetDirName = "_target"
 
-// pdfFiles contains filenames, pagecounts, processing state etc.
-//var pdfFiles []singleFileToProcess
+const blankPageNote = "Diese Seite bleibt\n absichtlich frei"
+const pageNrPrefix = ""
+const chapterPrefix = "Kap."
+const chapterPageSeparator = " - "
+
+// pdfFiles contains filenames, pagecounts,
 
 func main() {
 
 	domain.SetupConfiguration()
 
 	// get current directory
-	currentDir, err := os.Getwd()
+	/*currentDir, err := os.Getwd()
 	if err != nil {
 		log.Println(err)
-	}
-	log.Printf("current directory: %s\n", currentDir)
+	}*/
 
 	// count PDFs in current directory
 	// abort, if no PDF file is present
 	var nrOfCandidatePDFs int
 
-	// collect all PDFs with Glob
+	// collect all candidate PDFs with Glob
+	// "candidate" means, PDF has not been validated
 	pattern := sourceDirName + "/*.pdf"
 	files, err := filepath.Glob(pattern)
 	if err != nil {
@@ -56,7 +60,7 @@ func main() {
 	}
 
 	nrOfCandidatePDFs = len(files)
-	fmt.Printf("%d PDF files found.", nrOfCandidatePDFs)
+	//log.Printf("%d PDF files found.", nrOfCandidatePDFs)
 
 	// exit if no PDF files can be found
 	if nrOfCandidatePDFs == 0 {
@@ -82,9 +86,7 @@ func main() {
 	pdfFiles := make([]singleFileToProcess, nrOfCandidatePDFs)
 
 	// initialize slice of singleFileToProcess
-	// move over the pdf files into pdfFiles variable
-
-	// TODO: insert only valid PDFs in pdfFiles, count accordingly
+	// move over only the validated pdf files into pdfFiles variable
 
 	var originalFile, newFile *os.File
 
@@ -95,18 +97,19 @@ func main() {
 		// use default configuration for pdfcpu ("nil")
 		err = api.ValidateFile(files[i], nil)
 		if err != nil {
-			fmt.Fprintf(os.Stderr, "%v is no valid PDF\n", files[i])
+			log.Printf("%v is no valid PDF\n", files[i])
 		} else {
+
 			// we have a valid PDF
 
 			nrOfValidPDFs++
 
 			// count the pages of this particular file
 			// TODO: handle zero-page PDFs
-			pdfFiles[i].origPageCount, err = api.PageCountFile(files[i])
+			pdfFiles[i].pageCount, err = api.PageCountFile(files[i])
 
 			if err != nil {
-				fmt.Fprintf(os.Stderr, "error counting pages in %v\n", files[i])
+				log.Printf("error counting pages in %v\n", files[i])
 			} else {
 
 				// create target filePath
@@ -127,33 +130,66 @@ func main() {
 				}
 				defer newFile.Close()
 
-				//This will copy
+				//This will copy.
 				bytesWritten, err := io.Copy(newFile, originalFile)
 				if err != nil {
 					log.Fatal(err)
 				}
-				log.Printf("Bytes Written: %d\n", bytesWritten)
-
+				pdfFiles[i].origByteCount = bytesWritten
 			}
 
 		}
 	}
 
-	fmt.Printf("%v", pdfFiles)
+	log.Printf("%v", pdfFiles)
 
-	// TODO: add page numbers
+	// evenify: add empty page to every file with even pagecount
+	for i := 0; i < nrOfValidPDFs; i++ {
+		if !isEven(pdfFiles[i].pageCount) {
+			// add single blank page at the end of the file
+			_ = api.InsertPagesFile(pdfFiles[i].filename, "", []string{strconv.Itoa(pdfFiles[i].pageCount)}, false, nil)
+
+			// increment pagecount of file by 1
+			pdfFiles[i].pageCount++
+
+			// TODO: add huge diagonal marker text "deliberately left blank" to new blank page
+
+			onTop := true
+			update := false
+
+			wm, err := api.TextWatermark(blankPageNote, "font:Helvetica, points:48, col: 0.5 0.6 0.5, rot:45, sc:1 abs",
+				onTop, update, pdfcpu.POINTS)
+			if err != nil {
+				log.Println("Error creating watermark configuration %v: %v", wm, err)
+			} else {
+
+				err = api.AddWatermarksFile(pdfFiles[i].filename, "", []string{strconv.Itoa(pdfFiles[i].pageCount)}, wm,
+					nil)
+
+				if err != nil {
+					log.Println("error stamping blank page in file %v: %v", pdfFiles[i].filename, err)
+				}
+
+			}
+			log.Println("File %s was evenified", pdfFiles[i].filename)
+		}
+	}
+
+	// add page numbers
 
 	// currentOffset is the _previous_ pagenumber
 	var currentOffset = 0
 
-	for i := 0; i < nrOfCandidatePDFs; i++ {
-		var currentFilePageCount = pdfFiles[i].origPageCount
-		log.Printf("File %s starts %d, ends %d", pdfFiles[i].filename, currentOffset,
+	for i := 0; i < nrOfValidPDFs; i++ {
+		var currentFilePageCount = pdfFiles[i].pageCount
+		var currentFileName = pdfFiles[i].filename
+		log.Printf("File %s starts %d, ends %d", currentFileName, currentOffset+1,
 			currentOffset+currentFilePageCount)
 
-		err := api.AddWatermarksMapFile(pdfFiles[i].filename,
+		err := api.AddWatermarksMapFile(currentFileName,
 			"",
-			watermarkConfigurationForFile(currentOffset,
+			watermarkConfigurationForFile(i+1,
+				currentOffset,
 				currentFilePageCount),
 			nil)
 		if err != nil {
@@ -165,33 +201,36 @@ func main() {
 }
 
 // create a map[int] of TextWatermark configurations
-func watermarkConfigurationForFile(previousPageNr, pageCount int) map[int]*pdfcpu.Watermark {
+func watermarkConfigurationForFile(chapterNr, previousPageNr, pageCount int) map[int]*pdfcpu.Watermark {
 
 	wmcs := make(map[int]*pdfcpu.Watermark)
 
 	for page := 1; page <= (pageCount); page++ {
 		var currentPageNr = previousPageNr + page
-		wmcs[page], _ = api.TextWatermark(strconv.Itoa(currentPageNr),
-			waterMarkDescription(page), true, false, pdfcpu.POINTS)
+		var chapterStr = chapterPrefix + strconv.Itoa(chapterNr)
+		var pageStr = pageNrPrefix + strconv.Itoa(currentPageNr)
+
+		wmcs[page], _ = api.TextWatermark(chapterStr+chapterPageSeparator+pageStr,
+			waterMarkDescription(currentPageNr), true, false, pdfcpu.POINTS)
 	}
 	return wmcs
 }
 
+const fontColorSize = "font:Helvetica, points:16, scale: 0.9 abs, rot: 0, color: 0.5 0.5 0.5"
+
 // creates a pdfcpu TextWatermark description
 func waterMarkDescription(pageNumber int) string {
-	fontColorSize := "font:Helvetica, points:12, rot: 0, scale:0.05, color: 0.5 0.5 0.5"
 
 	const evenPos string = "position: bl"
-	const evenOffset string = "offset: 0 0"
+	const evenOffset string = "offset: 20 15"
 	const oddPos string = "position: br"
-	const oddOffset string = "offset: 0 0"
+	const oddOffset string = "offset: -20 15"
 
 	positionAndOffset := ""
 
 	if isEven(pageNumber) {
 		positionAndOffset = evenPos + "," + evenOffset
 	} else {
-		// fmt.Println(pageNumber,"is odd")
 		positionAndOffset = oddPos + "," + oddOffset
 	}
 	return fontColorSize + "," + positionAndOffset

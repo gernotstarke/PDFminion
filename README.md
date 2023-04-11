@@ -22,10 +22,13 @@ It shall have a (multi-platform) graphical user interface, at least for Mac-OS, 
 [![Maintainability](https://api.codeclimate.com/v1/badges/c481ef8142826f71ff65/maintainability)](https://codeclimate.com/github/gernotstarke/PDFminion/maintainability)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
+I'm currently experimenting with an MVP version of PDFminion, therefore most of the information given here is **NOT** valid any longer.
 ## Why PDFminion? 
 
 
 ## Development
+
+#### The following paragraphs are outdated!!
 
 We're using BDD (behavior driven development) with Cucumber to specify at least part of the requirements as _scenarios_.
 These scenarios can be executed, similar to automated unit tests.
