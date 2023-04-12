@@ -10,13 +10,13 @@ minimal viable product version of PDFminion:
 import (
 	"fmt"
 	"github.com/pdfcpu/pdfcpu/pkg/api"
-	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu"
+	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu/model"
+	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu/types"
 	"github.com/pkg/errors"
 	"io"
 	"log"
 	"os"
 	"path/filepath"
-	"pdfminion/domain"
 	"sort"
 	"strconv"
 )
@@ -39,7 +39,7 @@ const chapterPageSeparator = " - "
 
 func main() {
 
-	domain.SetupConfiguration()
+	//domain.SetupConfiguration()
 
 	// get current directory
 	/*currentDir, err := os.Getwd()
@@ -90,14 +90,21 @@ func main() {
 
 	var originalFile, newFile *os.File
 
+	// relax the validation mode, otherwise asciidoc generated pdfs
+	// will break and lead to errors
+	// see https://github.com/pdfcpu/pdfcpu/issues/498
+
+	relaxedConf := model.NewDefaultConfiguration()
+	relaxedConf.ValidationMode = model.ValidationRelaxed
+
 	var nrOfValidPDFs = 0
 	for i := 0; i < nrOfCandidatePDFs; i++ {
 
 		// check if file-i is a valid PDF with pdfcpu.api
 		// use default configuration for pdfcpu ("nil")
-		err = api.ValidateFile(files[i], nil)
+		err = api.ValidateFile(files[i], relaxedConf)
 		if err != nil {
-			log.Printf("%v is no valid PDF\n", files[i])
+			log.Printf("%v is no valid PDF, %v\n", files[i], err)
 		} else {
 
 			// we have a valid PDF
@@ -147,9 +154,8 @@ func main() {
 	for i := 0; i < nrOfValidPDFs; i++ {
 		if !isEven(pdfFiles[i].pageCount) {
 			// add single blank page at the end of the file
-			_ = api.InsertPagesFile(pdfFiles[i].filename, "", []string{strconv.Itoa(pdfFiles[i].pageCount)}, false, nil)
+			_ = api.InsertPagesFile(pdfFiles[i].filename, "", []string{strconv.Itoa(pdfFiles[i].pageCount)}, false, relaxedConf)
 
-			// increment pagecount of file by 1
 			pdfFiles[i].pageCount++
 
 			// TODO: add huge diagonal marker text "deliberately left blank" to new blank page
@@ -158,13 +164,13 @@ func main() {
 			update := false
 
 			wm, err := api.TextWatermark(blankPageNote, "font:Helvetica, points:48, col: 0.5 0.6 0.5, rot:45, sc:1 abs",
-				onTop, update, pdfcpu.POINTS)
+				onTop, update, types.POINTS)
 			if err != nil {
 				log.Println("Error creating watermark configuration %v: %v", wm, err)
 			} else {
 
 				err = api.AddWatermarksFile(pdfFiles[i].filename, "", []string{strconv.Itoa(pdfFiles[i].pageCount)}, wm,
-					nil)
+					relaxedConf)
 
 				if err != nil {
 					log.Println("error stamping blank page in file %v: %v", pdfFiles[i].filename, err)
@@ -191,7 +197,7 @@ func main() {
 			watermarkConfigurationForFile(i+1,
 				currentOffset,
 				currentFilePageCount),
-			nil)
+			relaxedConf)
 		if err != nil {
 			log.Println(err)
 		}
@@ -201,9 +207,9 @@ func main() {
 }
 
 // create a map[int] of TextWatermark configurations
-func watermarkConfigurationForFile(chapterNr, previousPageNr, pageCount int) map[int]*pdfcpu.Watermark {
+func watermarkConfigurationForFile(chapterNr, previousPageNr, pageCount int) map[int]*model.Watermark {
 
-	wmcs := make(map[int]*pdfcpu.Watermark)
+	wmcs := make(map[int]*model.Watermark)
 
 	for page := 1; page <= (pageCount); page++ {
 		var currentPageNr = previousPageNr + page
@@ -211,7 +217,7 @@ func watermarkConfigurationForFile(chapterNr, previousPageNr, pageCount int) map
 		var pageStr = pageNrPrefix + strconv.Itoa(currentPageNr)
 
 		wmcs[page], _ = api.TextWatermark(chapterStr+chapterPageSeparator+pageStr,
-			waterMarkDescription(currentPageNr), true, false, pdfcpu.POINTS)
+			waterMarkDescription(currentPageNr), true, false, types.POINTS)
 	}
 	return wmcs
 }
@@ -222,9 +228,9 @@ const fontColorSize = "font:Helvetica, points:16, scale: 0.9 abs, rot: 0, color:
 func waterMarkDescription(pageNumber int) string {
 
 	const evenPos string = "position: bl"
-	const evenOffset string = "offset: 20 15"
+	const evenOffset string = "offset: 20 6"
 	const oddPos string = "position: br"
-	const oddOffset string = "offset: -20 15"
+	const oddOffset string = "offset: -20 6"
 
 	positionAndOffset := ""
 
