@@ -8,6 +8,7 @@ minimal viable product version of PDFminion:
 
 */
 import (
+	"flag"
 	"fmt"
 	"github.com/pdfcpu/pdfcpu/pkg/api"
 	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu/model"
@@ -37,15 +38,92 @@ const chapterPageSeparator = " - "
 
 // pdfFiles contains filenames, pagecounts,
 
+// Version information
+const (
+	appName    = "PDFMinion"
+	appVersion = "1.1.0"
+)
+
+// config is used to handle command line flags
+type config struct {
+	sourceDir   string
+	targetDir   string
+	showVersion bool
+	showHelp    bool
+}
+
+func parseFlags() config {
+	cfg := config{}
+
+	flag.StringVar(&cfg.sourceDir, "source", "", "Source directory for PDF files")
+	flag.StringVar(&cfg.sourceDir, "s", "", "Source directory for PDF files (shorthand)")
+	flag.StringVar(&cfg.targetDir, "target", "", "Target directory for processed PDFs")
+	flag.StringVar(&cfg.targetDir, "t", "", "Target directory for processed PDFs (shorthand)")
+	flag.BoolVar(&cfg.showVersion, "version", false, "Show version information")
+	flag.BoolVar(&cfg.showVersion, "v", false, "Show version information (shorthand)")
+	flag.BoolVar(&cfg.showHelp, "help", false, "Show help information")
+	flag.BoolVar(&cfg.showHelp, "h", false, "Show help information (shorthand)")
+	flag.BoolVar(&cfg.showHelp, "?", false, "Show help information")
+
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage of %s:\n", os.Args[0])
+		flag.PrintDefaults()
+		fmt.Fprintf(os.Stderr, "  -?, --help\n\tShow help information\n")
+	}
+
+	flag.Parse()
+
+	for _, arg := range flag.Args() {
+		if arg == "?" {
+			cfg.showHelp = true
+			break
+		}
+	}
+
+	return cfg
+}
+
+func evaluateFlags(cfg config) error {
+	if cfg.showHelp {
+		flag.Usage()
+		os.Exit(0)
+	}
+
+	if cfg.showVersion {
+		fmt.Printf("%s version %s\n", appName, appVersion)
+		os.Exit(0)
+	}
+
+	if cfg.sourceDir == "" {
+		return fmt.Errorf("source directory not specified. Use -source or -s flag")
+	}
+
+	if cfg.targetDir == "" {
+		return fmt.Errorf("target directory not specified. Use -target or -t flag")
+	}
+
+	// Ensure directories exist
+	for _, dir := range []string{cfg.sourceDir, cfg.targetDir} {
+		if err := os.MkdirAll(dir, os.ModePerm); err != nil {
+			return fmt.Errorf("error creating directory %s: %v", dir, err)
+		}
+	}
+
+	return nil
+}
+
 func main() {
 
-	//domain.SetupConfiguration()
+	// handle command-line flags
+	cfg := parseFlags()
 
-	// get current directory
-	/*currentDir, err := os.Getwd()
-	if err != nil {
-		log.Println(err)
-	}*/
+	if err := evaluateFlags(cfg); err != nil {
+		fmt.Println("Error:", err)
+		flag.Usage()
+		os.Exit(1)
+	}
+
+	fmt.Printf("Processing PDFs from %s to %s\n", cfg.sourceDir, cfg.targetDir)
 
 	// count PDFs in current directory
 	// abort, if no PDF file is present
@@ -150,6 +228,34 @@ func main() {
 
 	log.Printf("%v", pdfFiles)
 
+	evenify(nrOfValidPDFs, pdfFiles, relaxedConf)
+
+	// add page numbers
+
+	// currentOffset is the _previous_ pagenumber
+	var currentOffset = 0
+
+	for i := 0; i < nrOfValidPDFs; i++ {
+		var currentFilePageCount = pdfFiles[i].pageCount
+		var currentFileName = pdfFiles[i].filename
+		log.Printf("File %s starts %d, ends %d", currentFileName, currentOffset+1,
+			currentOffset+currentFilePageCount)
+
+		err := api.AddWatermarksMapFile(currentFileName,
+			"",
+			watermarkConfigurationForFile(i+1,
+				currentOffset,
+				currentFilePageCount),
+			relaxedConf)
+		if err != nil {
+			log.Println(err)
+		}
+		currentOffset += currentFilePageCount
+	}
+
+}
+
+func evenify(nrOfValidPDFs int, pdfFiles []singleFileToProcess, relaxedConf *model.Configuration) {
 	// evenify: add empty page to every file with even pagecount
 	for i := 0; i < nrOfValidPDFs; i++ {
 		if !isEven(pdfFiles[i].pageCount) {
@@ -180,30 +286,6 @@ func main() {
 			log.Println("File %s was evenified", pdfFiles[i].filename)
 		}
 	}
-
-	// add page numbers
-
-	// currentOffset is the _previous_ pagenumber
-	var currentOffset = 0
-
-	for i := 0; i < nrOfValidPDFs; i++ {
-		var currentFilePageCount = pdfFiles[i].pageCount
-		var currentFileName = pdfFiles[i].filename
-		log.Printf("File %s starts %d, ends %d", currentFileName, currentOffset+1,
-			currentOffset+currentFilePageCount)
-
-		err := api.AddWatermarksMapFile(currentFileName,
-			"",
-			watermarkConfigurationForFile(i+1,
-				currentOffset,
-				currentFilePageCount),
-			relaxedConf)
-		if err != nil {
-			log.Println(err)
-		}
-		currentOffset += currentFilePageCount
-	}
-
 }
 
 // create a map[int] of TextWatermark configurations
