@@ -160,6 +160,19 @@ func main() {
 		}
 	}
 
+	pdfFiles, relaxedConf, nrOfValidPDFs := validateAndCopyPDFFiles(nrOfCandidatePDFs, err, files)
+
+	log.Printf("%v", pdfFiles)
+
+	// handle uneven page count: pad with empty page
+	evenify(nrOfValidPDFs, pdfFiles, relaxedConf)
+
+	// add page numbers
+	addPageNumbers(nrOfValidPDFs, pdfFiles, relaxedConf)
+
+}
+
+func validateAndCopyPDFFiles(nrOfCandidatePDFs int, err error, files []string) ([]singleFileToProcess, *model.Configuration, int) {
 	// create slice of singleFileToProcess of required length
 	pdfFiles := make([]singleFileToProcess, nrOfCandidatePDFs)
 
@@ -222,16 +235,12 @@ func main() {
 				}
 				pdfFiles[i].origByteCount = bytesWritten
 			}
-
 		}
 	}
+	return pdfFiles, relaxedConf, nrOfValidPDFs
+}
 
-	log.Printf("%v", pdfFiles)
-
-	evenify(nrOfValidPDFs, pdfFiles, relaxedConf)
-
-	// add page numbers
-
+func addPageNumbers(nrOfValidPDFs int, pdfFiles []singleFileToProcess, relaxedConf *model.Configuration) {
 	// currentOffset is the _previous_ pagenumber
 	var currentOffset = 0
 
@@ -252,7 +261,6 @@ func main() {
 		}
 		currentOffset += currentFilePageCount
 	}
-
 }
 
 func evenify(nrOfValidPDFs int, pdfFiles []singleFileToProcess, relaxedConf *model.Configuration) {

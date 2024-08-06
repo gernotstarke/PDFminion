@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"strings"
+	"time"
 )
 
 type Config struct {
@@ -17,14 +19,11 @@ type Config struct {
 const (
 	defaultSourceDir = "_pdfs"
 	defaultTargetDir = "_target"
+	Version          = "0.2.1"
 )
 
-// Version information
-var (
-	Version   = "development"
-	BuildTime = "unknown"
-	GitCommit = "unknown"
-)
+// BuildTime will be injected at build time
+var BuildTime string
 
 func New() *Config {
 	return &Config{
@@ -34,30 +33,45 @@ func New() *Config {
 }
 
 func (c *Config) ParseFlags() {
-	var sourceFlag, targetFlag string
-
-	flag.StringVar(&sourceFlag, "s", "", "Specify the source directory")
-	flag.StringVar(&sourceFlag, "source", "", "Specify the source directory")
-	flag.StringVar(&targetFlag, "t", "", "Specify the target directory")
-	flag.StringVar(&targetFlag, "target", "", "Specify the target directory")
+	flag.StringVar(&c.SourceDir, "s", defaultSourceDir, "Specify the source directory")
+	flag.StringVar(&c.SourceDir, "source", defaultSourceDir, "Specify the source directory")
+	flag.StringVar(&c.TargetDir, "t", defaultTargetDir, "Specify the target directory")
+	flag.StringVar(&c.TargetDir, "target", defaultTargetDir, "Specify the target directory")
 	flag.BoolVar(&c.showHelp, "h", false, "Show help information")
 	flag.BoolVar(&c.showHelp, "help", false, "Show help information")
 	flag.BoolVar(&c.showVersion, "v", false, "Show version information")
 	flag.BoolVar(&c.showVersion, "version", false, "Show version information")
 
+	// Custom usage function
+	flag.Usage = c.printHelp
+
+	// Parse flags
 	flag.Parse()
 
-	// Store the parsed values
-	if sourceFlag != "" {
-		c.SourceDir = sourceFlag
-	}
-	if targetFlag != "" {
-		c.TargetDir = targetFlag
+	// Check for unrecognized arguments or "help"
+	if flag.NArg() > 0 {
+		arg := flag.Arg(0)
+		if arg == "help" || arg == "?" || strings.HasPrefix(arg, "-") {
+			c.showHelp = true
+		}
 	}
 
-	// Check for "help" or "?" as the first argument
-	if flag.Arg(0) == "help" || flag.Arg(0) == "?" {
-		c.showHelp = true
+	// Check for "--" prefixed long-form flags
+	for i, arg := range os.Args {
+		switch arg {
+		case "--source":
+			if i+1 < len(os.Args) {
+				c.SourceDir = os.Args[i+1]
+			}
+		case "--target":
+			if i+1 < len(os.Args) {
+				c.TargetDir = os.Args[i+1]
+			}
+		case "--help":
+			c.showHelp = true
+		case "--version":
+			c.showVersion = true
+		}
 	}
 }
 
@@ -76,18 +90,39 @@ func (c *Config) Evaluate() error {
 }
 
 func (c *Config) printHelp() {
-	fmt.Println("Usage of PDFminion:")
-	fmt.Printf("  -s, -source string\n\tSpecify the source directory (default \"%s\")\n", defaultSourceDir)
-	fmt.Printf("  -t, -target string\n\tSpecify the target directory (default \"%s\")\n", defaultTargetDir)
-	fmt.Println("  -h, -help\n\tShow this help message")
-	fmt.Println("  -v, -version\n\tShow version information")
-	fmt.Println("  help, ?\n\tShow this help message")
+	fmt.Println("PDFMinion adds page numbers to existing PDF files.")
+	fmt.Println("It will take all PDF files from the source directory and put the numbered copies into the target directory.")
+	fmt.Println("Furthermore, it will ensure that every chapter (aka file) starts with an odd number")
+	fmt.Println("by adding a single blank page to files with an un-even page count.")
+	fmt.Println("When printed double-sided, every chapter will start on a right side with an odd pagenumber.")
+	fmt.Println("\n\nUsage:")
+	fmt.Printf("  -s, --source string\n\tSpecify the source directory (default \"%s\")\n", defaultSourceDir)
+	fmt.Printf("  -t, --target string\n\tSpecify the target directory (default \"%s\")\n", defaultTargetDir)
+	fmt.Println("  -h, --help, ?, -?, help\n\tShow this help message")
+	fmt.Println("  -v, --version\n\tShow version information")
 }
 
 func (c *Config) printVersion() {
 	fmt.Printf("PDFminion version %s\n", Version)
-	fmt.Printf("Build time: %s\n", BuildTime)
-	fmt.Printf("Git commit: %s\n", GitCommit)
+	if BuildTime != "" {
+		t, err := time.Parse("2006 Jan 02 15:04", BuildTime)
+		if err == nil {
+			formattedBuildTime := t.Format("2006 Jan 02 15:04")
+			parts := strings.Split(formattedBuildTime, " ")
+			if len(parts) == 4 {
+				day := parts[2]
+				suffix := getSuffix(day)
+				parts[2] = day + suffix
+				parts[3] += "h"
+				formattedBuildTime = strings.Join(parts, " ")
+			}
+			fmt.Printf("Build time: %s\n", formattedBuildTime)
+		} else {
+			fmt.Printf("Build time: %s\n", BuildTime)
+		}
+	} else {
+		fmt.Println("Build time: Not available")
+	}
 }
 
 func (c *Config) validate() error {
@@ -121,4 +156,17 @@ func (c *Config) validateTargetDir() error {
 		}
 	}
 	return nil
+}
+
+func getSuffix(day string) string {
+	switch day {
+	case "01", "21", "31":
+		return "st"
+	case "02", "22":
+		return "nd"
+	case "03", "23":
+		return "rd"
+	default:
+		return "th"
+	}
 }
