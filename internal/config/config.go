@@ -14,13 +14,18 @@ type Config struct {
 	TargetDir   string
 	showHelp    bool
 	showVersion bool
+	Force       bool
 }
 
 const (
 	defaultSourceDir = "_pdfs"
 	defaultTargetDir = "_target"
-	Version          = "0.2.1"
+	Version          = "0.2.5b"
 )
+
+const PageNrPrefix = ""
+const ChapterPrefix = "Kap."
+const ChapterPageSeparator = " - "
 
 // BuildTime will be injected at build time
 var BuildTime string
@@ -29,6 +34,7 @@ func New() *Config {
 	return &Config{
 		SourceDir: defaultSourceDir,
 		TargetDir: defaultTargetDir,
+		Force:     false,
 	}
 }
 
@@ -37,6 +43,7 @@ func (c *Config) ParseFlags() {
 	flag.StringVar(&c.SourceDir, "source", defaultSourceDir, "Specify the source directory")
 	flag.StringVar(&c.TargetDir, "t", defaultTargetDir, "Specify the target directory")
 	flag.StringVar(&c.TargetDir, "target", defaultTargetDir, "Specify the target directory")
+	flag.BoolVar(&c.Force, "force", false, "Skips check of empty target directory, forces overwrite of existing files")
 	flag.BoolVar(&c.showHelp, "h", false, "Show help information")
 	flag.BoolVar(&c.showHelp, "help", false, "Show help information")
 	flag.BoolVar(&c.showVersion, "v", false, "Show version information")
@@ -98,6 +105,7 @@ func (c *Config) printHelp() {
 	fmt.Println("\n\nUsage:")
 	fmt.Printf("  -s, --source string\n\tSpecify the source directory (default \"%s\")\n", defaultSourceDir)
 	fmt.Printf("  -t, --target string\n\tSpecify the target directory (default \"%s\")\n", defaultTargetDir)
+	fmt.Printf("  --force string\n\tSkips check of empty target directory, forces overwrite of existing files (default false)\n")
 	fmt.Println("  -h, --help, ?, -?, help\n\tShow this help message")
 	fmt.Println("  -v, --version\n\tShow version information")
 }
@@ -145,12 +153,13 @@ func (c *Config) validateTargetDir() error {
 		if err := os.MkdirAll(c.TargetDir, os.ModePerm); err != nil {
 			return fmt.Errorf("error creating directory %s: %v", c.TargetDir, err)
 		}
-	} else {
+	} else if !c.Force {
 		// Check if the directory is empty
 		files, err := ioutil.ReadDir(c.TargetDir)
 		if err != nil {
 			return fmt.Errorf("error reading directory %s: %v", c.TargetDir, err)
 		}
+
 		if len(files) > 0 {
 			return fmt.Errorf("target directory %s is not empty", c.TargetDir)
 		}

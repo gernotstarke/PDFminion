@@ -13,7 +13,7 @@ BINARY_UNIX=$(BINARY_NAME)_unix
 BUILDTIME=$(shell date -u +'%Y %b %d %H:%M')
 
 # Build flags
-LDFLAGS=-ldflags "-X 'pdfminion/internal/config.BuildTime=$(BUILDTIME)'"
+LDFLAGS=-ldflags "-s -w -X 'pdfminion/internal/config.BuildTime=$(BUILDTIME)'"
 
 # Install directory
 INSTALL_DIR=/usr/local/bin
