@@ -20,7 +20,7 @@ type Config struct {
 const (
 	defaultSourceDir = "_pdfs"
 	defaultTargetDir = "_target"
-	Version          = "0.2.5b"
+	Version          = "0.3.0"
 )
 
 const PageNrPrefix = ""
