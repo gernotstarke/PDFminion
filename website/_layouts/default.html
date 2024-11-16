@@ -1,0 +1,78 @@
+---
+---
+
+<!doctype html>
+<!--
+  OneFlow Jekyll Theme 1.0 by Per Starke
+  Copyright 2024 Per Starke - https://perstarke-webdev.de/
+  Free for personal and commercial use under the MIT license
+  https://opensource.org/license/mit/
+-->
+
+<!--
+  Based on Minimal Mistakes Jekyll Theme.
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose.
+  Copyright 2013-2021 Michael Rose - mademistakes.com | @mmistakes
+  Licensed under MIT.
+-->
+
+<html lang="{{ site.locale | slice: 0,2 | default: 'en' }}" class="no-js">
+  <head>
+    {% include head.html %}
+    {% include head/custom.html %}
+  </head>
+
+  <body class="layout--{{ page.layout | default: layout.layout }}{% if page.classes or layout.classes %}{{ page.classes | default: layout.classes | join: ' ' | prepend: ' ' }}{% endif %}">
+    {% include_cached masthead.html %}
+
+
+    <style>
+
+        .bg {
+          background-image: url({{site.background-image}});
+        }
+
+        .bg::after {
+           background-color: {{site.background-image-overlay}};
+        }
+
+        {% if site.background-image-mobile %}
+
+        @media (max-width: 768px) {
+          .bg {
+            background-image: url({{site.background-image-mobile}});
+          }
+
+         {% endif %}
+
+        }
+    </style>
+
+
+    {% if site.background-image %}
+      <div class="bg">
+    {% endif %}
+
+        {% if site.show-popup %}
+        {% include popup.html %}
+        {% endif %}
+
+      <div class="initial-content">
+        {{ content }}
+      </div>
+
+      <div id="footer" class="page__footer">
+        <footer>
+          {% include footer/custom.html %}
+          {% include_cached footer.html %}
+        </footer>
+      </div>
+
+    {% if site.background-image %}
+      </div>
+    {% endif %}
+
+    {% include scripts.html %}
+
+  </body>
+</html>

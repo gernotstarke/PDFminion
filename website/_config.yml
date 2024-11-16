@@ -1,0 +1,146 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your entire site, values
+# which you are expected to set up once and rarely need to edit after that.
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# `jekyll serve`. If you change this file, please restart the server process.
+
+
+oneflow-skin    : "aqua" # "default", "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+
+# Site Settings
+locale                   : "en-US"
+title                    : "PDFMinion"
+title_separator          : "-"
+subtitle                 : " " # Displayed in the masthead below the title, use " " for no subtitle
+url                      : "https://pdfminion.arc42.org" # the base hostname & protocol for your site
+baseurl                  : # the subpath of your site, e.g. "/blog"
+repository               : "gernotstarke/PDFMinion" # GitHub username/repo-name
+teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
+logo                     : "/assets/PDFminion-splash.png" # Site logo displayed in the masthead
+show-popup               : true # set to false if you don't need / want to show a cookie-banner / cdn-usage popup.
+                                # Edit the popup itself in the respective /includes file
+masthead_title           : " "  # Overrides the website title displayed in the masthead, use " " for no title
+sticky-masthead          : true # if true, masthead/navigation bar will stay visible when the user scrolls down.
+                                # if false, it will move out of sight when scrolling.
+masthead-opacity         : 0.85 # set to any value between 0 and 1.
+                                # 0.8-0.9 is a good recommended starting point. Only relevant if masthead is sticky.
+background-image         : # '/assets/images/header.webp' # Remove / out-comment, if you don't want a background image
+background-image-mobile  : # '/assets/images/header.webp' # If you want a different (e.g upright) background image for mobile
+background-image-overlay : rgba(255, 255, 255, 0.5) # Set overlay for the background image
+
+
+
+# Site Footer.
+footer:
+  links: # replace the URL's with your own for every link you want to have in your footer.
+    - label: "Home"
+      icon: "fa fa-globe"
+      url: "https://pdfminion.arc42.org"
+    - label: "Email"
+      icon: "fa fa-envelope"
+      url: "mailto:"
+    - label: "LinkedIn"
+      icon: "fab fa-linkedin"
+      # url:
+      # url:
+    - label: "GitHub"
+      icon: "fab fa-github"
+      url: "https://github.com/gernotstarke"
+  creator: # Replace with your own creator name or remove this if you don't want any "created by" in the footer
+      name: "Gernot Starke"
+      url: "https://arc42.org"
+
+
+
+# Reading Files
+include:
+  - .htaccess
+  - _pages
+exclude:
+  - vendor
+  - .asset-cache
+  - .bundle
+  - .jekyll-assets-cache
+  - .sass-cache
+  - assets/js/plugins
+  - assets/js/_main.js
+  - assets/js/vendor
+  - CHANGELOG
+  - config
+  - Gemfile
+  - Gruntfile.js
+  - gulpfile.js
+  - LICENSE
+  - log
+  - node_modules
+  - package.json
+  - package-lock.json
+  - Rakefile
+  - README
+  - tmp
+keep_files:
+  - .git
+  - .svn
+encoding: "utf-8"
+markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+
+# Conversion
+markdown: kramdown
+highlighter: rouge
+lsi: false
+excerpt_separator: "\n\n"
+incremental: false
+
+
+# Markdown Processing
+kramdown:
+  input: GFM
+  hard_wrap: false
+  auto_ids: true
+  footnote_nr: 1
+  entity_output: as_char
+  toc_levels: 1..6
+  smart_quotes: lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+
+
+
+# Plugins (previously gems:)
+plugins:
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+
+# mimic GitHub Pages with --safe
+whitelist:
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+
+
+
+# HTML Compression
+# - https://jch.penibelst.de/
+compress_html:
+  clippings: all
+  ignore:
+    envs: development
+
+# Defaults
+defaults:
+  - scope:
+      path: "_pages"
+      type: "pages"
+    values:
+      layout: "page"
+

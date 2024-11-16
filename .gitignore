@@ -20,5 +20,6 @@ test-results/cucumber_report.html
 test-results/index.html
 test-results
 node_modules
-_target
-_pdfs
+go-app/_target
+go-app/_pdfs
+pdfminion

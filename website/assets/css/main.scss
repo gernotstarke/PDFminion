@@ -1,0 +1,13 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+search: false
+---
+
+@charset "utf-8";
+
+@import "oneflow/skins/{{ site.oneflow-skin | default: 'default' }}"; // skin
+@import "oneflow"; // main partials
+
+@import "all.min.css"; // fontawesome
+
+@import "custom-styles.css" // custom css stylesheet
