@@ -23,4 +23,5 @@ node_modules
 go-app/_target
 go-app/_pdfs
 pdfminion
-website/_site
+docs/website/_site
+docs/_site
