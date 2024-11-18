@@ -5,7 +5,7 @@ import (
 	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu/model"
 	"github.com/pdfcpu/pdfcpu/pkg/pdfcpu/types"
 	"log"
-	"pdfminion/go-app/internal/util"
+	"pdfminion/internal/util"
 	"strconv"
 )
 

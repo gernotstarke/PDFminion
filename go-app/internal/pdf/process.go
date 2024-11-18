@@ -3,11 +3,11 @@ package pdf
 import (
 	"fmt"
 	"log"
-	"pdfminion/go-app/internal/config"
+	"pdfminion/internal/cli"
 	"sort"
 )
 
-func ProcessPDFs(cfg *config.Config) error {
+func ProcessPDFs(cfg *cli.Options) error {
 	InitializePDFInternals()
 
 	files, err := CollectCandidatePDFs(cfg)

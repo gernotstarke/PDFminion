@@ -1,5 +1,5 @@
 ## PDFminion version history
-
+0.3.1 Nov 16th 2024: refactored repository layout, fixed wrong output
 0.3.0 better structure, minimal main package, moved logic to process.go
 0.2.5 fixed nasty bug in numbering
 0.2.3 add --force flag to allow existing target directory

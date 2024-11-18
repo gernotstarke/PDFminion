@@ -9,8 +9,8 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"pdfminion/go-app/internal/config"
-	"pdfminion/go-app/internal/util"
+	"pdfminion/internal/cli"
+	"pdfminion/internal/util"
 	"strconv"
 )
 
@@ -30,7 +30,7 @@ func InitializePDFInternals() {
 	relaxedConf.ValidationMode = model.ValidationRelaxed
 }
 
-func CollectCandidatePDFs(cfg *config.Config) ([]string, error) {
+func CollectCandidatePDFs(cfg *cli.Options) ([]string, error) {
 	// count PDFs in source directory
 	// abort if no PDF file is present
 
@@ -167,10 +167,10 @@ func watermarkConfigurationForFile(chapterNr, previousPageNr, pageCount int) map
 
 	for page := 1; page <= (pageCount); page++ {
 		var currentPageNr = previousPageNr + page
-		var chapterStr = config.ChapterPrefix + strconv.Itoa(chapterNr)
-		var pageStr = config.PageNrPrefix + strconv.Itoa(currentPageNr)
+		var chapterStr = cli.ChapterPrefix + strconv.Itoa(chapterNr)
+		var pageStr = cli.PageNrPrefix + strconv.Itoa(currentPageNr)
 
-		wmcs[page], _ = api.TextWatermark(chapterStr+config.ChapterPageSeparator+pageStr,
+		wmcs[page], _ = api.TextWatermark(chapterStr+cli.ChapterPageSeparator+pageStr,
 			waterMarkDescription(currentPageNr), true, false, types.POINTS)
 	}
 	return wmcs

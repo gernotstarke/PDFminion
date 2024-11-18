@@ -25,3 +25,4 @@ go-app/_pdfs
 pdfminion
 docs/website/_site
 docs/_site
+go-app/build
