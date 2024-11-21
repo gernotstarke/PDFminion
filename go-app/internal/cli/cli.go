@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
+	"sort"
 	"strings"
 	"time"
 )
@@ -13,6 +15,57 @@ type Options struct {
 	SourceDir string
 	TargetDir string
 	Force     bool
+	Debug     bool
+	Help      bool
+	Version   bool
+}
+
+// FlagDef represents a flag definition with possible short and long forms
+type FlagDef struct {
+	Long    string
+	Short   string
+	Default interface{}
+	Help    string
+}
+
+// Flag definitions
+var flags = map[string]FlagDef{
+	"source": {
+		Long:    "source",
+		Short:   "s",
+		Default: defaultSourceDir,
+		Help:    "Specify the source directory",
+	},
+	"target": {
+		Long:    "target",
+		Short:   "t",
+		Default: defaultTargetDir,
+		Help:    "Specify the target directory",
+	},
+	"force": {
+		Long:    "force",
+		Short:   "f",
+		Default: false,
+		Help:    "Forces overwrite of existing files",
+	},
+	"debug": {
+		Long:    "debug",
+		Short:   "d",
+		Default: false,
+		Help:    "Enable debug logging",
+	},
+	"help": {
+		Long:    "help",
+		Short:   "h",
+		Default: false,
+		Help:    "Show this help message",
+	},
+	"version": {
+		Long:    "version",
+		Short:   "v",
+		Default: false,
+		Help:    "Show version information",
+	},
 }
 
 const (
@@ -40,34 +93,55 @@ func ParseOptions() (*Options, error) {
 		TargetDir: defaultTargetDir,
 	}
 
-	// Define flags once
-	flag.StringVar(&opts.SourceDir, "source", defaultSourceDir, "Specify the source directory")
-	flag.StringVar(&opts.TargetDir, "target", defaultTargetDir, "Specify the target directory")
-	flag.BoolVar(&opts.Force, "force", false, "Forces overwrite of existing files")
-
-	version := flag.Bool("version", false, "Show version information")
-	help := flag.Bool("help", false, "Show help information")
-
-	// Add short aliases
-	flag.StringVar(&opts.SourceDir, "s", defaultSourceDir, "")
-	flag.StringVar(&opts.TargetDir, "t", defaultTargetDir, "")
-	flag.BoolVar(help, "h", false, "")
-	flag.BoolVar(version, "v", false, "")
+	// Register all flags
+	for _, f := range flags {
+		switch def := f.Default.(type) {
+		case string:
+			var value string
+			flag.StringVar(&value, f.Long, def, f.Help)
+			if f.Short != "" {
+				flag.StringVar(&value, f.Short, def, f.Help)
+			}
+			switch f.Long {
+			case "source":
+				opts.SourceDir = value
+			case "target":
+				opts.TargetDir = value
+			}
+		case bool:
+			var value bool
+			flag.BoolVar(&value, f.Long, def, f.Help)
+			if f.Short != "" {
+				flag.BoolVar(&value, f.Short, def, f.Help)
+			}
+			switch f.Long {
+			case "force":
+				opts.Force = value
+			case "debug":
+				opts.Debug = value
+			case "help":
+				opts.Help = value
+			case "version":
+				opts.Version = value
+			}
+		}
+	}
 
 	flag.Usage = printHelp
 	flag.Parse()
 
-	// Handle help/version first
-	switch {
-	case *help:
+	// Handle help and version first, before any validation
+	if opts.Help || (len(os.Args) > 1 && (os.Args[1] == "help" || os.Args[1] == "?")) {
 		printHelp()
 		os.Exit(0)
-	case *version:
+	}
+
+	if opts.Version {
 		printVersion()
 		os.Exit(0)
 	}
 
-	// Validate the options
+	// Only validate directories if we're actually going to process files
 	if err := opts.validate(); err != nil {
 		return nil, err
 	}
@@ -76,24 +150,38 @@ func ParseOptions() (*Options, error) {
 }
 
 func printHelp() {
-	fmt.Printf(`PDFMinion adds page numbers to existing PDF files.
-It will take all PDF files from the source directory and put the numbered copies into the target directory.
-Furthermore, it will ensure that every chapter (aka file) starts with an odd number
-by adding a single blank page to files with an un-even page count.
-When printed double-sided, every chapter will start on a right side with an odd pagenumber.
+	progName := filepath.Base(os.Args[0])
 
-Usage:
-  -s, --source string
-        Specify the source directory (default "%s")
-  -t, --target string
-        Specify the target directory (default "%s")
-  --force
-        Forces overwrite of existing files
-  -h, --help
-        Show this help message
-  -v, --version
-        Show version information
-`, defaultSourceDir, defaultTargetDir)
+	fmt.Printf(`PDFMinion adds page numbers to existing PDF files.
+It will take all PDF files from the source directory and put the numbered copies 
+into the target directory. Every chapter (aka file) starts with an odd number
+by adding a single blank page to files with an un-even page count.
+When printed double-sided, every chapter will start on a right side.
+
+Usage: %s [options]
+
+Options:
+`, progName)
+
+	// Create a sorted list of flags for consistent output
+	var flagNames []string
+	for name := range flags {
+		flagNames = append(flagNames, name)
+	}
+	sort.Strings(flagNames)
+
+	// Print each flag with its short form
+	for _, name := range flagNames {
+		f := flags[name]
+		switch def := f.Default.(type) {
+		case string:
+			fmt.Printf("  -%s, --%-12s %s (default: %q)\n",
+				f.Short, f.Long, f.Help, def)
+		case bool:
+			fmt.Printf("  -%s, --%-12s %s\n",
+				f.Short, f.Long, f.Help)
+		}
+	}
 }
 
 func printVersion() {
@@ -143,9 +231,10 @@ func (o *Options) validate() error {
 	}
 	return o.validateTargetDir()
 }
+
 func (o *Options) validateSourceDir() error {
 	if _, err := os.Stat(o.SourceDir); os.IsNotExist(err) {
-		return fmt.Errorf("Source directory '%s' does not exist", o.SourceDir)
+		return fmt.Errorf("source directory %q does not exist", o.SourceDir)
 	}
 	return nil
 }

@@ -2,12 +2,14 @@ package pdf
 
 import (
 	"fmt"
-	"log"
+	"github.com/rs/zerolog/log"
 	"pdfminion/internal/cli"
 	"sort"
 )
 
 func ProcessPDFs(cfg *cli.Options) error {
+	log.Debug().Msg("Starting PDF processing") // Only shown in debug mode
+
 	InitializePDFInternals()
 
 	files, err := CollectCandidatePDFs(cfg)
@@ -26,7 +28,7 @@ func ProcessPDFs(cfg *cli.Options) error {
 		return fmt.Errorf("error during copy: %w", err)
 	}
 
-	log.Printf("%v", pdfFiles)
+	log.Debug().Int("fileCount", len(files)).Msg("Found files")
 
 	Evenify(nrOfValidPDFs, pdfFiles)
 	AddPageNumbersToAllFiles(nrOfValidPDFs, pdfFiles)

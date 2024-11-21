@@ -1,0 +1,9 @@
+# Dockerfile.linux-test
+FROM ubuntu:latest
+WORKDIR /app
+COPY output/pdfminion-linux-amd64/pdfminion .
+COPY _pdfs/ ./_pdfs/
+RUN chmod +x pdfminion
+
+# Default command - can be overridden
+CMD ["./pdfminion", "--version"]
