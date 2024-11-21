@@ -78,9 +78,9 @@ const (
 
 // Version information - injected at build time
 var (
-	buildTime    string
-	hostPlatform string
-	appVersion   string
+	buildTime     string
+	buildPlatform string
+	appVersion    string
 )
 
 func SetAppVersion(version string) {
@@ -94,44 +94,24 @@ func ParseOptions() (*Options, error) {
 	}
 
 	// Register all flags
-	for _, f := range flags {
-		switch def := f.Default.(type) {
-		case string:
-			var value string
-			flag.StringVar(&value, f.Long, def, f.Help)
-			if f.Short != "" {
-				flag.StringVar(&value, f.Short, def, f.Help)
-			}
-			switch f.Long {
-			case "source":
-				opts.SourceDir = value
-			case "target":
-				opts.TargetDir = value
-			}
-		case bool:
-			var value bool
-			flag.BoolVar(&value, f.Long, def, f.Help)
-			if f.Short != "" {
-				flag.BoolVar(&value, f.Short, def, f.Help)
-			}
-			switch f.Long {
-			case "force":
-				opts.Force = value
-			case "debug":
-				opts.Debug = value
-			case "help":
-				opts.Help = value
-			case "version":
-				opts.Version = value
-			}
-		}
-	}
+	flag.StringVar(&opts.SourceDir, "source", defaultSourceDir, flags["source"].Help)
+	flag.StringVar(&opts.SourceDir, "s", defaultSourceDir, "")
+	flag.StringVar(&opts.TargetDir, "target", defaultTargetDir, flags["target"].Help)
+	flag.StringVar(&opts.TargetDir, "t", defaultTargetDir, "")
+	flag.BoolVar(&opts.Force, "force", false, flags["force"].Help)
+	flag.BoolVar(&opts.Force, "f", false, "")
+	flag.BoolVar(&opts.Debug, "debug", false, flags["debug"].Help)
+	flag.BoolVar(&opts.Debug, "d", false, "")
+	flag.BoolVar(&opts.Help, "help", false, flags["help"].Help)
+	flag.BoolVar(&opts.Help, "h", false, "")
+	flag.BoolVar(&opts.Version, "version", false, flags["version"].Help)
+	flag.BoolVar(&opts.Version, "v", false, "")
 
 	flag.Usage = printHelp
 	flag.Parse()
 
-	// Handle help and version first, before any validation
-	if opts.Help || (len(os.Args) > 1 && (os.Args[1] == "help" || os.Args[1] == "?")) {
+	// Handle help and version first
+	if opts.Help || flag.Arg(0) == "help" || flag.Arg(0) == "?" {
 		printHelp()
 		os.Exit(0)
 	}
@@ -186,7 +166,7 @@ Options:
 
 func printVersion() {
 	fmt.Printf("PDFminion version %s\n", appVersion)
-	fmt.Printf("Built on: %s\n", hostPlatform)
+	fmt.Printf("Built on: %s\n", buildPlatform)
 	if buildTime != "" {
 		t, err := time.Parse("2006 Jan 02 15:04", buildTime)
 		if err == nil {
