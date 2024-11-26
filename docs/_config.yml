@@ -23,7 +23,7 @@ show-popup               : false # set to false if you don't need / want to show
 masthead_title           : " "  # Overrides the website title displayed in the masthead, use " " for no title
 sticky-masthead          : false # if true, masthead/navigation bar will stay visible when the user scrolls down.
                                 # if false, it will move out of sight when scrolling.
-masthead-opacity         : 0.85 # set to any value between 0 and 1.
+masthead-opacity         : 0.8 # set to any value between 0 and 1.
                                 # 0.8-0.9 is a good recommended starting point. Only relevant if masthead is sticky.
 background-image         : # '/assets/images/header.webp' # Remove / out-comment, if you don't want a background image
 background-image-mobile  : # '/assets/images/header.webp' # If you want a different (e.g upright) background image for mobile
