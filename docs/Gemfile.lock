@@ -310,6 +310,7 @@ DEPENDENCIES
   jekyll-sitemap
   jemoji
   tzinfo-data
+  webrick
 
 BUNDLED WITH
    2.5.4
