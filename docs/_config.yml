@@ -17,13 +17,13 @@ url                      : "https://pdfminion.arc42.org" # the base hostname & p
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "gernotstarke/PDFMinion" # GitHub username/repo-name
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : "/assets/PDFminion-splash.png" # Site logo displayed in the masthead
-show-popup               : true # set to false if you don't need / want to show a cookie-banner / cdn-usage popup.
+logo                     : "/assets/images/PDFminion-logo.png" # Site logo displayed in the masthead
+show-popup               : false # set to false if you don't need / want to show a cookie-banner / cdn-usage popup.
                                 # Edit the popup itself in the respective /includes file
 masthead_title           : " "  # Overrides the website title displayed in the masthead, use " " for no title
-sticky-masthead          : true # if true, masthead/navigation bar will stay visible when the user scrolls down.
+sticky-masthead          : false # if true, masthead/navigation bar will stay visible when the user scrolls down.
                                 # if false, it will move out of sight when scrolling.
-masthead-opacity         : 0.85 # set to any value between 0 and 1.
+masthead-opacity         : 0.8 # set to any value between 0 and 1.
                                 # 0.8-0.9 is a good recommended starting point. Only relevant if masthead is sticky.
 background-image         : # '/assets/images/header.webp' # Remove / out-comment, if you don't want a background image
 background-image-mobile  : # '/assets/images/header.webp' # If you want a different (e.g upright) background image for mobile
@@ -36,10 +36,10 @@ footer:
   links: # replace the URL's with your own for every link you want to have in your footer.
     - label: "Home"
       icon: "fa fa-globe"
-      url: "https://pdfminion.arc42.org"
+      url: "https://arc42.org/"
     - label: "Email"
       icon: "fa fa-envelope"
-      url: "mailto:"
+      # url: "mailto:"
     - label: "LinkedIn"
       icon: "fab fa-linkedin"
       # url:
@@ -49,7 +49,7 @@ footer:
       url: "https://github.com/gernotstarke"
   creator: # Replace with your own creator name or remove this if you don't want any "created by" in the footer
       name: "Gernot Starke"
-      url: "https://arc42.org"
+      url: "https://www.gernotstarke.de/"
 
 
 

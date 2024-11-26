@@ -5,12 +5,12 @@
 /* Colors */
 $gray                       : #1976d2 !default;
 $dark-gray                  : mix(#000, $gray, 40%) !default;
-$darker-gray                : mix(#000, $gray, 60%) !default;
+$darker-gray                : mix(#000, $gray, 40%) !default;
 $light-gray                 : mix(#fff, $gray, 50%) !default;
-$lighter-gray               : mix(#fff, $gray, 90%) !default;
+$lighter-gray               : mix(#fff, $gray, 80%) !default;
 
 $body-color                 : #fff !default;
-$background-color           : #f0fff0 !default;
+$background-color           : #d0f0fb !default;
 $code-background-color      : $lighter-gray !default;
 $code-background-color-dark : $light-gray !default;
 $text-color                 : $dark-gray !default;
