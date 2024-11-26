@@ -1,33 +1,30 @@
 ---
 layout: page
-title: Impressum und Datenschutz
+title: Imprint and privacy
+header:
+  overlay_image: /assets/images/header.webp
+  overlay_filter: rgba(0, 0, 0, 0.6)
 permalink: /imprint
 ---
 
 #### German Imprint
-This imprint & privacy note is in German, as I (Per Starke, the responsible person) am German, and it's therefore
+This imprint & privacy note is in German, as I (Gernot Starke, the responsible person) am German, and it's therefore
 required by German Law. Contact me or use translation tools for an english version. 
 
 <hr>
 
 #### Anbieter und Verantwortliche Person
-Per Starke, Willi-Lauf Allee 43, D-50858 Köln
+Gernot Starke, Willi-Lauf Allee 43, D-50858 Köln
 
 
 #### Kontakt
-Telefon: +49 160 93268817
-<br>
-e-Mail: per_at_starke-team.de
-<br>  
-  
-[Website](https://perstarke-webdev.de/)   
-[Blog](https://blog.perstarke-webdev.de/)
+e-Mail: gernotstarke_at_mailbox.org
 
   
 ## Datenschutzerklärung
 
 #### Geltungsbereich
-Diese Datenschutzerklärung klärt Nutzer über die Art, den Umfang und Zwecke der Erhebung und Verwendung personenbezogener Daten durch den vorstehend genannten Anbieter Per Starke auf dieser Website (im folgenden “Angebot”) auf.<br />
+Diese Datenschutzerklärung klärt Nutzer über die Art, den Umfang und Zwecke der Erhebung und Verwendung personenbezogener Daten durch den vorstehend genannten Anbieter Gernot Starke auf dieser Website (im folgenden “Angebot”) auf.<br />
 <br />
 Die rechtlichen Grundlagen des Datenschutzes finden sich in der Datenschutzgrundverordnung (DSGVO), dem Bundesdatenschutzgesetz (BDSG) und dem Telemediengesetz (TMG).<br />
 <br />
@@ -83,6 +80,12 @@ FontAwesome nutzt anonyme Zugriffsdaten, die in deren
 Auf dieser Webseite wird FontAwesome allerdings lokal gehostet und somit keine Daten an FontAwesome weitergegeben.
 <br/>
 
+#### Unterstützt von Per Starke Web Development
+[perstarke-webdev.de](https://perstarke-webdev.de/)   
+[Panorama Perspectives Blog](https://blog.perstarke-webdev.de/)
+
 
 #### Widerruf, Änderungen, Berichtigungen und Aktualisierungen
 Der Nutzer hat das Recht, auf Antrag unentgeltlich Auskunft zu erhalten über die personenbezogenen Daten, die über ihn gespeichert wurden. Zusätzlich hat der Nutzer das Recht auf Berichtigung unrichtiger Daten, Sperrung und Löschung seiner personenbezogenen Daten, soweit dem keine gesetzliche Aufbewahrungspflicht entgegensteht.<br />
+
+
