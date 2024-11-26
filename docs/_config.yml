@@ -17,11 +17,11 @@ url                      : "https://pdfminion.arc42.org" # the base hostname & p
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "gernotstarke/PDFMinion" # GitHub username/repo-name
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
-logo                     : "/assets/PDFminion-splash.png" # Site logo displayed in the masthead
-show-popup               : true # set to false if you don't need / want to show a cookie-banner / cdn-usage popup.
+logo                     : "/assets/images/PDFminion-logo.png" # Site logo displayed in the masthead
+show-popup               : false # set to false if you don't need / want to show a cookie-banner / cdn-usage popup.
                                 # Edit the popup itself in the respective /includes file
 masthead_title           : " "  # Overrides the website title displayed in the masthead, use " " for no title
-sticky-masthead          : true # if true, masthead/navigation bar will stay visible when the user scrolls down.
+sticky-masthead          : false # if true, masthead/navigation bar will stay visible when the user scrolls down.
                                 # if false, it will move out of sight when scrolling.
 masthead-opacity         : 0.85 # set to any value between 0 and 1.
                                 # 0.8-0.9 is a good recommended starting point. Only relevant if masthead is sticky.
@@ -39,7 +39,7 @@ footer:
       url: "https://pdfminion.arc42.org"
     - label: "Email"
       icon: "fa fa-envelope"
-      url: "mailto:"
+      # url: "mailto:"
     - label: "LinkedIn"
       icon: "fab fa-linkedin"
       # url:
