@@ -36,7 +36,7 @@ footer:
   links: # replace the URL's with your own for every link you want to have in your footer.
     - label: "Home"
       icon: "fa fa-globe"
-      url: "https://pdfminion.arc42.org"
+      url: "https://arc42.org/"
     - label: "Email"
       icon: "fa fa-envelope"
       # url: "mailto:"
@@ -49,7 +49,7 @@ footer:
       url: "https://github.com/gernotstarke"
   creator: # Replace with your own creator name or remove this if you don't want any "created by" in the footer
       name: "Gernot Starke"
-      url: "https://arc42.org"
+      url: "https://www.gernotstarke.de/"
 
 
 
