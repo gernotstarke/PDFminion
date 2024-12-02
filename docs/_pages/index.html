@@ -17,16 +17,64 @@ header:
 excerpt: "**For all those who like handouts - and page numbers even more so!**"
 ---
 
+<style>
+
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .logo {
+        flex: 0 0 auto;
+        margin-right: 20px;
+    }
+
+    .logo img {
+        max-width: 100px;
+        height: auto;
+    }
+
+    .text {
+        flex: 1 1 auto;
+        font-size: 1.2em;
+        color: #333;
+    }
+
+    @media (max-width: 600px) {
+        .container {
+            text-align: center;
+            flex-direction: column;
+        }
+
+        .logo {
+            margin-right: 0;
+            margin-bottom: 10px;
+        }
+
+        .text {
+            font-size: 1em;
+        }
+    }
+</style>
+
 <section>
 
     <p>
-        PDFminion is a tool designed for those who love organizing their documents and making them look polished. Whether you're working on reports, research papers, or any project that involves PDFs, PDFminion brings you an easy way to add page numbers and customize your documents effortlessly. It's a lightweight, user-friendly solution that integrates seamlessly with your workflow.
+        PDFminion adds page numbers and running-headers on pdf documents, helping to produce nicely formated
+
+        It runs on all platforms and is free to use.
     </p>
 
-    <p>
-        Designed with simplicity in mind, PDFminion offers straightforward functionality without unnecessary complexity. Say goodbye to manual formatting and let PDFminion do the heavy lifting, so you can focus on what really matters: your content.
-    </p>
-
+    <div class="container">
+        <div class="logo">
+            <img src="assets/images/arc42-logo.png" alt="arc42 logo">
+        </div>
+        <div class="text">
+            Brought to you by <strong>arc42</strong> + <strong>Gernot Starke</strong>
+        </div>
+    </div>
 </section>
 
 
@@ -49,7 +97,7 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
     <div class="box-container">
 
         <div class="box box--primary box-third">
-            <h4>Feature 1</h4>
+            <h4>Features </h4>
             <p>Feature 1 description</p>
         </div>
 
@@ -74,12 +122,63 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
 <br>
 
 
-
-
 <section id="installation">
 
     <h1>Installation</h1>
 
+
+</section>
+
+
+<br>
+<hr class="section-sep">
+<br>
+
+
+<section id="usage">
+
+<h1>Usage</h1>
+
+<div class="dummyt" markdown="1">
+
+## Usage
+
+| **Command/Config Name**  | **Long Command**            | **Short Command**       | **Description**    |
+|--------------------------|----------------------------|--------------------------|--------------------|
+| **Help**                 | `--help`                   | `-h`, `-?`, `?`         | Displays a list of supported commands and their usage. Example: `pdfminion --help`                                                |
+| **Version**              | `--version`                | `-v`                    | Displays the current version of PDFminion. Example: `pdfminion --version`                                                        |
+| **Source Directory**     | `--source <directory>`     | `-s <directory>`        | Specifies the input directory for PDF files. Example: `pdfminion --source ./input`                                               |
+| **Target Directory**     | `--target <directory>`     | `-t <directory>`        | Specifies the output directory for processed files. Creates the directory if it doesn’t exist. Example: `pdfminion --target ./out`|
+| **Force Overwrite**      | `--force`                  | `-f`                    | Allows overwriting existing files in the target directory. Example: `pdfminion --force`                                          |
+| **Language**             | `--language <code>`        | `-l <code>`             | Sets the language for stamped text. Supports `EN` (English) and `DE` (German). Default: `EN`. Example: `pdfminion --language DE` | | **Evenify**              | `--evenify {on\|off}`       | `-e {on\|off}`           | Enables or disables adding blank pages for even page counts. Example: `pdfminion --evenify=off`                                  |
+| **Blank Page Text**      | `--blankpagetext <text>`   | `-b <text>`             | Specifies text printed on blank pages added during evenification. Example: `pdfminion --blankpagetext "deliberately left blank"`              |
+| **Defaults**             | `--defaults`               |                          | Prints all current default settings. Example: `pdfminion --defaults`.                                                             |
+| **Debug Mode**           | `--debug`                  |                          | Enables debug mode for detailed logs. Example: `pdfminion --debug`                                                               |
+| **Merge**                | `--merge <filename>`       | `-m <filename>`         | Merges input files into a single PDF. Uses default name if `<filename>` not provided. Example: `pdfminion --merge combined.pdf`   |
+| **Table of Contents**    | `--toc`                    |                          | Generates a table-of-contents PDF. Supported from v1.5.0. Example: `pdfminion --toc`                                             |
+| **Config File**          | `--config <filename>`      | `-c <filename>`         | Loads configuration from a file. Overrides conflicting command-line options. Example: `pdfminion --config settings.json`         |
+| **List Languages**       | `--list-languages`         | `-ll`                   | Lists all available languages for the `--language` option. Example: `pdfminion --list-languages`                                 |
+| **Running Head**         | `--running-head <text>`    |                          | Sets text for the running head at the top of each page. Example: `pdfminion --running-head "Document Title"`                     |
+| **Chapter Prefix**       | `--chapter-prefix <text>`  |                          | Specifies prefix for chapter numbers. Default: "Chapter". Example: `pdfminion --chapter-prefix "Ch."`                           |
+| **Page Prefix**          | `--page-prefix <text>`     |                          | Sets prefix for page numbers. Default: "Page". Example: `pdfminion --page-prefix "Page"`                                         |
+| **Separator**            | `--separator <symbol>`     |                          | Defines the separator between chapter, page number, and total count. Default: `-`. Example: `pdfminion --separator " | "`        |
+| **Page Count Prefix**    | `--page-count-prefix <text>`|                          | Sets prefix for total page count. Default: "of". Example: `pdfminion --page-count-prefix "out of"`                               |
+
+
+</section>
+
+<br>
+<hr class="section-sep">
+<br>
+
+
+<section id="examples">
+
+    <h1>Examples</h1>
+
+<div markdown="1" >
+
+</div>
 
 </section>
 

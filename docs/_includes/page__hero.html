@@ -22,7 +22,6 @@
      style="background: linear-gradient(to right, #1976d2, #d5eaf6); height: 80vh; background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center;">
   {% if page.header.overlay_color or page.header.overlay_image %}
   <div class="wrapper">
-    <img src="/assets/images/PDFminion-logo.png" alt="PDFminion logo" class="center-img">
     <h1 id="page-title" class="page__title top-margin black" itemprop="headline">
       {{ page.title | default: site.title | markdownify | remove: "<p>" | remove: "</p>" }}
     </h1>

@@ -12,17 +12,11 @@
 *.out
 
 # Dependency directories (remove the comment below to include it)
-# vendor/
+
 .idea
 .DS_Store
-test-results/features
-test-results/cucumber_report.html
-test-results/index.html
-test-results
-node_modules
 go-app/_target
 go-app/_pdfs
 pdfminion
-docs/website/_site
 docs/_site
 go-app/build

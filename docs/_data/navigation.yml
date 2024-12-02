@@ -6,3 +6,9 @@ main:
   - title: "Installation"
     url: /#installation
     blank: false
+  - title: "Usage"
+    url: /#usage
+    blank: false
+  - title: "Examples"
+    url: /#examples
+    blank: false
