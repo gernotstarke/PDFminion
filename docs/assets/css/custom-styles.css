@@ -2,6 +2,10 @@
     margin-top: 2rem !important;
 }
 
+.top-margin-header {
+    margin-top: 6rem !important;
+}
+
 .black {
     color: black !important;
 }
@@ -12,4 +16,70 @@
     margin-right: auto;
     margin-top: 6rem;
     width: 150px;
+}
+
+
+
+
+
+/* STYLES YOU ADDED AS STYLE TAG */
+
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 20px;
+}
+
+.logo {
+    flex: 0 0 auto;
+    margin-right: 20px;
+}
+
+.logo img {
+    max-width: 100px;
+    height: auto;
+}
+
+.text {
+    flex: 1 1 auto;
+    font-size: 1.2em;
+    color: #333;
+}
+
+@media (max-width: 600px) {
+    .container {
+        text-align: center;
+        flex-direction: column;
+    }
+
+    .logo {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .text {
+        font-size: 1em;
+    }
+}
+
+
+
+
+
+/* TABLE STYLES */
+
+table {
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid grey;
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    border-bottom: 2px solid black;
 }

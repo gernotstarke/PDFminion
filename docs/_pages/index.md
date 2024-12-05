@@ -17,47 +17,7 @@ header:
 excerpt: "**For all those who like handouts - and page numbers even more so!**"
 ---
 
-<style>
 
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        padding: 20px;
-    }
-
-    .logo {
-        flex: 0 0 auto;
-        margin-right: 20px;
-    }
-
-    .logo img {
-        max-width: 100px;
-        height: auto;
-    }
-
-    .text {
-        flex: 1 1 auto;
-        font-size: 1.2em;
-        color: #333;
-    }
-
-    @media (max-width: 600px) {
-        .container {
-            text-align: center;
-            flex-direction: column;
-        }
-
-        .logo {
-            margin-right: 0;
-            margin-bottom: 10px;
-        }
-
-        .text {
-            font-size: 1em;
-        }
-    }
-</style>
 
 <section>
 
@@ -126,6 +86,26 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
 
     <h1>Installation</h1>
 
+    <div class="box-container">
+
+        <div class="box box--primary box-third">
+            <h4><i class="fab fa-apple"></i> MacOS</h4>
+            <p>How to install on MacOS</p>
+        </div>
+
+        <div class="box box--primary box-third">
+            <h4><i class="fab fa-windows"></i> Windows</h4>
+            <p>How to install on Windows</p>
+        </div>
+
+        <div class="box box--primary box-third">
+            <h4><i class="fab fa-linux"></i> Linux</h4>
+            <p>How to install on Linux</p>
+        </div>
+
+    </div>
+
+
 
 </section>
 
@@ -135,13 +115,9 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
 <br>
 
 
-<section id="usage">
+<section id="usage"></section>
 
 <h1>Usage</h1>
-
-<div class="dummyt" markdown="1">
-
-## Usage
 
 | **Command/Config Name**  | **Long Command**            | **Short Command**       | **Description**    |
 |--------------------------|----------------------------|--------------------------|--------------------|
@@ -165,7 +141,6 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
 | **Page Count Prefix**    | `--page-count-prefix <text>`|                          | Sets prefix for total page count. Default: "of". Example: `pdfminion --page-count-prefix "out of"`                               |
 
 
-</section>
 
 <br>
 <hr class="section-sep">
