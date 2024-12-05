@@ -21,7 +21,7 @@ logo                     : "/assets/images/PDFminion-logo.png" # Site logo displ
 show-popup               : false # set to false if you don't need / want to show a cookie-banner / cdn-usage popup.
                                 # Edit the popup itself in the respective /includes file
 masthead_title           : " "  # Overrides the website title displayed in the masthead, use " " for no title
-sticky-masthead          : false # if true, masthead/navigation bar will stay visible when the user scrolls down.
+sticky-masthead          : true # if true, masthead/navigation bar will stay visible when the user scrolls down.
                                 # if false, it will move out of sight when scrolling.
 masthead-opacity         : 0.8 # set to any value between 0 and 1.
                                 # 0.8-0.9 is a good recommended starting point. Only relevant if masthead is sticky.
