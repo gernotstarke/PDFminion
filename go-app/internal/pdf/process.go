@@ -3,11 +3,11 @@ package pdf
 import (
 	"fmt"
 	"github.com/rs/zerolog/log"
-	"pdfminion/internal/cli"
+	"pdfminion/internal/domain"
 	"sort"
 )
 
-func ProcessPDFs(cfg *cli.Options) error {
+func ProcessPDFs(cfg *domain.Options) error {
 	log.Debug().Msg("Starting PDF processing") // Only shown in debug mode
 
 	InitializePDFInternals()

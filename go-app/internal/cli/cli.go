@@ -6,105 +6,36 @@ import (
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"pdfminion/internal/domain"
 	"sort"
 	"strings"
 	"time"
-)
-
-type Options struct {
-	SourceDir string
-	TargetDir string
-	Force     bool
-	Debug     bool
-	Help      bool
-	Version   bool
-}
-
-// FlagDef represents a flag definition with possible short and long forms
-type FlagDef struct {
-	Long    string
-	Short   string
-	Default interface{}
-	Help    string
-}
-
-// Flag definitions
-var flags = map[string]FlagDef{
-	"source": {
-		Long:    "source",
-		Short:   "s",
-		Default: defaultSourceDir,
-		Help:    "Specify the source directory",
-	},
-	"target": {
-		Long:    "target",
-		Short:   "t",
-		Default: defaultTargetDir,
-		Help:    "Specify the target directory",
-	},
-	"force": {
-		Long:    "force",
-		Short:   "f",
-		Default: false,
-		Help:    "Forces overwrite of existing files",
-	},
-	"debug": {
-		Long:    "debug",
-		Short:   "d",
-		Default: false,
-		Help:    "Enable debug logging",
-	},
-	"help": {
-		Long:    "help",
-		Short:   "h",
-		Default: false,
-		Help:    "Show this help message",
-	},
-	"version": {
-		Long:    "version",
-		Short:   "v",
-		Default: false,
-		Help:    "Show version information",
-	},
-}
-
-const (
-	defaultSourceDir     = "_pdfs"
-	defaultTargetDir     = "_target"
-	PageNrPrefix         = ""
-	ChapterPrefix        = "Kap."
-	ChapterPageSeparator = " - "
 )
 
 // Version information - injected at build time
 var (
 	buildTime     string
 	buildPlatform string
-	appVersion    string
 )
 
-func SetAppVersion(version string) {
-	appVersion = version
-}
-
-func ParseOptions() (*Options, error) {
-	opts := &Options{
-		SourceDir: defaultSourceDir,
-		TargetDir: defaultTargetDir,
+func ParseOptions() (*domain.Options, error) {
+	opts := &domain.Options{
+		SourceDir: domain.DefaultSourceDir,
+		TargetDir: domain.DefaultTargetDir,
 	}
 
 	// Register all flags
-	flag.StringVar(&opts.SourceDir, "source", defaultSourceDir, flags["source"].Help)
-	flag.StringVar(&opts.SourceDir, "s", defaultSourceDir, "")
-	flag.StringVar(&opts.TargetDir, "target", defaultTargetDir, flags["target"].Help)
-	flag.StringVar(&opts.TargetDir, "t", defaultTargetDir, "")
-	flag.BoolVar(&opts.Force, "force", false, flags["force"].Help)
+	flag.StringVar(&opts.SourceDir, "source", domain.DefaultSourceDir, domain.Flags["source"].Help)
+	flag.StringVar(&opts.SourceDir, "s", domain.DefaultSourceDir, "")
+	flag.StringVar(&opts.TargetDir, "target", domain.DefaultTargetDir, domain.Flags["target"].Help)
+	flag.StringVar(&opts.TargetDir, "t", domain.DefaultTargetDir, "")
+	flag.BoolVar(&opts.Force, "force", false, domain.Flags["force"].Help)
 	flag.BoolVar(&opts.Force, "f", false, "")
-	flag.BoolVar(&opts.Debug, "debug", false, flags["debug"].Help)
+	flag.BoolVar(&opts.Debug, "debug", false, domain.Flags["debug"].Help)
 	flag.BoolVar(&opts.Debug, "d", false, "")
-	flag.BoolVar(&opts.Help, "help", false, flags["help"].Help)
+	flag.BoolVar(&opts.Help, "help", false, domain.Flags["help"].Help)
 	flag.BoolVar(&opts.Help, "h", false, "")
-	flag.BoolVar(&opts.Version, "version", false, flags["version"].Help)
+	flag.BoolVar(&opts.Version, "version", false, domain.Flags["version"].Help)
 	flag.BoolVar(&opts.Version, "v", false, "")
 
 	flag.Usage = printHelp
@@ -145,14 +76,14 @@ Options:
 
 	// Create a sorted list of flags for consistent output
 	var flagNames []string
-	for name := range flags {
+	for name := range domain.Flags {
 		flagNames = append(flagNames, name)
 	}
 	sort.Strings(flagNames)
 
 	// Print each flag with its short form
 	for _, name := range flagNames {
-		f := flags[name]
+		f := domain.Flags[name]
 		switch def := f.Default.(type) {
 		case string:
 			fmt.Printf("  -%s, --%-12s %s (default: %q)\n",
@@ -165,7 +96,7 @@ Options:
 }
 
 func printVersion() {
-	fmt.Printf("PDFminion version %s\n", appVersion)
+	fmt.Printf("PDFminion version %s\n", domain.AppVersion)
 	fmt.Printf("Built on: %s\n", buildPlatform)
 	if buildTime != "" {
 		t, err := time.Parse("2006 Jan 02 15:04", buildTime)
@@ -205,21 +136,21 @@ func getDaySuffix(day string) string {
 	}
 }
 
-func (o *Options) validate() error {
+func (o *domain.Options) validate() error {
 	if err := o.validateSourceDir(); err != nil {
 		return err
 	}
 	return o.validateTargetDir()
 }
 
-func (o *Options) validateSourceDir() error {
+func (o *domain.Options) validateSourceDir() error {
 	if _, err := os.Stat(o.SourceDir); os.IsNotExist(err) {
 		return fmt.Errorf("source directory %q does not exist", o.SourceDir)
 	}
 	return nil
 }
 
-func (o *Options) validateTargetDir() error {
+func (o *domain.Options) validateTargetDir() error {
 	if _, err := os.Stat(o.TargetDir); os.IsNotExist(err) {
 		fmt.Printf("Target directory '%s' does not exist. Creating it...\n", o.TargetDir)
 		if err := os.MkdirAll(o.TargetDir, os.ModePerm); err != nil {
