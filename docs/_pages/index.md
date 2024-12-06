@@ -50,27 +50,29 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
 
     <h1>Features</h1>
 
-    <p>
-        Placeholder content for features
-    </p>
-
-    <div class="box-container">
+        <div class="box-container">
 
         <div class="box box--primary box-third">
-            <h4>Features </h4>
-            <p>Feature 1 description</p>
+            <img src="assets/images/functions/page-number.png" alt="page-numbering">
         </div>
 
         <div class="box box--primary box-third">
-            <h4>Feature 2</h4>
-            <p>Feature 2 description</p>
+            <img src="assets/images/functions/running-header.png" alt="running-head">
         </div>
 
         <div class="box box--primary box-third">
-            <h4>Feature 2</h4>
-            <p>Feature 2 description</p>
+            <img src="assets/images/functions/mascot.png" alt="we have a sweet mascot">
         </div>
 
+        <div class="box box--primary box-third">
+            <img src="assets/images/functions/chapter-number.png" alt="chapter numbers">
+        </div>
+        <div class="box box--primary box-third">
+            <img src="assets/images/functions/toc.png" alt="table of contents">
+        </div>
+        <div class="box box--primary box-third">
+            <img src="assets/images/functions/merge.png" alt="merge documents">
+        </div>
     </div>
 
 </section>
@@ -84,14 +86,18 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
 
 <section id="installation">
 
-    <h1>Installation</h1>
+<h1>Installation</h1>
+    
+PDFminion will be installable with [Homebrew](https://brew.sh), the package manager for MacOS.
+But currently, this simple installation method is not available...
 
     <div class="box-container">
 
         <div class="box box--primary box-third">
             <h4><i class="fab fa-apple"></i> MacOS</h4>
             <p>How to install on MacOS</p>
-        </div>
+
+           </div>
 
         <div class="box box--primary box-third">
             <h4><i class="fab fa-windows"></i> Windows</h4>
@@ -117,10 +123,11 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
 
 <section id="usage"></section>
 
+
 <h1>Usage</h1>
 
-| **Command/Config Name**  | **Long Command**            | **Short Command**       | **Description**    |
-|--------------------------|----------------------------|--------------------------|--------------------|
+| **Name**  | **Long Command**  | **Short Command** | **Description**    |
+|-----------|-------------------|-------------------|--------------------|
 | **Help**                 | `--help`                   | `-h`, `-?`, `?`         | Displays a list of supported commands and their usage. Example: `pdfminion --help`                                                |
 | **Version**              | `--version`                | `-v`                    | Displays the current version of PDFminion. Example: `pdfminion --version`                                                        |
 | **Source Directory**     | `--source <directory>`     | `-s <directory>`        | Specifies the input directory for PDF files. Example: `pdfminion --source ./input`                                               |
