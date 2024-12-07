@@ -84,32 +84,38 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
 <br>
 
 
-<section id="installation">
+<section id="installation" markdown="1">
 
 <h1>Installation</h1>
     
 PDFminion will be installable with [Homebrew](https://brew.sh), the package manager for MacOS.
 But currently, this simple installation method is not available...
 
-    <div class="box-container">
+<div class="box-container">
 
-        <div class="box box--primary box-third">
-            <h4><i class="fab fa-apple"></i> MacOS</h4>
-            <p>How to install on MacOS</p>
+<div class="box box--primary box-third" markdown="1">
+<h4><i class="fab fa-apple"></i> MacOS</h4>
+<p>How to install on MacOS</p>
+PDFminion will be installable with [Homebrew](https://brew.sh), the package manager for MacOS.
+But currently, this simple installation method is not available...
 
-           </div>
+</div>
 
-        <div class="box box--primary box-third">
-            <h4><i class="fab fa-windows"></i> Windows</h4>
-            <p>How to install on Windows</p>
-        </div>
+<div class="box box--primary box-third" markdown="1">
+<h4><i class="fab fa-windows"></i> Windows</h4>
+<p>How to install on Windows</p>
+PDFminion will be installable with [Homebrew](https://brew.sh), the package manager for MacOS.
+But currently, this simple installation method is not available...
+</div>
 
-        <div class="box box--primary box-third">
-            <h4><i class="fab fa-linux"></i> Linux</h4>
-            <p>How to install on Linux</p>
-        </div>
+<div class="box box--primary box-third" markdown="1">
+<h4><i class="fab fa-linux"></i> Linux</h4>
+<p>How to install on Linux</p>
+PDFminion will be installable with [Homebrew](https://brew.sh), the package manager for MacOS.
+But currently, this simple installation method is not available...
+</div>
 
-    </div>
+</div>
 
 
 
