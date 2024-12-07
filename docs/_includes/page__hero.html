@@ -19,10 +19,10 @@
 {% assign image_description = image_description | markdownify | strip_html | strip_newlines | escape_once %}
 
 <div class="page__hero{% if page.header.overlay_color or page.header.overlay_image %}--overlay{% endif %}"
-     style="background: linear-gradient(to right, #1976d2, #d5eaf6); height: 60vh; background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+     style="background: linear-gradient(to right, #1976d2, #d5eaf6); background-size: cover; display: flex; flex-direction: column; justify-content: center; align-items: center;">
   {% if page.header.overlay_color or page.header.overlay_image %}
   <div class="wrapper">
-    <h1 id="page-title" class="page__title top-margin-header black" itemprop="headline">
+    <h1 id="page-title" class="page__title black" itemprop="headline">
       {{ page.title | default: site.title | markdownify | remove: "<p>" | remove: "</p>" }}
     </h1>
     {% if page.header.show_overlay_excerpt != false and page.excerpt %}
