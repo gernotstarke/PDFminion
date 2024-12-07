@@ -15,7 +15,7 @@ title_separator          : "-"
 subtitle                 : " " # Displayed in the masthead below the title, use " " for no subtitle
 url                      : "https://pdfminion.arc42.org" # the base hostname & protocol for your site
 baseurl                  : # the subpath of your site, e.g. "/blog"
-repository               : "gernotstarke/PDFMinion" # GitHub username/repo-name
+repository               : "arc42/PDFMinion" # GitHub username/repo-name
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : "/assets/images/PDFminion-logo.png" # Site logo displayed in the masthead
 show-popup               : false # set to false if you don't need / want to show a cookie-banner / cdn-usage popup.
@@ -42,11 +42,10 @@ footer:
       # url: "mailto:"
     - label: "LinkedIn"
       icon: "fab fa-linkedin"
-      # url:
-      # url:
+      url: "https://www.linkedin.com/in/gernotstarke/"
     - label: "GitHub"
       icon: "fab fa-github"
-      url: "https://github.com/gernotstarke"
+      url: "https://github.com/arc42"
   copyright: "Gernot Starke" # Replace with your own
   creator: # Replace with your own creator name or remove this if you don't want any "created by" in the footer
     name: "Per Starke Web Development"
