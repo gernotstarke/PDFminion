@@ -10,31 +10,31 @@ header:
     overlay_filter: rgba(0, 0, 0, 0.6)
 
     actions:
-        - label: "Get Started <i class='fab fa-github'></i>"
-          url: https://github.com/gernotstarke/pdfminion
+        - label: "GitHub Repo <i class='fab fa-github'></i>"
+          url: https://github.com/arc42/pdfminion
           blank: true
 
-excerpt: "**For all those who like handouts - and page numbers even more so!**"
+excerpt: "**For all those who like handouts with page numbers and running headers!**"
 ---
 
 
 
 <section>
 
-    <p>
-        PDFminion adds page numbers and running-headers on pdf documents, helping to produce nicely formated
+     <p>
+        PDFminion adds page numbers and running-headers on pdf documents, helping to produce useful handouts.
 
-        It runs on all platforms and is free to use.
-    </p>
-
-    <div class="container">
+        It's open-source, runs on all major platforms and is free to use.
+        <br>    
         <div class="logo">
             <img src="assets/images/arc42-logo.png" alt="arc42 logo">
         </div>
-        <div class="text">
-            Brought to you by <strong>arc42</strong> + <strong>Gernot Starke</strong>
-        </div>
-    </div>
+
+    </p>
+ <p>
+   Brought to you by <strong>arc42</strong>
+</p>
+
 </section>
 
 
@@ -55,35 +55,35 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
         <div class="box box--primary box-third">
             <img src="assets/images/functions/page-number.png" alt="page-numbering" class="img-half">
             <h5>Page Numbers</h5>
-            <p>Description of this feature</p>
+            <p>Adds consecutive page numbers to all documents.</p>
         </div>
 
         <div class="box box--primary box-third">
             <img src="assets/images/functions/running-header.png" alt="running-head" class="img-half">
             <h5>Running Header</h5>
-            <p>Description of this feature</p>
+            <p>Adds a header to the top of all pages in all documents. </p>
         </div>
 
         <div class="box box--primary box-third">
             <img src="assets/images/functions/mascot.png" alt="we have a sweet mascot" class="img-half">
             <h5>Add Personal Touch</h5>
-            <p>Description of this feature</p>
+            <p>Who said PDF documents couldn't have a personal touch? Thanx to Lisa, @teapot418.</p>
         </div>
     
         <div class="box box--primary box-third">
             <img src="assets/images/functions/chapter-number.png" alt="chapter numbers" class="img-half">
             <h5>Chapter Number</h5>
-            <p>Description of this feature</p>
+            <p>Every document makes a chapter within the output. This feature allows to add the chapter number to all pages.</p>
         </div>
         <div class="box box--primary box-third">
             <img src="assets/images/functions/toc.png" alt="table of contents" class="img-half">
             <h5>Table of Contents</h5>
-            <p>Description of this feature</p>
+            <p>Create table-of-contents with document names, their chapter number and starting page number.</p>
         </div>
         <div class="box box--primary box-third">
             <img src="assets/images/functions/merge.png" alt="merge documents" class="img-half">
             <h5>Merge</h5>
-            <p>Description of this feature</p>
+            <p>Create a single output document from all inputs. The output file name is configurable.</p>
         </div>
     </div>
 
@@ -100,8 +100,10 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
 
 <h1>Installation</h1>
     
-PDFminion will be installable with [Homebrew](https://brew.sh), the package manager for MacOS.
-But currently, this simple installation method is not available...
+PDFminion runs on all major (desktop) operating systems. 
+You can download an appropriate version and install it yourself, or you can use one of our installation options.
+
+If you're nerdy enough, you can [fork the repo](https://github.com/arc42/pdfminion), and build your own executable version, either with `make` or `go build`.
 
 <div class="box-container">
 
@@ -109,22 +111,22 @@ But currently, this simple installation method is not available...
 <h4><i class="fab fa-apple"></i> MacOS</h4>
 <p>How to install on MacOS</p>
 PDFminion will be installable with [Homebrew](https://brew.sh), the package manager for MacOS.
-But currently, this simple installation method is not available...
+But currently, this installation method is not available...
 
 </div>
 
 <div class="box box--primary box-third" markdown="1">
 <h4><i class="fab fa-windows"></i> Windows</h4>
 <p>How to install on Windows</p>
-PDFminion will be installable with [Homebrew](https://brew.sh), the package manager for MacOS.
-But currently, this simple installation method is not available...
+PDFminion will be installable with [Chocolatey](https://chocolatey.org/), the package manager for Windows.
+But currently, this installation method is not available...
 </div>
 
 <div class="box box--primary box-third" markdown="1">
 <h4><i class="fab fa-linux"></i> Linux</h4>
 <p>How to install on Linux</p>
-PDFminion will be installable with [Homebrew](https://brew.sh), the package manager for MacOS.
-But currently, this simple installation method is not available...
+PDFminion will be installable with [Snapcraft](https://snapcraft.io/snapcraft), the package manager for Linux, that works for most distributions.
+But currently, this installation method is not available...
 </div>
 
 </div>
