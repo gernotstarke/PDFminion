@@ -47,9 +47,10 @@ footer:
     - label: "GitHub"
       icon: "fab fa-github"
       url: "https://github.com/gernotstarke"
+  copyright: "Gernot Starke" # Replace with your own
   creator: # Replace with your own creator name or remove this if you don't want any "created by" in the footer
-      name: "Gernot Starke"
-      url: "https://www.gernotstarke.de/"
+    name: "Per Starke Web Development"
+    url: "https://perstarke-webdev.de"
 
 
 
