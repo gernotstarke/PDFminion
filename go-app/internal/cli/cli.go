@@ -18,8 +18,8 @@ var (
 	buildPlatform string
 )
 
-func ParseOptions() (*domain.Options, error) {
-	opts := &domain.Options{
+func ParseOptions() (*domain.MinionConfig, error) {
+	opts := &domain.MinionConfig{
 		SourceDir: domain.DefaultSourceDir,
 		TargetDir: domain.DefaultTargetDir,
 	}
@@ -71,7 +71,7 @@ When printed double-sided, every chapter will start on a right side.
 
 Usage: %s [options]
 
-Options:
+MinionConfig:
 `, progName)
 
 	// Create a sorted list of flags for consistent output
@@ -136,21 +136,21 @@ func getDaySuffix(day string) string {
 	}
 }
 
-func (o *domain.Options) validate() error {
+func (o *domain.MinionConfig) validate() error {
 	if err := o.validateSourceDir(); err != nil {
 		return err
 	}
 	return o.validateTargetDir()
 }
 
-func (o *domain.Options) validateSourceDir() error {
+func (o *domain.MinionConfig) validateSourceDir() error {
 	if _, err := os.Stat(o.SourceDir); os.IsNotExist(err) {
 		return fmt.Errorf("source directory %q does not exist", o.SourceDir)
 	}
 	return nil
 }
 
-func (o *domain.Options) validateTargetDir() error {
+func (o *domain.MinionConfig) validateTargetDir() error {
 	if _, err := os.Stat(o.TargetDir); os.IsNotExist(err) {
 		fmt.Printf("Target directory '%s' does not exist. Creating it...\n", o.TargetDir)
 		if err := os.MkdirAll(o.TargetDir, os.ModePerm); err != nil {

@@ -7,7 +7,7 @@ import (
 	"sort"
 )
 
-func ProcessPDFs(cfg *domain.Options) error {
+func ProcessPDFs(cfg *domain.MinionConfig) error {
 	log.Debug().Msg("Starting PDF processing") // Only shown in debug mode
 
 	InitializePDFInternals()

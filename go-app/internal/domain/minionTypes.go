@@ -11,10 +11,13 @@ import (
 // SourceDir
 // TargetDir
 // Force
+// Evenify
+// Merge
+// MergeFileName
 // Debug
 //
 // For the page header:
-// RunningHead: The text to show in the page header, identical on all pages
+// RunningHeader: The text to show in the page header, identical on all pages
 //
 // For the page footer:
 // Let's take "Chapter 3 - page 3 of 42" as an example
@@ -25,50 +28,53 @@ import (
 
 type MinionConfig struct {
 
+	// Commands that are executed immediately
+	Help          bool
+	Version       bool
+	ListLanguages bool
+
 	// General config settings, see ADR-0005
-	Language  language.Tag
-	Debug     bool
-	SourceDir string
-	TargetDir string
-	Force     bool
+	Language      language.Tag
+	Debug         bool
+	SourceDir     string
+	TargetDir     string
+	Force         bool
+	Evenify       bool
+	Merge         bool
+	MergeFileName string
 
 	// Page-related settings, see ADR-0006
-	RunningHead          string
+	RunningHeader        string
 	ChapterPrefix        string
 	Separator            string
 	PagePrefix           string
 	TotalPageCountPrefix string
+	BlankPageText        string
 }
 
 // DefaultTexts holds UI texts by language
 
 var DefaultTexts = map[language.Tag]struct {
-	SectionHeader string
-	PageHeader    string
+	ChapterPrefix string
+	RunningHeader string
 	PageFooter    string
 	PageNumber    string
+	BlankPageText string
 }{
 	language.German: {
-		SectionHeader: "Kapitel",
-		PageHeader:    "Seite",
+		ChapterPrefix: "Kapitel",
+		RunningHeader: "Seite",
 		PageFooter:    "Seite %d von %d",
 		PageNumber:    "Seite %d",
+		BlankPageText: "Diese Seite bleibt absichtlich leer",
 	},
 	language.English: {
-		SectionHeader: "Chapter",
-		PageHeader:    "Page",
+		ChapterPrefix: "Chapter",
+		RunningHeader: "Page",
 		PageFooter:    "Page %d of %d",
 		PageNumber:    "Page %d",
+		BlankPageText: "deliberately left blank",
 	},
-}
-
-type Options struct {
-	SourceDir string
-	TargetDir string
-	Force     bool
-	Debug     bool
-	Help      bool
-	Version   bool
 }
 
 // FlagDef represents a flag definition with possible short and long forms
@@ -101,7 +107,7 @@ var Flags = map[string]FlagDef{
 	},
 	"debug": {
 		Long:    "debug",
-		Short:   "d",
+		Short:   "",
 		Default: false,
 		Help:    "Enable debug logging",
 	},
@@ -117,7 +123,24 @@ var Flags = map[string]FlagDef{
 		Default: false,
 		Help:    "Show version information",
 	},
-}
+	"list-languages": {
+		Long:    "list-languages",
+		Short:   "ll",
+		Default: false,
+		Help:    "Show available languages, like EN or DE",
+	},
+	"defaults": {
+		Long:    "defaults",
+		Short:   "d",
+		Default: false,
+		Help:    "Show all current default settings",
+	},
+	"language": {
+		Long:    "language",
+		Short:   "l",
+		Default: false,
+		Help:    "Sets the language for stamped text, like EN or DE",
+	}}
 
 const (
 	DefaultSourceDir     = "_pdfs"

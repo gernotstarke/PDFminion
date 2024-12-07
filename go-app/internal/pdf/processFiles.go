@@ -30,7 +30,7 @@ func InitializePDFInternals() {
 	relaxedConf.ValidationMode = model.ValidationRelaxed
 }
 
-func CollectCandidatePDFs(cfg *domain.Options) ([]string, error) {
+func CollectCandidatePDFs(cfg *domain.MinionConfig) ([]string, error) {
 	// count PDFs in source directory
 	// abort if no PDF file is present
 
