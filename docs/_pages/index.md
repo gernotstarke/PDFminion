@@ -53,25 +53,37 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
         <div class="box-container">
 
         <div class="box box--primary box-third">
-            <img src="assets/images/functions/page-number.png" alt="page-numbering">
+            <img src="assets/images/functions/page-number.png" alt="page-numbering" class="img-half">
+            <h5>Page Numbers</h5>
+            <p>Description of this feature</p>
         </div>
 
         <div class="box box--primary box-third">
-            <img src="assets/images/functions/running-header.png" alt="running-head">
+            <img src="assets/images/functions/running-header.png" alt="running-head" class="img-half">
+            <h5>Running Header</h5>
+            <p>Description of this feature</p>
         </div>
 
         <div class="box box--primary box-third">
-            <img src="assets/images/functions/mascot.png" alt="we have a sweet mascot">
+            <img src="assets/images/functions/mascot.png" alt="we have a sweet mascot" class="img-half">
+            <h5>Add Personal Touch</h5>
+            <p>Description of this feature</p>
         </div>
 
         <div class="box box--primary box-third">
-            <img src="assets/images/functions/chapter-number.png" alt="chapter numbers">
+            <img src="assets/images/functions/chapter-number.png" alt="chapter numbers" class="img-half">
+            <h5>Chapter Number</h5>
+            <p>Description of this feature</p>
         </div>
         <div class="box box--primary box-third">
-            <img src="assets/images/functions/toc.png" alt="table of contents">
+            <img src="assets/images/functions/toc.png" alt="table of contents" class="img-half">
+            <h5>Table of Contents</h5>
+            <p>Description of this feature</p>
         </div>
         <div class="box box--primary box-third">
-            <img src="assets/images/functions/merge.png" alt="merge documents">
+            <img src="assets/images/functions/merge.png" alt="merge documents" class="img-half">
+            <h5>Merge</h5>
+            <p>Description of this feature</p>
         </div>
     </div>
 
