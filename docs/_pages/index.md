@@ -63,7 +63,7 @@ excerpt: "**For all those who like handouts - and page numbers even more so!**"
         <div class="box box--primary box-third">
             <img src="assets/images/functions/mascot.png" alt="we have a sweet mascot">
         </div>
-
+    
         <div class="box box--primary box-third">
             <img src="assets/images/functions/chapter-number.png" alt="chapter numbers">
         </div>
@@ -121,6 +121,19 @@ But currently, this simple installation method is not available...
 <br>
 
 
+<section id="terminology"></section>
+
+
+<h1>Terminology</h1>
+
+<img src="assets/images/page-terminology.png" alt="page terminology"/>
+
+
+<br>
+<hr class="section-sep">
+<br>
+
+
 <section id="usage"></section>
 
 
@@ -141,12 +154,12 @@ But currently, this simple installation method is not available...
 | **Merge**                | `--merge <filename>`       | `-m <filename>`         | Merges input files into a single PDF. Uses default name if `<filename>` not provided. Example: `pdfminion --merge combined.pdf`   |
 | **Table of Contents**    | `--toc`                    |                          | Generates a table-of-contents PDF. Supported from v1.5.0. Example: `pdfminion --toc`                                             |
 | **Config File**          | `--config <filename>`      | `-c <filename>`         | Loads configuration from a file. Overrides conflicting command-line options. Example: `pdfminion --config settings.json`         |
-| **List Languages**       | `--list-languages`         | `-ll`                   | Lists all available languages for the `--language` option. Example: `pdfminion --list-languages`                                 |
-| **Running Head**         | `--running-head <text>`    |                          | Sets text for the running head at the top of each page. Example: `pdfminion --running-head "Document Title"`                     |
-| **Chapter Prefix**       | `--chapter-prefix <text>`  |                          | Specifies prefix for chapter numbers. Default: "Chapter". Example: `pdfminion --chapter-prefix "Ch."`                           |
-| **Page Prefix**          | `--page-prefix <text>`     |                          | Sets prefix for page numbers. Default: "Page". Example: `pdfminion --page-prefix "Page"`                                         |
-| **Separator**            | `--separator <symbol>`     |                          | Defines the separator between chapter, page number, and total count. Default: `-`. Example: `pdfminion --separator " | "`        |
-| **Page Count Prefix**    | `--page-count-prefix <text>`|                          | Sets prefix for total page count. Default: "of". Example: `pdfminion --page-count-prefix "out of"`                               |
+| **List Languages**       | `--list-languages` | `-ll`                   | Lists all available languages for the `--language` option. Example: `pdfminion --list-languages` |
+| **Running Head**         | `--running-head <text>`    | | Sets text for the running head at the top of each page. Example: `pdfminion --running-head "Document Title"`|
+| **Chapter Prefix**       | `--chapter-prefix <text>`  | | Specifies prefix for chapter numbers. Default: "Chapter". Example: `pdfminion --chapter-prefix "Ch."`|
+| **Page Prefix**          | `--page-prefix <text>`     | | Sets prefix for page numbers. Default: "Page". Example: `pdfminion --page-prefix "Page"` |
+| **Separator**            | `--separator <symbol>`     |  | Defines the separator between chapter, page number, and total count. Default: `-`. Example: `pdfminion --separator " | "`        |
+| **Page Count Prefix**    | `--page-count-prefix <text>`| | Sets prefix for total page count. Default: "of". Example: `pdfminion --page-count-prefix "out of"` |
 
 
 
