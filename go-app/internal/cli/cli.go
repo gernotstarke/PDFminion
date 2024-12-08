@@ -3,7 +3,7 @@ package cli
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
+	"github.com/rs/zerolog/log"
 	"os"
 	"path/filepath"
 	"pdfminion/internal/domain"
@@ -38,6 +38,9 @@ func ParseOptions() (*domain.MinionConfig, error) {
 	flag.BoolVar(&opts.Version, "version", false, domain.Flags["version"].Help)
 	flag.BoolVar(&opts.Version, "v", false, "")
 
+	flag.BoolVar(&opts.ListLanguages, "list-languages", false, domain.Flags["list-languages"].Help)
+	flag.BoolVar(&opts.ListLanguages, "ll", false, "")
+
 	flag.Usage = printHelp
 	flag.Parse()
 
@@ -52,8 +55,13 @@ func ParseOptions() (*domain.MinionConfig, error) {
 		os.Exit(0)
 	}
 
+	if opts.ListLanguages {
+		log.Info().Msg("List available languages")
+		domain.PrintLanguages()
+		os.Exit(0)
+	}
 	// Only validate directories if we're actually going to process files
-	if err := opts.validate(); err != nil {
+	if err := opts.Validate(); err != nil {
 		return nil, err
 	}
 
@@ -134,43 +142,4 @@ func getDaySuffix(day string) string {
 	default:
 		return "th"
 	}
-}
-
-func (o *domain.MinionConfig) validate() error {
-	if err := o.validateSourceDir(); err != nil {
-		return err
-	}
-	return o.validateTargetDir()
-}
-
-func (o *domain.MinionConfig) validateSourceDir() error {
-	if _, err := os.Stat(o.SourceDir); os.IsNotExist(err) {
-		return fmt.Errorf("source directory %q does not exist", o.SourceDir)
-	}
-	return nil
-}
-
-func (o *domain.MinionConfig) validateTargetDir() error {
-	if _, err := os.Stat(o.TargetDir); os.IsNotExist(err) {
-		fmt.Printf("Target directory '%s' does not exist. Creating it...\n", o.TargetDir)
-		if err := os.MkdirAll(o.TargetDir, os.ModePerm); err != nil {
-			return fmt.Errorf("Failed to create directory '%s': %v", o.TargetDir, err)
-		}
-		return nil
-	}
-
-	if o.Force {
-		return nil
-	}
-
-	files, err := ioutil.ReadDir(o.TargetDir)
-	if err != nil {
-		return fmt.Errorf("Cannot read directory '%s': %v", o.TargetDir, err)
-	}
-
-	if len(files) > 0 {
-		return fmt.Errorf("Target directory '%s' is not empty. Use --force to override", o.TargetDir)
-	}
-
-	return nil
 }

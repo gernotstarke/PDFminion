@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"fmt"
 	"golang.org/x/text/language"
 	"golang.org/x/text/language/display"
 	"os"
@@ -47,4 +48,34 @@ func ValidateLanguage(lang string) (language.Tag, error) {
 
 	tag, _, _ = matcher.Match(tag)
 	return tag, nil
+}
+
+func ListAvailableLanguages() [][]string {
+	languages := [][]string{}
+	for _, tag := range supportedLanguages {
+		// Get language code (two-letter code)
+		langCode := tag.String()
+
+		// Get language name in the language itself
+		nameInLanguage := GetLanguageName(tag)
+
+		// Get language name in English
+		nameInEnglish := GetLanguageNameInEnglish(tag)
+
+		languages = append(languages, []string{
+			langCode,       // Language code
+			nameInLanguage, // Name in native language
+			nameInEnglish,  // Name in English
+		})
+	}
+	return languages
+}
+
+func PrintLanguages() {
+	languages := ListAvailableLanguages()
+	for _, lang := range languages {
+		// Each `lang` is a []string with the format [langCode, nameInLanguage, nameInEnglish]
+		fmt.Printf("Code: %s, Native: %s, English: %s\n", lang[0], lang[1], lang[2])
+	}
+
 }
