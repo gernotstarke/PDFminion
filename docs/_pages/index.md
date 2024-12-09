@@ -67,7 +67,7 @@ excerpt: "**For all those who like handouts with page numbers and running header
         <div class="box box--primary box-third">
             <img src="assets/images/functions/mascot.png" alt="we have a sweet mascot" class="img-half">
             <h5>Add Personal Touch</h5>
-            <p>Who said PDF documents couldn't have a personal touch? Thanx to Lisa, @teapot418.</p>
+            <p>Who said PDF documents couldn't have a personal touch? Thanx to [Lisa, @teapot418](https://sketchnotes.tech).</p>
         </div>
     
         <div class="box box--primary box-third">
