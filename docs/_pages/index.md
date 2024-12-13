@@ -75,11 +75,20 @@ excerpt: "**For all those who like handouts with page numbers and running header
             <h5>Chapter Number</h5>
             <p>Every document makes a chapter within the output. This feature allows to add the chapter number to all pages.</p>
         </div>
-        <div class="box box--primary box-third">
+
+
+       <div class="box box--primary box-third">
+            <img src="assets/images/functions/evenify.png" alt="evenify" class="img-half">
+             <h5>Evenify</h5>
+             <p>Make all documents have an even number of pages by adding a blank page to files with odd page count.</p>
+       </div>
+
+       <div class="box box--primary box-third">
             <img src="assets/images/functions/toc.png" alt="table of contents" class="img-half">
             <h5>Table of Contents</h5>
             <p>Create table-of-contents with document names, their chapter number and starting page number.</p>
         </div>
+
         <div class="box box--primary box-third">
             <img src="assets/images/functions/merge.png" alt="merge documents" class="img-half">
             <h5>Merge</h5>
