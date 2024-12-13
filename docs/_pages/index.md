@@ -211,6 +211,7 @@ Set the running head, the page- and chapter prefix etc.
 | **Separator**            | `--separator <symbol>`     |  | Defines the separator between chapter, page number, and total count. Default: `-`. Example: `pdfminion --separator " | "`        |
 | **Page Count Prefix**    | `--page-count-prefix <text>`| | Sets prefix for total page count. Default: "of". Example: `pdfminion --page-count-prefix "out of"` |
 | **Evenify**  | `--evenify {on\|off}`  | `-e {on\|off}`  | Enables or disables adding blank pages for even page counts. Example: `pdfminion --evenify=off |
+| **Personal Touch**  | `--personal {on\|off}`  |   | Adds a personal touch (aka: Our PDFminion logo) on random pages. Not yet implemented. |
 
 
 <h2>Information</h2>
@@ -243,8 +244,8 @@ After all files have been processed, you may merge them or create a table-of-con
 
 | **Name**  | **Long Command**  | **Short Command** | **Description** |
 |-----------|-------------------|-------------------|-----------------|
-| **Merge** | `--merge <filename>`       | `-m <filename>` | Merges input files into a single PDF. Uses default name if `<filename>` not provided. Example: `pdfminion --merge combined.pdf`   |
-| **Table of Contents**  | `--toc`   |  | Generates a table-of-contents PDF. Supported from v1.5.0. Example: `pdfminion --toc`|
+| **Merge** | `--merge <filename>`       | `-m <filename>` | Merges input files into a single PDF. Uses default name if `<filename>` not provided. Not yet implemented. Example: `pdfminion --merge combined.pdf`   |
+| **Table of Contents**  | `--toc`   |  | Generates a table-of-contents PDF. Not yet implemented. Example: `pdfminion --toc`|
 | **Config File**  | `--config <filename>`  | `-c <filename>` | Loads configuration from a file. Overrides conflicting command-line options. Example: `pdfminion --config settings.json`  |
 
 
@@ -256,9 +257,22 @@ After all files have been processed, you may merge them or create a table-of-con
 
 <section id="examples">
 
-    <h1>Examples</h1>
+<h1 markdown="1">Examples</h1>
 
 <div markdown="1" >
+
+> **Example 1**: Add page numbers and running headers to all PDF files in the `input` directory and save the processed files in the `output` directory. Requires the `output` to be empty!
+
+```shell
+pdfminion --source ./input --target ./output
+```
+
+> **Example 2**: Force overwrite of existing files in the `output` directory  
+
+```shell
+pdfminion --force --source ./input --target ./output
+```
+
 
 </div>
 
