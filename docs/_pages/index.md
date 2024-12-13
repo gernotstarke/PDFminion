@@ -23,17 +23,15 @@ excerpt: "**For all those who like handouts with page numbers and running header
 
      <p>
         PDFminion adds page numbers and running-headers on pdf documents, helping to produce useful handouts.
-
+        <br>
         It's open-source, runs on all major platforms and is free to use.
         <br>    
+        <p>Brought to you by</p>
         <div class="logo">
-            <img src="assets/images/arc42-logo.png" alt="arc42 logo">
+            <img src="assets/images/arc42-logo.png" alt="arc42">
         </div>
 
     </p>
- <p>
-   Brought to you by <strong>arc42</strong>
-</p>
 
 </section>
 
@@ -67,7 +65,7 @@ excerpt: "**For all those who like handouts with page numbers and running header
         <div class="box box--primary box-third">
             <img src="assets/images/functions/mascot.png" alt="we have a sweet mascot" class="img-half">
             <h5>Add Personal Touch</h5>
-            <p>Who said PDF documents couldn't have a personal touch? Thanx to [Lisa, @teapot418](https://sketchnotes.tech).</p>
+            <p>Who said PDF documents couldn't have a personal touch? Thanx to <a href="https://www.sketchnotes.tech/">Lisa, @teapot418</a>.</p>
         </div>
     
         <div class="box box--primary box-third">
@@ -168,6 +166,18 @@ But currently, this installation method is not available...
 
 <img src="assets/images/page-terminology.png" alt="page terminology"/>
 
+<h2>Evenify</h2>
+
+To evenify a file means adding a blank page at the end of the file if the page-count is odd (1, 3, 5 or such).
+That means that the first page of every file in a group will always start on the front-page of paper,
+even in case of double-sided printing.
+
+Chapters in technical or scientific books traditionally start on odd (right-hand) pages to ensure consistency, 
+readability, and prominence, aligning with classic book design practices.
+
+
+<img src="assets/images/page-terminology-evenify.png" alt="evenify"/>
+
 
 <br>
 <hr class="section-sep">
@@ -179,27 +189,63 @@ But currently, this installation method is not available...
 
 <h1>Usage</h1>
 
+
+<h2>Basic Commands</h2>
+
 | **Name**  | **Long Command**  | **Short Command** | **Description**    |
 |-----------|-------------------|-------------------|--------------------|
-| **Help**                 | `--help`                   | `-h`, `-?`, `?`         | Displays a list of supported commands and their usage. Example: `pdfminion --help`                                                |
-| **Version**              | `--version`                | `-v`                    | Displays the current version of PDFminion. Example: `pdfminion --version`                                                        |
-| **Source Directory**     | `--source <directory>`     | `-s <directory>`        | Specifies the input directory for PDF files. Example: `pdfminion --source ./input`                                               |
+| **Source Directory**     | `--source <directory>`     | `-s <directory>`        | Specifies the input directory for PDF files. Example: `pdfminion --source ./input`|
 | **Target Directory**     | `--target <directory>`     | `-t <directory>`        | Specifies the output directory for processed files. Creates the directory if it doesn’t exist. Example: `pdfminion --target ./out`|
-| **Force Overwrite**      | `--force`                  | `-f`                    | Allows overwriting existing files in the target directory. Example: `pdfminion --force`                                          |
-| **Language**             | `--language <code>`        | `-l <code>`             | Sets the language for stamped text. Supports `EN` (English) and `DE` (German). Default: `EN`. Example: `pdfminion --language DE` | 
-| **Evenify**              | `--evenify {on\|off}`       | `-e {on\|off}`           | Enables or disables adding blank pages for even page counts. Example: `pdfminion --evenify=off`                                  |
-| **Blank Page Text**      | `--blankpagetext <text>`   | `-b <text>`             | Specifies text printed on blank pages added during evenification. Example: `pdfminion --blankpagetext "deliberately left blank"`              |
-| **Defaults**             | `--defaults`               |                          | Prints all current default settings. Example: `pdfminion --defaults`.                                                             |
-| **Debug Mode**           | `--debug`                  |                          | Enables debug mode for detailed logs. Example: `pdfminion --debug`                                                               |
-| **Merge**                | `--merge <filename>`       | `-m <filename>`         | Merges input files into a single PDF. Uses default name if `<filename>` not provided. Example: `pdfminion --merge combined.pdf`   |
-| **Table of Contents**    | `--toc`                    |                          | Generates a table-of-contents PDF. Supported from v1.5.0. Example: `pdfminion --toc`                                             |
-| **Config File**          | `--config <filename>`      | `-c <filename>`         | Loads configuration from a file. Overrides conflicting command-line options. Example: `pdfminion --config settings.json`         |
-| **List Languages**       | `--list-languages` | `-ll`                   | Lists all available languages for the `--language` option. Example: `pdfminion --list-languages` |
+| **Force Overwrite**      | `--force`                  | `-f`                    | Allows overwriting existing files in the target directory. Example: `pdfminion --force` |
+
+
+<h2>Processing Commands</h2>
+
+Set the running head, the page- and chapter prefix etc.
+
+| **Name**  | **Long Command**  | **Short Command** | **Description**    |
+|-----------|-------------------|-------------------|--------------------|
 | **Running Head**         | `--running-head <text>`    | | Sets text for the running head at the top of each page. Example: `pdfminion --running-head "Document Title"`|
 | **Chapter Prefix**       | `--chapter-prefix <text>`  | | Specifies prefix for chapter numbers. Default: "Chapter". Example: `pdfminion --chapter-prefix "Ch."`|
 | **Page Prefix**          | `--page-prefix <text>`     | | Sets prefix for page numbers. Default: "Page". Example: `pdfminion --page-prefix "Page"` |
 | **Separator**            | `--separator <symbol>`     |  | Defines the separator between chapter, page number, and total count. Default: `-`. Example: `pdfminion --separator " | "`        |
 | **Page Count Prefix**    | `--page-count-prefix <text>`| | Sets prefix for total page count. Default: "of". Example: `pdfminion --page-count-prefix "out of"` |
+| **Evenify**  | `--evenify {on\|off}`  | `-e {on\|off}`  | Enables or disables adding blank pages for even page counts. Example: `pdfminion --evenify=off |
+
+
+<h2>Information</h2>
+
+| **Name**  | **Long Command**  | **Short Command** | **Description** |
+|-----------|-------------------|-------------------|-----------------|
+| **Help**                 | `--help`                   | `-h`, `-?`, `?`| Displays a list of supported commands and their usage. Example: `pdfminion --help`|
+| **Version**              | `--version`                | `-v`           | Displays the current version of PDFminion. Example: `pdfminion --version` |
+| **Defaults**             | `--defaults`               |                | Prints all current default settings. Example: `pdfminion --defaults`.  |
+| **Debug Mode**           | `--debug`                  |                | Enables debug mode for detailed logs. Example: `pdfminion --debug`    |
+
+
+<h2>Multi-Language Support</h2>
+
+PDFMinion provides defaults for page processing for several languages.
+With these commands you can change these defaults and provide your own values.
+
+
+| **Name**| **Long Command**  | **Short Command** | **Description** |
+|-----------|-------------------|-------------------|-----------------|
+| **List Languages**| `--list-languages` | `-ll` | Lists all available languages for the `--language` option. Example: `pdfminion --list-languages` |
+| **Language**      | `--language <code>`        | `-l <code>`     | Sets the language for stamped text. Supports `EN` (English) and `DE` (German). Default: `EN`. Example: `pdfminion --language DE` |
+| **Blank Page Text** | `--blankpagetext <text>`   | `-b <text>`     | Specifies text printed on blank pages added during evenification. Example: `pdfminion --blankpagetext "deliberately left blank"`|
+
+
+
+
+<h2>File-Related Commands</h2>
+After all files have been processed, you may merge them or create a table-of-contents.
+
+| **Name**  | **Long Command**  | **Short Command** | **Description** |
+|-----------|-------------------|-------------------|-----------------|
+| **Merge** | `--merge <filename>`       | `-m <filename>` | Merges input files into a single PDF. Uses default name if `<filename>` not provided. Example: `pdfminion --merge combined.pdf`   |
+| **Table of Contents**  | `--toc`   |  | Generates a table-of-contents PDF. Supported from v1.5.0. Example: `pdfminion --toc`|
+| **Config File**  | `--config <filename>`  | `-c <filename>` | Loads configuration from a file. Overrides conflicting command-line options. Example: `pdfminion --config settings.json`  |
 
 
 
