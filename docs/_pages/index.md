@@ -82,6 +82,17 @@ excerpt: "**For all those who like handouts with page numbers and running header
              <h5>Evenify</h5>
              <p>Make all documents have an even number of pages by adding a blank page to files with odd page count.</p>
        </div>
+ <div class="box box--primary box-third">
+            <img src="assets/images/functions/privacy.png" alt="privacy" class="img-half">
+             <h5>Privacy</h5>
+             <p>We value your privacy: Your documents are yours, forever. We do neither collect data nor retain any information about your documents.</p>
+       </div>
+
+ <div class="box box--primary box-third">
+            <img src="assets/images/functions/multi-language.png" alt="multi-language" class="img-half">
+             <h5>Multi-Language</h5>
+             <p>Handle a number of natural languages, starting with English (EN)m German (DE), French (FR) and Spanish (ES).</p>
+       </div>
 
        <div class="box box--primary box-third">
             <img src="assets/images/functions/toc.png" alt="table of contents" class="img-half">
