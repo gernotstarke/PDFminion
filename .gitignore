@@ -21,3 +21,4 @@ pdfminion
 docs/_site
 go-app/build
 *.bkp
+*.dtmp
