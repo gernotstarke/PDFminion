@@ -19,7 +19,6 @@ Helper (_minion_) for some mundane tasks with PDF documents, among others:
 [![Maintainability](https://api.codeclimate.com/v1/badges/c481ef8142826f71ff65/maintainability)](https://codeclimate.com/github/gernotstarke/PDFminion/maintainability)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-I'm currently experimenting with an MVP version of PDFminion, therefore most of the information given here is **NOT** valid any longer.
 
 ## Why PDFminion?
 
