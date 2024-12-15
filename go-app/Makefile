@@ -160,6 +160,7 @@ clean:
 	$(GOCLEAN)
 	rm -rf $(OUTPUT_DIR)
 	rm -rf $(DIST_DIR)
+	rm -f ./$(BINARY_NAME)  # Remove the binary from the root directory
 
 run: compile
 	./$(OUTPUT_DIR)/$(BINARY_NAME)
