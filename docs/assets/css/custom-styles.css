@@ -24,10 +24,20 @@
     margin-top: 0.7rem;
 }
 
+#examples {
+    text-align: left;
+}
+
+#examples h1 {
+    text-align: center; 
+}
 
 
 
-/* STYLES YOU ADDED AS STYLE TAG */
+
+
+
+/* STYLES GERNOT ADDED AS STYLE TAG */
 
 
 .container {

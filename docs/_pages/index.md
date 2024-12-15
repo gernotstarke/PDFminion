@@ -255,11 +255,14 @@ After all files have been processed, you may merge them or create a table-of-con
 <br>
 
 
+
 <section id="examples">
 
 <h1 markdown="1">Examples</h1>
 
 <div markdown="1" >
+
+
 
 > **Example 1**: Add page numbers and running headers to all PDF files in the `input` directory and save the processed files in the `output` directory. Requires the `output` to be empty!
 
@@ -272,6 +275,7 @@ pdfminion --source ./input --target ./output
 ```shell
 pdfminion --force --source ./input --target ./output
 ```
+
 
 
 </div>
