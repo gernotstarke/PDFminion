@@ -56,10 +56,11 @@ func ParseOptions() (*domain.MinionConfig, error) {
 	}
 
 	if opts.ListLanguages {
-		log.Info().Msg("List available languages")
+		log.Debug().Msg("List available languages")
 		domain.PrintLanguages()
 		os.Exit(0)
 	}
+
 	// Only validate directories if we're actually going to process files
 	if err := opts.Validate(); err != nil {
 		return nil, err
