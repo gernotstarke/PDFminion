@@ -3,6 +3,7 @@ module pdfminion
 go 1.18
 
 require (
+	github.com/Xuanwo/go-locale v1.1.2
 	github.com/pdfcpu/pdfcpu v0.4.0
 	github.com/rs/zerolog v1.33.0
 	golang.org/x/text v0.20.0
@@ -17,6 +18,6 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.4.3 // indirect
 	golang.org/x/image v0.5.0 // indirect
-	golang.org/x/sys v0.12.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
