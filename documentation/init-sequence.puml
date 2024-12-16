@@ -1,0 +1,39 @@
+@startuml
+actor User as user
+participant main
+participant config
+participant domain
+participant "github.com/spf13/viper" as viper
+participant "github.com/spf13/cobra" as cobra
+participant "golang.org/x/text/language" as language
+
+user -> main : Execute application
+main -> config : LoadConfig()
+activate config
+
+config -> domain : InitializeDefaults()
+activate domain
+domain --> config : Return default MinionConfig
+deactivate domain
+
+config -> cobra : Parse CLI flags (--file, --source, --language, etc.)
+activate cobra
+cobra --> config : CLI flag values
+deactivate cobra
+
+config -> config : Determine config file path\n(either --file or pdfminion.cfg)
+config -> viper : Read config file
+activate viper
+viper --> config : Parsed config values
+deactivate viper
+
+config -> language : Parse language tag (if applicable)
+activate language
+language --> config : Parsed language.Tag
+deactivate language
+
+config --> main : Final merged MinionConfig
+deactivate config
+
+main -> domain : Use MinionConfig for application logic
+@enduml

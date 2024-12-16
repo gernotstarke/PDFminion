@@ -12,3 +12,6 @@ main:
   - title: "Examples"
     url: /#examples
     blank: false
+  - title: "Credits"
+    url: /#credits
+    blank: false

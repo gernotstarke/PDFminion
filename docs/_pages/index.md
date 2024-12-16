@@ -218,10 +218,11 @@ Set the running head, the page- and chapter prefix etc.
 
 | **Name**  | **Long Command**  | **Short Command** | **Description** |
 |-----------|-------------------|-------------------|-----------------|
-| **Help**                 | `--help`                   | `-h`, `-?`, `?`| Displays a list of supported commands and their usage. Example: `pdfminion --help`|
-| **Version**              | `--version`                | `-v`           | Displays the current version of PDFminion. Example: `pdfminion --version` |
-| **Defaults**             | `--defaults`               |                | Prints all current default settings. Example: `pdfminion --defaults`.  |
-| **Debug Mode**           | `--debug`                  |                | Enables debug mode for detailed logs. Example: `pdfminion --debug`    |
+| **Help**        | `--help`      | `-h`, `-?`, `?`| Displays a list of supported commands and their usage. Example: `pdfminion --help`|
+| **Version**     | `--version`   | `-v`           | Displays the current version of PDFminion. Example: `pdfminion --version` |
+| **Thanx**       | `--thanx`     | `-tx`          | Gives credit to the maintainers of several OS libraries. Example: `pdfminion --thanx`.  |
+| **Defaults**    | `--defaults`  |                | Prints all current default settings. Example: `pdfminion --defaults`.  |
+| **Debug Mode**  | `--debug`     |                | Enables debug mode for detailed logs. Example: `pdfminion --debug`    |
 
 
 <h2>Multi-Language Support</h2>
@@ -267,13 +268,21 @@ After all files have been processed, you may merge them or create a table-of-con
 > **Example 1**: Add page numbers and running headers to all PDF files in the `input` directory and save the processed files in the `output` directory. Requires the `output` to be empty!
 
 ```shell
-pdfminion --source ./input --target ./output
+$ pdfminion --source ./input --target ./output
 ```
 
 > **Example 2**: Force overwrite of existing files in the `output` directory  
 
 ```shell
-pdfminion --force --source ./input --target ./output
+$ pdfminion --force --source ./input --target ./output
+```
+
+> **Example 41**: Gives credit to the maintainers of the open-source libraries used by PDFminion, e.g. [pdfcpu](https://pdfcpu.io/) and a few others..
+
+```shell
+$ pdfminion --thanx
+
+PDFminion was created on the shoulder of giants...
 ```
 
 
@@ -282,3 +291,19 @@ pdfminion --force --source ./input --target ./output
 
 </section>
 
+
+<br>
+<hr class="section-sep">
+<br>
+<section id="examples" markdown="1">
+<h1>Credits</h1>
+
+PDFminion uses numerous open-source libraries, and wish to thank the maintainers of the following projects:
+
+
+* Horst Rutter for [pdfcpu](https://pdfcpu.io/), all things related to PDF processing.
+* Hao Ding for [go-locale](https://github.com/Xuanwo/go-locale) to handle tricky locale settings.
+
+* and, of course, the [Go team](https://golang.org/) for creating the language that compiles to various operating systems,
+    and refrains from adding fancy features every 6 month (pun intended).
+</section>
