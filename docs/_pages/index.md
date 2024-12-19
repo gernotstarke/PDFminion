@@ -257,7 +257,7 @@ After all files have been processed, you may merge them or create a table-of-con
 
 
 
-<section id="examples">
+<section id="examples" class="left-aligned-section">
 
 <h1 markdown="1">Examples</h1>
 
@@ -295,7 +295,7 @@ PDFminion was created on the shoulder of giants...
 <br>
 <hr class="section-sep">
 <br>
-<section id="examples" markdown="1">
+<section id="credits" markdown="1" class="left-aligned-section">
 <h1>Credits</h1>
 
 PDFminion uses numerous open-source libraries, and wish to thank the maintainers of the following projects:

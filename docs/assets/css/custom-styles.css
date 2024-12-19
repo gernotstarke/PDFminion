@@ -24,11 +24,11 @@
     margin-top: 0.7rem;
 }
 
-#examples {
+.left-aligned-section {
     text-align: left;
 }
 
-#examples h1 {
+.left-aligned-section h1 {
     text-align: center; 
 }
 
