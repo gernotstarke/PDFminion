@@ -37,6 +37,36 @@
 
 
 
+
+/* INNOQ LOGO FOOTER */
+
+.supported-by-innoq {
+    margin-bottom: 8px;
+    width: 110px;
+    margin-left: 1.4rem;
+}
+
+.supported-by-innoq:hover {
+    opacity: 0.8;
+}
+
+
+@media (max-width: 900px) {
+    .supported-by-innoq {
+        width: 100px;
+    }
+}
+
+@media (max-width: 600px) {
+    .supported-by-innoq {
+        width: 90px;
+    }
+}
+
+
+
+
+
 /* STYLES GERNOT ADDED AS STYLE TAG */
 
 
