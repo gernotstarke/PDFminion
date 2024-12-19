@@ -28,7 +28,9 @@ excerpt: "**For all those who like handouts with page numbers and running header
         <br>    
         <p>Brought to you by</p>
         <div class="logo">
+            <a href="https://arc42.org/" target="_blank" rel="noopener noreferrer nofollow">
             <img src="assets/images/arc42-logo.png" alt="arc42">
+            </a>   
         </div>
 
     </p>
