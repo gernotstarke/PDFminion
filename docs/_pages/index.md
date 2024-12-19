@@ -287,6 +287,10 @@ $ pdfminion --thanx
 PDFminion was created on the shoulder of giants...
 ```
 
+<br>
+<a href="/downloads/pdfminion-config.yaml" download="pdfminion-config.yaml" class="btn btn--primary">Download example config file</a>
+
+
 
 
 </div>
