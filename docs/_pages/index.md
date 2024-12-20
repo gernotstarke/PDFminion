@@ -330,7 +330,8 @@ PDFminion uses numerous open-source libraries, and wish to thank the maintainers
 * Horst Rutter for [pdfcpu](https://pdfcpu.io/), all things related to PDF processing.
 * Hao Ding for [go-locale](https://github.com/Xuanwo/go-locale) to handle tricky locale settings.
 * [Steve Francia](https://spf13.com) for a lot of stuff, including [cobra](github.com/spf13/cobra) and [viper](github.com/spf13/viper).
-
+* [Max Howell](https://brew.sh) for creating Homebrew, the package manager for MacOS.
+* [Tom Preston-Werner & Co.](https://jekyllrb.com) for creating Jekyll, the static site generator.
 * and, of course, the [Go team](https://golang.org/) for creating the language that compiles to various operating systems,
     and refrains from adding fancy features every 6 month (pun intended).
     and refrains from adding fancy features every 6 month (pun intended).

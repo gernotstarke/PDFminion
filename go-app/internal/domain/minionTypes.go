@@ -3,33 +3,36 @@ package domain
 import (
 	"fmt"
 	"golang.org/x/text/language"
-	"io/ioutil"
+	"io"
 	"os"
 )
 
-const MinionConfigFileName = "pdfminion.yaml"
+const (
+	MinionConfigFileName = "pdfminion.yaml"
+
+	// Default formatting settings
+	DefaultSourceDir     = "_pdfs"
+	DefaultTargetDir     = "_target"
+	PageNrPrefix         = ""
+	ChapterPrefix        = "Chapter"
+	ChapterPageSeparator = " - "
+)
 
 type MinionConfig struct {
-
-	// Commands that are executed immediately
-	Help          bool
-	Version       bool
-	ListLanguages bool
-	Settings      bool
-	Credits       bool
-
-	// General config settings, see ADR-0005
-	ConfigFileName string // Name of the configuration file
+	// General settings
+	ConfigFileName string
 	Language       language.Tag
 	Debug          bool
 	SourceDir      string
 	TargetDir      string
 	Force          bool
-	Evenify        bool
-	Merge          bool
-	MergeFileName  string
 
-	// Page-related settings, see ADR-0006
+	// Processing options
+	Evenify       bool
+	Merge         bool
+	MergeFileName string
+
+	// Page formatting
 	RunningHeader        string
 	ChapterPrefix        string
 	Separator            string
@@ -38,90 +41,125 @@ type MinionConfig struct {
 	BlankPageText        string
 }
 
-// DefaultTexts holds UI texts by language
-
-var DefaultTexts = map[language.Tag]struct {
-	ChapterPrefix string
-	RunningHeader string
-	PageFooter    string
-	PageNumber    string
-	BlankPageText string
-}{
-	language.German: {
-		ChapterPrefix: "Kapitel",
-		RunningHeader: "Seite",
-		PageFooter:    "Seite %d von %d",
-		PageNumber:    "Seite %d",
-		BlankPageText: "Diese Seite bleibt absichtlich leer",
-	},
-	language.English: {
-		ChapterPrefix: "Chapter",
-		RunningHeader: "Page",
-		PageFooter:    "Page %d of %d",
-		PageNumber:    "Page %d",
-		BlankPageText: "deliberately left blank",
-	},
+// NewDefaultConfig creates a new configuration with default values
+func NewDefaultConfig() *MinionConfig {
+	return &MinionConfig{
+		ConfigFileName: MinionConfigFileName,
+		Language:       language.English,
+		Debug:          false,
+		SourceDir:      "_pdfs",
+		TargetDir:      "_target",
+		Force:          false,
+		Evenify:        true,
+		Merge:          false,
+		MergeFileName:  "merged.pdf",
+		Separator:      " - ",
+		PagePrefix:     "",
+		BlankPageText:  "",
+	}
 }
 
-// FlagDef represents a flag definition with possible short and long forms
-type FlagDef struct {
-	Long    string
-	Short   string
-	Default interface{}
-	Help    string
+// MergeWith merges the current config with another config, giving precedence to the other config
+func (c *MinionConfig) MergeWith(other *MinionConfig) error {
+	if other == nil {
+		return nil
+	}
+
+	// Only override non-zero values
+	if other.Language != language.Und {
+		c.Language = other.Language
+	}
+	if other.SourceDir != "" {
+		c.SourceDir = other.SourceDir
+	}
+	if other.TargetDir != "" {
+		c.TargetDir = other.TargetDir
+	}
+	if other.MergeFileName != "" {
+		c.MergeFileName = other.MergeFileName
+	}
+	if other.RunningHeader != "" {
+		c.RunningHeader = other.RunningHeader
+	}
+	if other.ChapterPrefix != "" {
+		c.ChapterPrefix = other.ChapterPrefix
+	}
+	if other.PagePrefix != "" {
+		c.PagePrefix = other.PagePrefix
+	}
+	if other.BlankPageText != "" {
+		c.BlankPageText = other.BlankPageText
+	}
+
+	// Boolean flags always override
+	c.Debug = other.Debug
+	c.Force = other.Force
+	c.Evenify = other.Evenify
+	c.Merge = other.Merge
+
+	return nil
 }
 
-const (
-	DefaultSourceDir     = "_pdfs"
-	DefaultTargetDir     = "_target"
-	PageNrPrefix         = ""
-	ChapterPrefix        = "Kap."
-	ChapterPageSeparator = " - "
-)
-
-var AppVersion string
-
-func SetAppVersion(version string) {
-	AppVersion = version
-}
-
-func (conf *MinionConfig) Validate() error {
-	if err := conf.validateSourceDir(); err != nil {
+func (c *MinionConfig) Validate() error {
+	// Validate source directory
+	if err := c.validateSourceDir(); err != nil {
 		return err
 	}
-	return conf.validateTargetDir()
+
+	// Validate target directory
+	if err := c.validateTargetDir(); err != nil {
+		return err
+	}
+
+	// Validate language
+	if c.Language == language.Und {
+		return fmt.Errorf("invalid or undefined language")
+	}
+
+	return nil
 }
 
-func (conf *MinionConfig) validateSourceDir() error {
-	if _, err := os.Stat(conf.SourceDir); os.IsNotExist(err) {
-		return fmt.Errorf("source directory %q does not exist", conf.SourceDir)
+func (c *MinionConfig) validateSourceDir() error {
+	if _, err := os.Stat(c.SourceDir); os.IsNotExist(err) {
+		return fmt.Errorf("source directory %q does not exist", c.SourceDir)
 	}
 	return nil
 }
 
-func (conf *MinionConfig) validateTargetDir() error {
-	if _, err := os.Stat(conf.TargetDir); os.IsNotExist(err) {
-		fmt.Printf("Target directory '%s' does not exist. Creating it...\n", conf.TargetDir)
-		if err := os.MkdirAll(conf.TargetDir, os.ModePerm); err != nil {
-			return fmt.Errorf("Failed to create directory '%s': %v", conf.TargetDir, err)
+func (c *MinionConfig) validateTargetDir() error {
+	if _, err := os.Stat(c.TargetDir); os.IsNotExist(err) {
+		if err := os.MkdirAll(c.TargetDir, os.ModePerm); err != nil {
+			return fmt.Errorf("failed to create target directory %q: %w", c.TargetDir, err)
 		}
 		return nil
 	}
 
-	if conf.Force {
-		return nil
-	}
-
-	// TODO: replace deprecated ReadDir() with suggested replacement
-	files, err := ioutil.ReadDir(conf.TargetDir)
-
-	if err != nil {
-		return fmt.Errorf("Cannot read directory '%s': %v", conf.TargetDir, err)
-	}
-
-	if len(files) > 0 {
-		return fmt.Errorf("Target directory '%s' is not empty. Use --force to override", conf.TargetDir)
+	if !c.Force {
+		empty, err := isDirEmpty(c.TargetDir)
+		if err != nil {
+			return err
+		}
+		if !empty {
+			return fmt.Errorf("target directory %q is not empty (use --force to override)", c.TargetDir)
+		}
 	}
 
 	return nil
+}
+
+func isDirEmpty(dir string) (bool, error) {
+	f, err := os.Open(dir)
+	if err != nil {
+		return false, err
+	}
+	defer f.Close()
+
+	// Try to read one entry
+	names, err := f.Readdirnames(1)
+	if err != nil && err != io.EOF {
+		return false, err // Return error if it's not EOF
+	}
+
+	// Directory is empty if we got EOF (no entries)
+	return len(names) == 0, nil
 }

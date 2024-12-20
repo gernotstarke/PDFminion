@@ -2,207 +2,272 @@ package config
 
 import (
 	"fmt"
-	"github.com/rs/zerolog"
-	"golang.org/x/text/language"
 	"os"
+	"path/filepath"
 
+	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"pdfminion/internal/domain"
 )
 
-// Root command
-var rootCmd = &cobra.Command{
-	Use:   "pdfminion",
-	Short: "PDFMinion adds page numbers to PDF files with custom options.",
-	Long:  "PDFMinion is a CLI tool to add page numbers to existing PDF files. It provides customizable options like chapter numbers, running header,  merging and more.",
-	RunE:  runNormalProcessing, // This runs when no subcommand is given
-}
-
-var minionConfig *domain.MinionConfig // Config variable to be populated
-
-// LoadConfig initializes the configuration
-func LoadConfig() (*domain.MinionConfig, error) {
-	// Define flags
-	rootCmd.PersistentFlags().StringP("config", "c", "", "Path to the configuration file")
-	rootCmd.PersistentFlags().Bool("settings", false, "Display the final configuration settings")
-	rootCmd.Flags().StringP("source", "s", "", "Source directory for input files")
-	rootCmd.Flags().StringP("target", "t", "", "Target directory for output files")
-	rootCmd.Flags().String("page-prefix", "", "Prefix for page numbers")
-	rootCmd.Flags().Bool("evenify", false, "Ensure even number of pages")
-	rootCmd.Flags().Bool("debug", false, "Enable debug mode")
-
-	// Bind flags to Viper
-	viper.BindPFlag("config", rootCmd.PersistentFlags().Lookup("config"))
-	viper.BindPFlag("settings", rootCmd.PersistentFlags().Lookup("settings"))
-	viper.BindPFlag("source", rootCmd.Flags().Lookup("source"))
-	viper.BindPFlag("target", rootCmd.Flags().Lookup("target"))
-	viper.BindPFlag("page-prefix", rootCmd.Flags().Lookup("page-prefix"))
-	viper.BindPFlag("evenify", rootCmd.Flags().Lookup("evenify"))
-	viper.BindPFlag("debug", rootCmd.Flags().Lookup("debug"))
-
-	// Hook into PreRun for early config loading and merging
-	rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
-		// Skip config loading for subcommands
-		if cmd.CalledAs() != "" && cmd.CalledAs() != "pdfminion" {
-			return nil
-		}
-		return loadAndMergeConfig()
+var (
+	minionConfig *domain.MinionConfig
+	rootCmd      = &cobra.Command{
+		Use:   "pdfminion",
+		Short: "PDFMinion adds page numbers to PDF files with custom options",
+		Long:  "PDFMinion is a CLI tool to add page numbers to existing PDF files with customizable options like chapter numbers, running headers, and more",
+		RunE:  runPDFProcessing,
 	}
+)
 
-	// Add subcommands
-	addCommands()
+// LoadConfig initializes and returns the complete configuration
+func LoadConfig() (*domain.MinionConfig, error) {
+	setupFlags()
+	setupCommands()
 
-	// Set the main logic
-	rootCmd.RunE = runNormalProcessing
+	// Initialize default configuration
+	minionConfig = domain.NewDefaultConfig()
 
-	// Execute the root command
+	// Execute command processing
 	if err := rootCmd.Execute(); err != nil {
-		return nil, err
+		return nil, fmt.Errorf("command execution failed: %w", err)
 	}
 
 	return minionConfig, nil
 }
 
-func loadAndMergeConfig() error {
-	// Step 1: Initialize defaults
-	minionConfig = initializeDefaults()
-	log.Debug().Msg("Initialized defaults.")
+func setupFlags() {
+	// Persistent flags (available to all commands)
+	rootCmd.PersistentFlags().StringP("config", "c", "", "Path to configuration file")
+	rootCmd.PersistentFlags().Bool("debug", false, "Enable debug mode")
+	rootCmd.PersistentFlags().StringP("language", "l", "", "Override system language")
 
-	// Step 2: Check for --config flag
-	configFile := viper.GetString("config")
-	if configFile != "" {
-		log.Debug().Str("filename", configFile).Msg("Detected --config flag.")
+	// Local flags (only for PDF processing)
+	rootCmd.Flags().StringP("source", "s", domain.DefaultSourceDir, "Source directory for PDF files")
+	rootCmd.Flags().StringP("target", "t", domain.DefaultTargetDir, "Target directory for processed files")
+	rootCmd.Flags().Bool("force", false, "Force overwrite of target directory")
+	rootCmd.Flags().Bool("evenify", true, "Ensure even page count in output")
+	rootCmd.Flags().Bool("merge", false, "Merge all output files into one")
+	rootCmd.Flags().String("merge-filename", "merged.pdf", "Name for merged output file")
+	rootCmd.Flags().String("running-header", "", "Text for running header")
+	rootCmd.Flags().String("chapter-prefix", domain.ChapterPrefix, "Prefix for chapter numbers")
+	rootCmd.Flags().String("separator", domain.ChapterPageSeparator, "Separator between chapter and page")
+	rootCmd.Flags().String("page-prefix", domain.PageNrPrefix, "Prefix for page numbers")
+	rootCmd.Flags().String("total-page-count-prefix", "", "Prefix for total page count")
+	rootCmd.Flags().String("blank-page-text", "", "Text for blank pages")
 
-		// Search in the home directory first
-		homeDir, err := os.UserHomeDir()
-		if err == nil {
-			homeConfigPath := fmt.Sprintf("%s/%s", homeDir, configFile)
-			log.Debug().Str("path", homeConfigPath).Msg("Searching for config file in the home directory.")
-			if _, err := os.Stat(homeConfigPath); err == nil {
-				viper.SetConfigFile(homeConfigPath)
-				if err := viper.MergeInConfig(); err == nil {
-					log.Info().Str("path", homeConfigPath).Msg("Configuration file successfully read from home directory.")
-				}
-			}
-		}
+	// Mark required flags
+	rootCmd.MarkFlagRequired("source")
+	rootCmd.MarkFlagRequired("target")
 
-		// Search in the current directory
-		localConfigPath := configFile
-		log.Debug().Str("path", localConfigPath).Msg("Searching for config file in the current directory.")
-		if _, err := os.Stat(localConfigPath); err == nil {
-			viper.SetConfigFile(localConfigPath)
-			if err := viper.MergeInConfig(); err == nil {
-				log.Info().Str("path", localConfigPath).Msg("Configuration file successfully read from current directory.")
-			}
-		}
-	}
-
-	// Step 3: Merge Viper into minionConfig
-	if err := viper.Unmarshal(minionConfig); err != nil {
-		return fmt.Errorf("failed to load configuration: %w", err)
-	}
-
-	log.Debug().Msg("Merged configuration with CLI flags and defaults.")
-	return nil
+	// Bind all flags to viper
+	viper.BindPFlags(rootCmd.PersistentFlags())
+	viper.BindPFlags(rootCmd.Flags())
 }
 
-func addCommands() {
-	// Subcommand: version
-	rootCmd.AddCommand(&cobra.Command{
+func setupCommands() {
+	// Version command - note the PersistentPreRun override
+	versionCmd := &cobra.Command{
 		Use:   "version",
-		Short: "Show the application version",
+		Short: "Show application version",
+		PersistentPreRun: func(cmd *cobra.Command, args []string) {
+			// Override parent PersistentPreRun
+		},
 		Run: func(cmd *cobra.Command, args []string) {
 			domain.PrintVersion()
 			os.Exit(0)
 		},
-	})
+	}
+	rootCmd.AddCommand(versionCmd)
 
-	// Subcommand: credits
-	rootCmd.AddCommand(&cobra.Command{
-		Use:   "credits",
-		Short: "Show credits for PDFMinion",
-		Run: func(cmd *cobra.Command, args []string) {
-			domain.GiveCredits()
-			os.Exit(0)
+	// Add all immediate commands
+	var immediateCommands = map[string]*cobra.Command{
+		"help": {
+			Use:   "help",
+			Short: "Help about any command",
+			PersistentPreRun: func(cmd *cobra.Command, args []string) {
+				// Override parent PersistentPreRun
+			},
+			Run: func(cmd *cobra.Command, args []string) {
+				rootCmd.Help()
+				os.Exit(0)
+			},
 		},
-	})
-
-	// Subcommand: list-languages
-	rootCmd.AddCommand(&cobra.Command{
-		Use:   "list-languages",
-		Short: "List supported languages",
-		Run: func(cmd *cobra.Command, args []string) {
-			domain.PrintLanguages()
-			os.Exit(0)
+		"list-languages": {
+			Use:   "list-languages",
+			Short: "List supported languages",
+			PersistentPreRun: func(cmd *cobra.Command, args []string) {
+				// Override parent PersistentPreRun
+			},
+			Run: func(cmd *cobra.Command, args []string) {
+				domain.PrintLanguages()
+				os.Exit(0)
+			},
 		},
-	})
-	// and its short form ll
-	rootCmd.AddCommand(&cobra.Command{
-		Use:   "ll",
-		Short: "List supported languages",
-		Run: func(cmd *cobra.Command, args []string) {
-			domain.PrintLanguages()
-			os.Exit(0)
+		"ll": {
+			Use:   "ll",
+			Short: "List supported languages (short form)",
+			PersistentPreRun: func(cmd *cobra.Command, args []string) {
+				// Override parent PersistentPreRun
+			},
+			Run: func(cmd *cobra.Command, args []string) {
+				domain.PrintLanguages()
+				os.Exit(0)
+			},
 		},
-	})
-}
-
-func runNormalProcessing(cmd *cobra.Command, args []string) error {
-	// Step 4: Check for --settings flag to print the final config
-	if viper.GetBool("settings") {
-		log.Info().Msg("Displaying final configuration settings as requested.")
-		domain.PrintFinalConfiguration(*minionConfig)
-		fmt.Println("Final Configuration:")
-		os.Exit(0)
+		"settings": {
+			Use:   "settings",
+			Short: "Display current configuration",
+			PersistentPreRun: func(cmd *cobra.Command, args []string) {
+				// Override parent PersistentPreRun
+			},
+			Run: func(cmd *cobra.Command, args []string) {
+				if err := loadConfiguration(); err != nil {
+					log.Error().Err(err).Msg("Failed to load configuration")
+					os.Exit(1)
+				}
+				domain.PrintFinalConfiguration(*minionConfig)
+				os.Exit(0)
+			},
+		},
 	}
 
-	// Step 5: Setup logging
-	setupLogging(minionConfig.Debug)
-	log.Info().Msg("Configuration setup complete.")
+	// Add all other immediate commands to root
+	for _, cmd := range immediateCommands {
+		rootCmd.AddCommand(cmd)
+	}
 
-	// Step 6: Main processing logic
-	fmt.Println("Processing PDFs with the following configuration:")
-	fmt.Printf("%+v\n", *minionConfig)
+	// Add preprocessing hooks
+	rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
+		return loadConfiguration()
+	}
+}
+
+func loadConfiguration() error {
+	// 1. Start with system language detection
+	systemLang := domain.DetectSystemLanguage()
+	minionConfig.Language = systemLang
+
+	// 2. Load config files
+	if err := loadConfigFiles(); err != nil {
+		return fmt.Errorf("failed to load config files: %w", err)
+	}
+
+	// 3. Apply command line flags (highest priority)
+	if err := applyCommandLineFlags(); err != nil {
+		return fmt.Errorf("failed to apply command line flags: %w", err)
+	}
+
+	// 4. Validate final configuration
+	if err := minionConfig.Validate(); err != nil {
+		return fmt.Errorf("configuration validation failed: %w", err)
+	}
+
+	// 5. Setup logging based on final config
+	setupLogging(minionConfig.Debug)
 
 	return nil
 }
 
-// SetupLogging initializes logging with debug or production settings.
-func setupLogging(debug bool) {
-	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
-
-	if debug {
-		log.Logger = log.Output(zerolog.ConsoleWriter{
-			Out:        os.Stderr,
-			TimeFormat: "15:04:05",
-		}).Level(zerolog.DebugLevel)
-	} else {
-		log.Logger = log.Output(zerolog.ConsoleWriter{
-			Out:        os.Stderr,
-			TimeFormat: "15:04:05",
-		}).Level(zerolog.InfoLevel)
+func loadConfigFiles() error {
+	configFile := viper.GetString("config")
+	if configFile == "" {
+		configFile = domain.MinionConfigFileName
 	}
+
+	// Try home directory first
+	if homeConfig, err := loadHomeConfig(configFile); err == nil {
+		if err := minionConfig.MergeWith(homeConfig); err != nil {
+			log.Warn().Err(err).Msg("Failed to merge home directory config")
+		}
+	}
+
+	// Then try current directory (takes precedence)
+	if localConfig, err := loadLocalConfig(configFile); err == nil {
+		if err := minionConfig.MergeWith(localConfig); err != nil {
+			log.Warn().Err(err).Msg("Failed to merge local directory config")
+		}
+	}
+
+	return nil
 }
 
-// Initialize default values for the configuration
-func initializeDefaults() *domain.MinionConfig {
-	return &domain.MinionConfig{
-		ConfigFileName:       "pdfminion.yaml",
-		Language:             language.English,
-		SourceDir:            "./source",
-		TargetDir:            "./target",
-		Evenify:              true,
-		Merge:                false,
-		MergeFileName:        "merged.pdf",
-		RunningHeader:        "",
-		ChapterPrefix:        "",
-		Separator:            "",
-		PagePrefix:           "",
-		TotalPageCountPrefix: "",
-		BlankPageText:        "",
-		Settings:             false,
-		Debug:                false,
+func loadHomeConfig(filename string) (*domain.MinionConfig, error) {
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return nil, err
 	}
+
+	viper.SetConfigFile(filepath.Join(homeDir, filename))
+	if err := viper.MergeInConfig(); err != nil {
+		return nil, err
+	}
+
+	var config domain.MinionConfig
+	if err := viper.Unmarshal(&config); err != nil {
+		return nil, err
+	}
+
+	return &config, nil
+}
+
+func loadLocalConfig(filename string) (*domain.MinionConfig, error) {
+	viper.SetConfigFile(filename)
+	if err := viper.MergeInConfig(); err != nil {
+		return nil, err
+	}
+
+	var config domain.MinionConfig
+	if err := viper.Unmarshal(&config); err != nil {
+		return nil, err
+	}
+
+	return &config, nil
+}
+
+func applyCommandLineFlags() error {
+	// Create a new config from flags
+	flagConfig := &domain.MinionConfig{
+		Debug:         viper.GetBool("debug"),
+		SourceDir:     viper.GetString("source"),
+		TargetDir:     viper.GetString("target"),
+		Force:         viper.GetBool("force"),
+		Evenify:       viper.GetBool("evenify"),
+		Merge:         viper.GetBool("merge"),
+		MergeFileName: viper.GetString("merge-filename"),
+		RunningHeader: viper.GetString("running-header"),
+		ChapterPrefix: viper.GetString("chapter-prefix"),
+		PagePrefix:    viper.GetString("page-prefix"),
+	}
+
+	// Override language if specified
+	if langStr := viper.GetString("language"); langStr != "" {
+		lang, err := domain.ValidateLanguage(langStr)
+		if err != nil {
+			return fmt.Errorf("invalid language specified: %w", err)
+		}
+		flagConfig.Language = lang
+	}
+
+	return minionConfig.MergeWith(flagConfig)
+}
+
+func setupLogging(debug bool) {
+	level := zerolog.InfoLevel
+	if debug {
+		level = zerolog.DebugLevel
+	}
+
+	log.Logger = zerolog.New(zerolog.ConsoleWriter{
+		Out:        os.Stderr,
+		TimeFormat: "15:04:05",
+	}).Level(level).With().Timestamp().Logger()
+}
+
+func runPDFProcessing(cmd *cobra.Command, args []string) error {
+	log.Info().Msg("Starting PDF processing")
+	// TODO: Implement actual PDF processing logic
+	return nil
 }

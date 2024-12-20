@@ -8,6 +8,12 @@ import (
 	"os"
 )
 
+var AppVersion string
+
+func SetAppVersion(version string) {
+	AppVersion = version
+}
+
 // PrintFinalConfiguration prints the final configuration
 func PrintFinalConfiguration(myConfig MinionConfig) {
 	fmt.Println("Final Configuration:")
@@ -47,6 +53,7 @@ func GiveCredits() {
 	log.Info().Msg("Max Howell (Homebrew, https://brew.sh)")
 	log.Info().Msg("Tom Preston-Werner & Co. (Jekyll, https://jekyllrb.com)")
 	log.Info().Msg("Special thanks to the Go team (https://golang.org) and the Go community.")
+	log.Info().Msg("INNOQ (https://innoq.com) for supporting my work")
 
 }
 

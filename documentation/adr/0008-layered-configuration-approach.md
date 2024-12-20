@@ -18,6 +18,35 @@ Users shall be able to:
 
 This is called a _layered configuration approach_:
 
+### Details Requirements
+
+#### Commands
+Several commands shall be immediately executed. PDF processing shall not happen in these cases:
+- version, help, ll, list-languages, settings
+
+The default-command is pdf processing.
+It shall be invoked if no other command is given.
+
+#### Flags
+The default command can be configured with numerous flags, concerning the source, target, language, overwrite target (force), merge generated files, and various page-related and language-dependend settings.
+These settings can be given via command-line flags or a configuration file.
+The name of this config file can be given via command-line flags (--file or --config).
+The default name of this file is pdfminion.yaml.
+The location of the configuration file is the current directory or the users' home directory or both.
+In case both files are present, the current directory file shall have precedence.
+The settings command can also accept the --config or --file flag to read the settings from a file and then display them.
+The configuration shall be layered, from low to high priority:
+
+1. Default values (hard coded in the application)
+2. Configuration file in users' home directory
+3. Configuration file in the current directory
+4. Command-line flags
+
+Default values depend on the language setting. The default language is English.
+The application supports a number of languages (currently EN, DE and FR).
+Upon startup, the application shall determine the language setting by using the library xuanwo/go-locale.
+
+
 ## Decision
 
 
@@ -29,16 +58,11 @@ This is called a _layered configuration approach_:
 * Library Choice: Use Viper for configuration file handling and defaults.
 * Use the Cobra package for command-line parsing. Cobra integrates well with Viper for CLI apps.
 
-### Priority Order:
 
-Command-line flags > Config file > Defaults.
+
 
 ### Implementation Outline:
 
-* Parse CLI flags (use Cobra).
-* Determine the config file location (from --file or pdfminion.cfg).
-* Load the config file (if it exists).
-* Merge all sources into a unified configuration structure.
 
 
 
